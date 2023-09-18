@@ -3,10 +3,11 @@ import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
 // import ReviewCard from "./ReviewCard";
 // import AddReview from "./AddReview";
-import Cookies from "js-cookie";
-// import "../App.css";
-import UseTheme from "../UseTheme";
 // import Search from "./Search";
+// import "../App.css";
+
+import Cookies from "js-cookie";
+import UseTheme from "../UseTheme";
 import { IntlProvider, FormattedMessage } from "react-intl";
 
 import {
@@ -141,7 +142,6 @@ function MainPage() {
     // };
 
     let theme = UseTheme().theme;
-    console.log(theme.palette);
 
     const { locale } = useParams();
     const intlMessages = messages[locale];
@@ -203,9 +203,9 @@ function MainPage() {
                                         <Grid item>
                                             <Button
                                                 variant="contained"
-                                                onClick={() =>
-                                                    setShowAddForm(true)
-                                                }
+                                                // onClick={() =>
+                                                //     setShowAddForm(true)
+                                                // }
                                             >
                                                 <FormattedMessage
                                                     id="addReview"
@@ -232,12 +232,12 @@ function MainPage() {
                                 </Grid>
                             )}
                         </Grid>
-                        {showAddForm && (
+                        {/* {showAddForm && (
                             <AddReview
                                 onAddReview={handleAddReview}
                                 userId={user.id}
                             />
-                        )}
+                        )} */}
                     </>
                 )}
                 <Grid container spacing={2}>
@@ -314,11 +314,11 @@ function MainPage() {
                                             xl={3}
                                             key={result.id}
                                         >
-                                            <ReviewCard
+                                            {/* <ReviewCard
                                                 review={result}
                                                 user={user}
                                                 update={getReviews}
-                                            />
+                                            /> */}
                                         </Grid>
                                     ))}
                                 </Grid>
