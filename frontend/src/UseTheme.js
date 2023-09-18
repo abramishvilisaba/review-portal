@@ -89,9 +89,20 @@ const UseTheme = () => {
                             },
                         },
                     },
+                    MuiSelect: {
+                        styleOverrides: {
+                            root: {
+                                color: "inherit",
+                            },
+                        },
+                    },
                     a: {
-                        textDecoration: "none",
-                        color: "inherit",
+                        styleOverrides: {
+                            root: {
+                                textDecoration: "none",
+                                color: "inherit",
+                            },
+                        },
                     },
                 },
                 breakpoints: {

@@ -13,14 +13,17 @@ function LanguageSelector({ onLocaleChange, locale }) {
     const navigate = useNavigate();
 
     const handleChange = (event) => {
-        console.log("============================================");
         const selectedLocale = event.target.value;
         onLocaleChange(selectedLocale);
         navigate("/" + selectedLocale);
     };
 
     return (
-        <Select value={locale} onChange={handleChange}>
+        <Select
+            value={locale}
+            onChange={handleChange}
+            // sx={{ color: "inherit" }}
+        >
             {languages.map((language) => (
                 <MenuItem key={language.code} value={language.code}>
                     {language.label}
