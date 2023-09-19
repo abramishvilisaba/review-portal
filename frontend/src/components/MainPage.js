@@ -135,15 +135,39 @@ function MainPage() {
     //     setSearchResults([]);
     // }, []);
 
+    const fetchAndSetReviews = () => {
+        getReviews()
+            .then((reviewData) => {
+                setReviews(reviewData);
+            })
+            .catch((error) => {
+                console.error("Error loading recently added reviews:", error);
+            });
+    };
+
+    const fetchAndSetUsers = () => {
+        getUserData()
+            .then((userData) => {
+                setUser(userData);
+                getReviews().then((reviewData) => {
+                    setReviews(reviewData);
+                });
+            })
+            .catch((error) => {
+                console.error("Error loading users:", error);
+            });
+    };
+
     useEffect(() => {
         // setToken();
-        getUserData().then((userData) => {
-            setUser(userData);
-            getReviews().then((reviewData) => {
-                setReviews(reviewData);
-                console.log("reviews", reviewData);
-            });
-        });
+        // getUserData().then((userData) => {
+        //     setUser(userData);
+        //     getReviews().then((reviewData) => {
+        //         setReviews(reviewData);
+        //     });
+        // });
+        fetchAndSetUsers();
+        fetchAndSetReviews();
     }, []);
 
     const handleAddReview = (newReview) => {
@@ -165,8 +189,6 @@ function MainPage() {
         }
     }, [locale]);
     const intlMessages = messages[locale];
-
-    console.log(user);
 
     return (
         <IntlProvider locale={currentLocale} messages={intlMessages}>
@@ -296,7 +318,7 @@ function MainPage() {
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>
-                                <Grid container spacing={2}>
+                                <Grid container spacing={2} marginBottom={8}>
                                     {reviews.map((review) => (
                                         <Grid
                                             item
@@ -310,7 +332,7 @@ function MainPage() {
                                             <ReviewCard
                                                 review={review}
                                                 user={user}
-                                                update={getReviews}
+                                                update={fetchAndSetReviews}
                                             />
                                         </Grid>
                                     ))}

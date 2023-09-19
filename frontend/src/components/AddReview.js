@@ -12,6 +12,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import UserRating from "./reviewCard/UserRating";
 import axios from "axios";
 import Dropzone from "react-dropzone";
+import UseTheme from "../UseTheme";
 
 function AddReview({ userId, onAddReview }) {
     const [reviewData, setReviewData] = useState({
@@ -64,10 +65,6 @@ function AddReview({ userId, onAddReview }) {
             reviewPhoto,
             tags,
         } = reviewData;
-        console.log("post");
-        console.log(reviewData);
-        console.log(creatorGrade);
-
         axios
             .post(`${API_URL}/reviews`, {
                 creatorId: userId,
@@ -105,15 +102,13 @@ function AddReview({ userId, onAddReview }) {
     };
 
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth="md" width="100px">
             <Box
-                className="bg-white shadow-md p-6 rounded-lg mb-4"
+                marginBottom={8}
                 sx={{
                     p: 6,
-                    backgroundColor: "white",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+                    boxShadow: "0px 4px 6px rgba(200, 200, 200, 0.5)",
                     borderRadius: "8px",
-                    marginBottom: "16px",
                 }}
             >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 4 }}>
@@ -143,7 +138,9 @@ function AddReview({ userId, onAddReview }) {
                         sx={{ mb: 4 }}
                     />
                     {/* Review Text */}
-                    <TextareaAutosize
+                    <TextField
+                        multiline
+                        label="Review Text"
                         id="reviewText"
                         name="reviewText"
                         placeholder="Review Text"
@@ -153,8 +150,6 @@ function AddReview({ userId, onAddReview }) {
                         style={{ width: "100%" }}
                         sx={{
                             mb: 4,
-                            border: "1px solid #ccc",
-                            borderRadius: "4px",
                         }}
                         required
                     />
@@ -202,34 +197,29 @@ function AddReview({ userId, onAddReview }) {
                         {({ getRootProps, getInputProps }) => (
                             <section>
                                 <div
-                                    className="w-[100%] h-20 bg-slate-200"
                                     {...getRootProps()}
-                                    sx={{
-                                        border: "2px dashed #ccc",
+                                    style={{
+                                        border: "2px dashed #999999",
                                         borderRadius: "4px",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
                                         cursor: "pointer",
+                                        height: "80px",
                                     }}
                                 >
                                     <input {...getInputProps()} />
                                     <CloudUploadIcon sx={{ fontSize: 32 }} />
-                                    <Typography variant="body1">
+                                    {/* <Typography variant="body1">
                                         Drag 'n' drop some files here, or click
                                         to select files
-                                    </Typography>
+                                    </Typography> */}
                                 </div>
                             </section>
                         )}
                     </Dropzone>
                     {/* Submit Button */}
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        sx={{ mt: 4 }}
-                    >
+                    <Button type="submit" variant="contained" sx={{ mt: 4 }}>
                         Add Review
                     </Button>
                 </form>

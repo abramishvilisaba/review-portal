@@ -21,7 +21,7 @@ function UserRating({ userRating, onUserRatingChange, averageRating }) {
                         }}
                         onClick={(e) => onUserRatingChange(star, e)}
                     >
-                        <FontAwesomeIcon icon={faStar} size="lg" />
+                        <FontAwesomeIcon icon={faStar} size="1x" />
                     </span>
                 ))}
             </Box>

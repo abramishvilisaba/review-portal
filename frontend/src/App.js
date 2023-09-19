@@ -12,7 +12,8 @@ import LanguageSelector from "./LanguageSelector";
 import messages from "./messages";
 import UseTheme from "./UseTheme";
 import MainPage from "./components/MainPage";
-import Login from "./components/Login";
+import Login from "./components/pages/Login";
+import ReviewDetail from "./components/pages/ReviewDetail";
 
 import Navbar from "./Navbar";
 import {
@@ -82,11 +83,11 @@ function App() {
                         slectedLocale={slectedLocale}
                     />
                     <Route path="/login" element={<Login />} />
-                    {/*<Route path="/profile" element={<Profile />} />
-                <Route
-                    path="/reviews/:reviewId"
-                    element={<ReviewDetail />}
-                /> */}
+                    {/* <Route path="/profile" element={<Profile />} /> */}
+                    <Route
+                        path="/reviews/:reviewId"
+                        element={<ReviewDetail />}
+                    />
                 </Routes>
             </Router>
             {/* </LocalizationProvider>  */}

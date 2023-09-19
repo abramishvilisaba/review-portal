@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 import React, { useState, useMemo } from "react";
 
 const UseTheme = () => {
-    const [themeMode, setThemeMode] = useState("dark");
+    const [themeMode, setThemeMode] = useState("light");
     const [themeLocale, setThemeLocale] = useState("en");
 
     const theme = useMemo(
@@ -86,6 +86,13 @@ const UseTheme = () => {
                         styleOverrides: {
                             root: {
                                 padding: "15px",
+                            },
+                        },
+                    },
+                    MuiTextField: {
+                        styleOverrides: {
+                            root: {
+                                // backgroundColor: "gray",
                             },
                         },
                     },

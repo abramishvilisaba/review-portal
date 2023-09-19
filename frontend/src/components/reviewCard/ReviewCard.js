@@ -86,12 +86,12 @@ function ReviewCard({
     }, [user]);
 
     const handleLikeButton = async (e) => {
-        e.preventDefault();
+        console.log("handleLikeButton");
+        // e.preventDefault();
         const action = liked ? "unlike" : "like";
         const method = liked ? "delete" : "post";
         const url = `${API_URL}/likes/${action}`;
         const payload = { userId: user.id, reviewId: review.id };
-        console.log(payload);
         try {
             const response = await axios({
                 method: method,
@@ -114,7 +114,6 @@ function ReviewCard({
         setUserRating(rating);
         const userId = user.id;
         const reviewId = review.id;
-
         const isRated = user.ratedReviews.some(
             (ratedReview) => ratedReview.reviewId === reviewId
         );
@@ -128,7 +127,6 @@ function ReviewCard({
         console.log(url);
 
         try {
-            console.log("postLikeeeeeeeeeeee");
             const response = await axios({ method, url, data });
             console.log("response", response);
             update();
@@ -165,10 +163,12 @@ function ReviewCard({
 
     const theme = useTheme();
 
+    console.log(review);
+
     return (
         <Card sx={{ width: "100%", maxWidth: "500px" }}>
             <Link
-                // to={`/reviews/${review.id}`}
+                to={`/reviews/${review.id}`}
                 state={{
                     review: review,
                     user: user,
@@ -285,8 +285,8 @@ function ReviewCard({
                                 <LikeButton
                                     liked={liked}
                                     // onClick={() => handleLikeButton()}
-                                    // onClick={handleLikeButton}
-                                    onClick={(e) => console.log(e)}
+                                    onClick={handleLikeButton}
+                                    // onClick={(e) => console.log(e)}
                                 />
                             </Grid>
                             <Grid
@@ -295,29 +295,28 @@ function ReviewCard({
                                 sx={{
                                     display: "flex",
                                     alignItems: "center",
+                                    height: "max-content",
                                 }}
                             >
-                                {/* <UserRating
-                                            userRating={userRating}
-                                            // onUserRatingChange={(rating, e) => {
-                                            //     console.log(
-                                            //         "onUserRatingChange"
-                                            //     );
-                                            //     submitRating(rating, e);
-                                            // }}
-                                            onUserRatingChange={(rating, e) => {
-                                                console.log(rating);
-                                                console.log(e);
-
-                                                submitRating(rating, e);
-                                            }}
-                                            averageRating={averageRating}
-                                        /> */}
+                                <UserRating
+                                    userRating={userRating}
+                                    // onUserRatingChange={(rating, e) => {
+                                    //     console.log(
+                                    //         "onUserRatingChange"
+                                    //     );
+                                    //     submitRating(rating, e);
+                                    // }}
+                                    onUserRatingChange={(rating, e) => {
+                                        console.log(rating);
+                                        submitRating(rating, e);
+                                    }}
+                                    averageRating={averageRating}
+                                />
                             </Grid>
                         </Grid>
                     )}
 
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} padding={0}>
                         <Grid item xs={6}>
                             <Typography variant="body2" color="text.secondary">
                                 Likes: {review.likes}

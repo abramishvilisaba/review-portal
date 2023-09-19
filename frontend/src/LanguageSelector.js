@@ -19,11 +19,7 @@ function LanguageSelector({ onLocaleChange, locale }) {
     };
 
     return (
-        <Select
-            value={locale}
-            onChange={handleChange}
-            // sx={{ color: "inherit" }}
-        >
+        <Select value={locale} onChange={handleChange} sx={{ height: "45px" }}>
             {languages.map((language) => (
                 <MenuItem key={language.code} value={language.code}>
                     {language.label}

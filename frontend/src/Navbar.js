@@ -36,35 +36,74 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
     //     toggleLocale(selectedLocale);
     // };
 
+    // return (
+    //     <IntlProvider locale={locale} messages={intlMessages}>
+    //         <AppBar position="static">
+    //             <Toolbar>
+    //                 {/* <select onChange={(e) => onLocaleChange(e.target.value)}>
+    //                 <option value="en">English</option>
+    //                 <option value="fr">Français</option>
+    //             </select> */}
+    //                 <LanguageSelector
+    //                     onLocaleChange={handleLocaleChange}
+    //                     locale={locale}
+    //                 />
+    //                 <Button
+    //                     variant="h2"
+    //                     // color="secondary"
+    //                     onClick={() => {
+    //                         navigate("/");
+    //                     }}
+    //                 >
+    //                     <Typography
+    //                         variant="h6"
+    //                         component="div"
+    //                         sx={{ flexGrow: 1 }}
+    //                     >
+    //                         Review Portal
+    //                     </Typography>
+    //                 </Button>
+    //                 <Box sx={{ display: "flex", alignItems: "center" }}>
+    //                     <Box sx={{ mt: "20px", ml: "20px" }}>
+    //                         <Switch
+    //                             checked={theme.palette.mode === "dark"}
+    //                             onChange={toggleMode}
+    //                             color="primary"
+    //                         />
+    //                         {theme.palette.mode === "dark"
+    //                             ? "Light Mode"
+    //                             : "Dark Mode"}
+    //                     </Box>
+    //                 </Box>
+    //             </Toolbar>
+    //         </AppBar>
+    //     </IntlProvider>
+    // );
     return (
         <IntlProvider locale={locale} messages={intlMessages}>
             <AppBar position="static">
-                <Toolbar>
-                    {/* <select onChange={(e) => onLocaleChange(e.target.value)}>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                </select> */}
-                    <LanguageSelector
-                        onLocaleChange={handleLocaleChange}
-                        locale={locale}
-                    />
-                    <Button
-                        variant="h2"
-                        // color="secondary"
-                        onClick={() => {
-                            navigate("/");
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            component="div"
-                            sx={{ flexGrow: 1 }}
-                        >
-                            Review Portal
-                        </Typography>
-                    </Button>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Box sx={{ mt: "20px", ml: "20px" }}>
+                <Toolbar
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <Button variant="h2" onClick={() => navigate("/")}>
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ flexGrow: 1 }}
+                            >
+                                Review Portal
+                            </Typography>
+                        </Button>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <Box sx={{ ml: "20px" }}>
+                            <LanguageSelector
+                                onLocaleChange={handleLocaleChange}
+                                locale={locale}
+                            />
+                        </Box>
+                        <Box sx={{ ml: "20px" }}>
                             <Switch
                                 checked={theme.palette.mode === "dark"}
                                 onChange={toggleMode}
@@ -74,7 +113,7 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
                                 ? "Light Mode"
                                 : "Dark Mode"}
                         </Box>
-                    </Box>
+                    </div>
                 </Toolbar>
             </AppBar>
         </IntlProvider>
