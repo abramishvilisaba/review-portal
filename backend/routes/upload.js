@@ -25,12 +25,15 @@ router.post("/photo", upload.single("image"), (req, res) => {
     }
 
     cloudinary.uploader
-        .upload_stream({ public_id: id, resource_type: "auto" }, (error, result) => {
-            if (error) {
-                return res.status(500).send(error);
+        .upload_stream(
+            { public_id: id, resource_type: "auto" },
+            (error, result) => {
+                if (error) {
+                    return res.status(500).send(error);
+                }
+                return res.status(200).send(result.secure_url);
             }
-            return res.status(200).send(result.secure_url);
-        })
+        )
         .end(file.buffer);
 });
 

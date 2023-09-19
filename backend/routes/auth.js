@@ -72,8 +72,10 @@ router.get(
                 httpOnly: false,
                 maxAge: 1000 * 60 * 60 * 4,
             });
+            const encodedJwtToken = encodeURIComponent(jwtToken);
+
             res.redirect(
-                `${ALLOWED_ORIGINS}/dashboard?message=Login%20successful&jwtToken=${jwtToken}`
+                `${ALLOWED_ORIGINS}/dashboard?message=Login%20successful&jwtToken=${encodedJwtToken}`
             );
             // res.redirect(`${ALLOWED_ORIGINS}`);
         } catch (error) {

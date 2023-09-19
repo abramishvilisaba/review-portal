@@ -98,10 +98,8 @@ const UseTheme = () => {
                     },
                     a: {
                         styleOverrides: {
-                            root: {
-                                textDecoration: "none",
-                                color: "inherit",
-                            },
+                            textDecoration: "none",
+                            color: "inherit",
                         },
                     },
                 },

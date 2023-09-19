@@ -12,6 +12,8 @@ import LanguageSelector from "./LanguageSelector";
 import messages from "./messages";
 import UseTheme from "./UseTheme";
 import MainPage from "./components/MainPage";
+import Login from "./components/Login";
+
 import Navbar from "./Navbar";
 import {
     BrowserRouter as Router,
@@ -35,6 +37,7 @@ function App() {
     const slectedLocale = theme.palette.theme;
 
     return (
+        // return (
         // <IntlProvider locale={locale} messages={intlMessages}>
         //     <LanguageSelector onLocaleChange={handleLocaleChange} />
 
@@ -59,6 +62,7 @@ function App() {
         //         <FormattedMessage id="login" defaultMessage="Login" />
         //     </Button>
         // </IntlProvider>
+        //)
 
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -77,8 +81,8 @@ function App() {
                         element={<MainPage />}
                         slectedLocale={slectedLocale}
                     />
-                    {/* <Route path="/login" element={<Login />} />
-                <Route path="/profile" element={<Profile />} />
+                    <Route path="/login" element={<Login />} />
+                    {/*<Route path="/profile" element={<Profile />} />
                 <Route
                     path="/reviews/:reviewId"
                     element={<ReviewDetail />}

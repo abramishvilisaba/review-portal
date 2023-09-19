@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-// import ReviewCard from "./ReviewCard";
-// import AddReview from "./AddReview";
+import ReviewCard from "./reviewCard/ReviewCard";
+import AddReview from "./AddReview";
 // import Search from "./Search";
 // import "../App.css";
 
@@ -26,6 +26,9 @@ import {
 } from "@mui/material";
 import messages from "../messages";
 
+import { getReviews, getReviewsWithRetry } from "../services/reviewService";
+import { getUserData, logOut } from "../services/userService";
+
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 function MainPage() {
@@ -35,6 +38,7 @@ function MainPage() {
     const [connected, setConnected] = useState(false);
     const location = useLocation();
     const [searchResults, setSearchResults] = useState([]);
+    const [currentLocale, setCurrentLocale] = useState("en");
 
     const MAX_RETRIES = 20;
     const RETRY_DELAY = 1000;
@@ -131,23 +135,41 @@ function MainPage() {
     //     setSearchResults([]);
     // }, []);
 
-    // const handleAddReview = (newReview) => {
-    //     console.log("review added");
-    //     getReviews();
-    //     setShowAddForm(false);
-    // };
+    useEffect(() => {
+        // setToken();
+        getUserData().then((userData) => {
+            setUser(userData);
+            getReviews().then((reviewData) => {
+                setReviews(reviewData);
+                console.log("reviews", reviewData);
+            });
+        });
+    }, []);
 
-    // const updateSearchResults = (results) => {
-    //     setSearchResults(results);
-    // };
+    const handleAddReview = (newReview) => {
+        console.log("review added");
+        getReviews();
+        setShowAddForm(false);
+    };
+
+    const updateSearchResults = (results) => {
+        setSearchResults(results);
+    };
 
     let theme = UseTheme().theme;
 
     const { locale } = useParams();
+    useEffect(() => {
+        if (locale.length === 2 && typeof locale === "string") {
+            setCurrentLocale(locale);
+        }
+    }, [locale]);
     const intlMessages = messages[locale];
 
+    console.log(user);
+
     return (
-        <IntlProvider locale={locale} messages={intlMessages}>
+        <IntlProvider locale={currentLocale} messages={intlMessages}>
             <Container
                 maxWidth="lg"
                 sx={{
@@ -159,7 +181,6 @@ function MainPage() {
                 }}
             >
                 <Typography variant="h1" mt={8} mb={8}>
-                    {/* Review Portal {locale && locale} */}
                     <FormattedMessage
                         id="greeting"
                         defaultMessage="Review Portal"
@@ -191,7 +212,10 @@ function MainPage() {
                                     <Grid item>
                                         <Button
                                             variant="contained"
-                                            // onClick={logOut}
+                                            onClick={() => {
+                                                logOut();
+                                                setUser(null);
+                                            }}
                                         >
                                             <FormattedMessage
                                                 id="logout"
@@ -203,9 +227,9 @@ function MainPage() {
                                         <Grid item>
                                             <Button
                                                 variant="contained"
-                                                // onClick={() =>
-                                                //     setShowAddForm(true)
-                                                // }
+                                                onClick={() =>
+                                                    setShowAddForm(true)
+                                                }
                                             >
                                                 <FormattedMessage
                                                     id="addReview"
@@ -218,26 +242,26 @@ function MainPage() {
                             )}
                             {!user && (
                                 <Grid item>
-                                    {/* <Link to={`/login`} state={""}> */}
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => console.log("login")}
-                                    >
-                                        <FormattedMessage
-                                            id="login"
-                                            defaultMessage="Login"
-                                        />
-                                    </Button>
-                                    {/* </Link> */}
+                                    <Link to={`/login`} state={""}>
+                                        <Button
+                                            variant="contained"
+                                            onClick={() => console.log("login")}
+                                        >
+                                            <FormattedMessage
+                                                id="login"
+                                                defaultMessage="Login"
+                                            />
+                                        </Button>
+                                    </Link>
                                 </Grid>
                             )}
                         </Grid>
-                        {/* {showAddForm && (
+                        {showAddForm && (
                             <AddReview
                                 onAddReview={handleAddReview}
                                 userId={user.id}
                             />
-                        )} */}
+                        )}
                     </>
                 )}
                 <Grid container spacing={2}>
@@ -283,11 +307,11 @@ function MainPage() {
                                             xl={3}
                                             key={review.id}
                                         >
-                                            {/* <ReviewCard
-                                            review={review}
-                                            user={user}
-                                            update={getReviews}
-                                        /> */}
+                                            <ReviewCard
+                                                review={review}
+                                                user={user}
+                                                update={getReviews}
+                                            />
                                         </Grid>
                                     ))}
                                 </Grid>
