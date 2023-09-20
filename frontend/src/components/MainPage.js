@@ -121,8 +121,8 @@ function MainPage() {
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
-            maxWidth="lg"
             sx={{
+                maxWidth: { xs: "90%", md: "80%" },
                 minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
