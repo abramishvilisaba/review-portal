@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
 import ReviewCard from "./reviewCard/ReviewCard";
 import AddReview from "./AddReview";
-// import Search from "./Search";
+import Search from "./Search";
 // import "../App.css";
 
 import Cookies from "js-cookie";
@@ -92,6 +92,8 @@ function MainPage() {
         //         setReviews(reviewData);
         //     });
         // });
+        setSearchResults([]);
+        setShowAddForm(false);
         console.log("fetchAndSetReviews");
         fetchAndSetUsers();
         fetchAndSetReviews();
@@ -116,6 +118,7 @@ function MainPage() {
     // }, []);
 
     console.log("reviews", reviews);
+    console.log("searchResults", searchResults, searchResults.reviews);
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
@@ -220,10 +223,10 @@ function MainPage() {
                         px={"20px"}
                     >
                         <Grid item xs={12} md={6}>
-                            {/* <Search
-                            reviews={reviews}
-                            updateResults={updateSearchResults}
-                        /> */}
+                            <Search
+                                reviews={reviews}
+                                updateResults={updateSearchResults}
+                            />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <Typography
@@ -279,23 +282,32 @@ function MainPage() {
                                     />
                                 </Typography>
                                 <Grid container spacing={2}>
-                                    {searchResults.map((result) => (
-                                        <Grid
-                                            item
-                                            xs={12}
-                                            sm={6}
-                                            md={6}
-                                            lg={4}
-                                            xl={3}
-                                            key={result.id}
-                                        >
-                                            {/* <ReviewCard
-                                                review={result}
-                                                user={user}
-                                                update={getReviews}
-                                            /> */}
-                                        </Grid>
-                                    ))}
+                                    {searchResults.reviews
+                                        ? searchResults.reviews.map(
+                                              (result) => (
+                                                  <Grid
+                                                      item
+                                                      xs={12}
+                                                      sm={6}
+                                                      md={6}
+                                                      lg={4}
+                                                      xl={3}
+                                                      key={result.id}
+                                                  >
+                                                      <ReviewCard
+                                                          review={result}
+                                                          user={user}
+                                                          update={() => {
+                                                              fetchAndSetReviews();
+                                                              console.log(
+                                                                  "update"
+                                                              );
+                                                          }}
+                                                      />
+                                                  </Grid>
+                                              )
+                                          )
+                                        : null}
                                 </Grid>
                             </>
                         )}
