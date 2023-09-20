@@ -80,7 +80,7 @@ const ReviewDetail = ({}) => {
                         review={review}
                         user={user}
                         size={400}
-                        useHeightOption2={true}
+                        reviewDetail={true}
                     />
                 </Box>
                 {user && (

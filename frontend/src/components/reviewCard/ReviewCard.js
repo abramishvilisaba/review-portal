@@ -34,7 +34,7 @@ function ReviewCard({
     user,
     update,
     size = 350,
-    useHeightOption2 = false,
+    reviewDetail = false,
 }) {
     const [userRating, setUserRating] = useState(0);
     const [liked, setLiked] = useState(false);
@@ -46,7 +46,7 @@ function ReviewCard({
     const StyledCardMedia = styled(CardMedia)({
         transition: "transform 0.15s ease-in-out",
         "&:hover": {
-            transform: "scale(1.05)",
+            transform: reviewDetail ? "none" : "scale(1.05)",
         },
     });
 
@@ -192,7 +192,7 @@ function ReviewCard({
                     }}
                 >
                     <StyledCardMedia>
-                        <CardActionArea>
+                        <CardActionArea disabled={reviewDetail}>
                             <Box
                                 sx={{
                                     width: "100%",
@@ -211,10 +211,10 @@ function ReviewCard({
                                     component="img"
                                     // height={300}
                                     // height={
-                                    //     useHeightOption2 ? "heightOption2" : undefined
+                                    //     reviewDetail ? "heightOption2" : undefined
                                     // }
                                     height={
-                                        useHeightOption2
+                                        reviewDetail
                                             ? theme.heightOptions.option2
                                             : theme.heightOptions.option1
                                     }
@@ -250,8 +250,8 @@ function ReviewCard({
                             variant="body1"
                             color="text.primary"
                             sx={{
-                                height: useHeightOption2 ? "fit" : "125px",
-                                maxHeight: useHeightOption2 ? "500px" : "125px",
+                                height: reviewDetail ? "fit" : "125px",
+                                maxHeight: reviewDetail ? "500px" : "125px",
                                 overflow: "hidden",
                                 fontSize: "14px",
                                 lineHeight: "1.5",
