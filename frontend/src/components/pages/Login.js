@@ -29,7 +29,7 @@ function Login() {
         // window.open(loginUrl, "_blank");
     };
 
-    handleGithubLogin;
+    // handleGithubLogin;
 
     // const handleAuthenticationResponse = () => {
     //     console.log("handleAuthenticationResponse");
@@ -73,14 +73,14 @@ function Login() {
         //     </SignedOut>
         // </ClerkProvider>
         <Container
-            maxWidth="sm"
+            // maxWidth="sm"
             style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 height: "90vh",
-                gap: "10px",
+                gap: "20px",
             }}
         >
             <Typography variant="h2" align="center" gutterBottom>
