@@ -82,12 +82,12 @@ function App() {
                         element={<MainPage />}
                         slectedLocale={slectedLocale}
                     />
-                    <Route path="/login" element={<Login />} />
-                    {/* <Route path="/profile" element={<Profile />} /> */}
+
                     <Route
                         path="/reviews/:reviewId"
                         element={<ReviewDetail />}
                     />
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </Router>
             {/* </LocalizationProvider>  */}

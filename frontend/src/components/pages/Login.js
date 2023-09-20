@@ -9,7 +9,6 @@ function Login() {
     const handleGoogleLogin = () => {
         const loginUrl = `${API_URL}/auth/google`;
         window.location.href = loginUrl;
-
         // window.open(loginUrl, "_blank");
     };
 
@@ -48,14 +47,9 @@ function Login() {
     //     </div>
     // );
 
-    if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
-        throw new Error("Missing Publishable Key");
-    }
-    const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
-
     return (
         <Container
-            style={{
+            sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
