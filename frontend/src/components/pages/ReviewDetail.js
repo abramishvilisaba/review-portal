@@ -115,18 +115,29 @@ const ReviewDetail = ({}) => {
                     sx={{
                         width: 2 / 3,
                         maxWidth: "500px",
-                        bgcolor: "slategray",
+                        border: "",
                     }}
                 >
                     {comments.map((comment) => {
                         return (
                             <Box key={comment.id} width={1}>
-                                <Typography align="center" variant="h6">
+                                <Typography
+                                    align="start"
+                                    variant="h6"
+                                    px={2}
+                                    py={1}
+                                    sx={{
+                                        border: "1px solid gray",
+                                        borderRadius: "10px",
+                                    }}
+                                >
                                     {comment.CommentCreator.displayName}
-                                </Typography>
-                                <Typography align="center">
+                                    {" : "}
                                     {comment.content}
                                 </Typography>
+                                {/* <Typography align="center">
+                                    {comment.content}
+                                </Typography> */}
                             </Box>
                         );
                     })}
