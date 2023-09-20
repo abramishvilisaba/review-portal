@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import UserRating from "./UserRating";
 import LikeButton from "./LikeButton";
 // import ReviewImage from "./ReviewImage";
-// import ReviewTags from "./ReviewTags";
+import ReviewTags from "./ReviewTags";
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
@@ -163,7 +163,8 @@ function ReviewCard({
     //     }
     // }
 
-    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.id}.jpg`;
+    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
+    console.log(url);
 
     // const { locale } = useParams();
     // useEffect(() => {
@@ -177,6 +178,8 @@ function ReviewCard({
     const intlMessages = messages[currentLocale];
 
     const theme = useTheme();
+
+    console.log(review);
 
     return (
         <IntlProvider locale={currentLocale} messages={intlMessages}>
@@ -230,7 +233,8 @@ function ReviewCard({
                             component="div"
                             sx={{
                                 textAlign: "center",
-                                height: "70px",
+                                height: "90px",
+                                fontSize: "32px",
                             }}
                         >
                             {review.reviewName}
@@ -238,7 +242,7 @@ function ReviewCard({
                         <Typography
                             variant="h6"
                             color="text.primary"
-                            sx={{ marginBottom: "4px" }}
+                            sx={{ marginBottom: "4px", alignSelf: "center" }}
                         >
                             {review.pieceName}
                         </Typography>
@@ -285,7 +289,7 @@ function ReviewCard({
                                     alignItems: "flex-end",
                                 }}
                             >
-                                {/* <ReviewTags tags={review.tags} /> */}
+                                <ReviewTags tags={review.tags} />
                             </Grid>
                         </Grid>
 

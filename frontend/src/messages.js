@@ -31,7 +31,7 @@ const messages = {
         recentlyAddedReviews: "ბოლოს დამატებული მიმოხილვებები",
         searchResults: "ძებნის შედეგები",
         reviewName: "მიმოხილვის სახელი",
-        pieceName: "კატეგორიის სახელი",
+        pieceName: "ნაწარმოების სახელი",
         reviewText: "მიმოხილვის ტექსტი",
         grade: "ხარისხი : ",
         likes: "მოწონებები: ",

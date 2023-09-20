@@ -8,6 +8,7 @@ function ReviewTags({ tags }) {
             spacing={"2px"}
             sx={{
                 display: "flex",
+                mb: "4px",
             }}
         >
             {tags.map((tag, index) => (
@@ -17,6 +18,7 @@ function ReviewTags({ tags }) {
                         variant="outlined"
                         sx={{
                             height: "30px",
+                            px: "0px",
                         }}
                         color="primary"
                     />

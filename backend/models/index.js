@@ -55,6 +55,16 @@ const Review = sequelize.define(
                 },
             },
         },
+        group: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isIn: {
+                    args: [["Movies", "Books", "Games"]],
+                    msg: "Invalid group. Group must be one of: 'Movies', 'Books', 'Games'.",
+                },
+            },
+        },
         reviewText: {
             type: DataTypes.TEXT,
             allowNull: false,

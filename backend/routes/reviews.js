@@ -20,6 +20,7 @@ router.post("/", async (req, res) => {
             reviewText,
             reviewName,
             pieceName,
+            group,
             tags,
         } = req.body;
         console.log("--------------------------------------");
@@ -28,6 +29,7 @@ router.post("/", async (req, res) => {
             creatorId: creatorId,
             reviewName: reviewName,
             pieceName: pieceName,
+            group: group,
             reviewText: reviewText,
             creatorGrade: creatorGrade,
             tags: tags,

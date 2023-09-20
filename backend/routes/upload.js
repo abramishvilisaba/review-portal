@@ -17,7 +17,7 @@ router.post("/photo", upload.single("image"), (req, res) => {
     console.log("/photo");
 
     const file = req.file;
-    const id = req.body.reviewId;
+    const id = req.body.id;
 
     const transformOptions = {
         width: 1000,

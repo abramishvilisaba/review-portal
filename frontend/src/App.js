@@ -42,26 +42,19 @@ function App() {
         const savedThemeMode = sessionStorage.getItem("themeMode");
         if (savedThemeMode) {
             setCurrentTheme(savedThemeMode);
-            console.log("-----------------------");
-            console.log("savedThemeMode", savedThemeMode);
-            console.log("theme.palette.mode", theme.palette.mode);
-            console.log("currentTheme", currentTheme);
+
             if (theme.palette.mode !== savedThemeMode) {
                 toggleMode();
             }
         } else if (!currentTheme) {
             setCurrentTheme("light");
         }
-        console.log(theme.palette.mode, currentTheme);
 
         const savedLanguage = sessionStorage.getItem("selectedLanguage");
         if (savedLanguage) {
             setLocale(savedLanguage);
         }
-        console.log("savedLanguage", savedLanguage);
     }, []);
-
-    console.log("currentTheme======", currentTheme);
 
     return (
         <IntlProvider locale={locale} messages={intlMessages}>

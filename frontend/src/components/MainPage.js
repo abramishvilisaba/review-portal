@@ -99,8 +99,8 @@ function MainPage() {
 
     const handleAddReview = (newReview) => {
         console.log("review added");
-        fetchAndSetReviews();
         setShowAddForm(false);
+        fetchAndSetReviews();
     };
 
     const updateSearchResults = (results) => {
@@ -115,6 +115,7 @@ function MainPage() {
     //     setRenderCount((prevCount) => prevCount + 1);
     // }, []);
 
+    console.log("reviews", reviews);
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
@@ -210,7 +211,7 @@ function MainPage() {
                 </>
             )}
 
-            {reviews.length > 1 ? (
+            {reviews.length > 0 ? (
                 <Grid container spacing={2}>
                     <Grid
                         container
