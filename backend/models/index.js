@@ -17,12 +17,15 @@ const User = sequelize.define(
                 },
             },
         },
-        email: {
+        profileId: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
             validate: {
-                isEmail: true,
+                notEmpty: {
+                    args: true,
+                    msg: "profile Id cannot be empty.",
+                },
             },
         },
     },

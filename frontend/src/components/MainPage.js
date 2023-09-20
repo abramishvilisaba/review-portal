@@ -53,80 +53,6 @@ function MainPage() {
     //     }
     // }
 
-    // const getReviews = async () => {
-    //     console.log("getReview-----------------------------------------------");
-    //     axios
-    //         .get(`${API_URL}/reviews/recentlyAdded`)
-    //         .then((response) => {
-    //             setReviews(response.data);
-    //             console.log("reviews", response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error loading recently added reviews:", error);
-    //         });
-    // };
-
-    // const getReviewsWithRetry = async () => {
-    //     let retries = 0;
-    //     let reviewsData = null;
-    //     while (retries < MAX_RETRIES) {
-    //         console.log("retry connection-----------", retries);
-    //         try {
-    //             const response = await axios.get(
-    //                 `${API_URL}/reviews/recentlyAdded`
-    //             );
-    //             reviewsData = response.data;
-    //             setReviews(reviewsData);
-    //             setConnected(true);
-    //             break;
-    //         } catch (error) {
-    //             console.error("Error loading recently added reviews:", error);
-    //             await new Promise((resolve) =>
-    //                 setTimeout(resolve, RETRY_DELAY)
-    //             );
-    //             retries++;
-    //         }
-    //     }
-    // };
-
-    // const getUserData = async () => {
-    //     const token = Cookies.get("jwtToken");
-
-    //     axios
-    //         .get(`${API_URL}/auth/getuserdata`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             setUser({
-    //                 id: response.data.userId,
-    //                 name: response.data.userName,
-    //                 email: response.data.userEmail,
-    //                 likedReviews: response.data.likedReviews,
-    //                 ratedReviews: response.data.ratedReviews,
-    //             });
-    //             console.log(response.data);
-    //         })
-    //         .catch((error) => {
-    //             console.log("error retrieving user data : ", error);
-    //         });
-    // };
-
-    // const logOut = async () => {
-    //     axios
-    //         .post(`${API_URL}/auth/logout`)
-    //         .then((response) => {
-    //             console.log(response);
-    //             setUser(null);
-    //             Cookies.remove("jwtToken", { path: "/" });
-    //             // window.location.href = `/`;
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error loading recently added reviews:", error);
-    //         });
-    // };
-
     // useEffect(() => {
     //     setToken();
     //     getUserData();
@@ -136,6 +62,7 @@ function MainPage() {
     // }, []);
 
     const fetchAndSetReviews = () => {
+        console.log("fetchAndSetReviews");
         getReviews()
             .then((reviewData) => {
                 setReviews(reviewData);
@@ -146,6 +73,7 @@ function MainPage() {
     };
 
     const fetchAndSetUsers = () => {
+        console.log("fetchAndSetUsers");
         getUserData()
             .then((userData) => {
                 setUser(userData);
@@ -166,13 +94,14 @@ function MainPage() {
         //         setReviews(reviewData);
         //     });
         // });
+
         fetchAndSetUsers();
         fetchAndSetReviews();
     }, []);
 
     const handleAddReview = (newReview) => {
         console.log("review added");
-        getReviews();
+        fetchAndSetReviews();
         setShowAddForm(false);
     };
 
@@ -198,7 +127,7 @@ function MainPage() {
                     minHeight: "100vh",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "start",
                     alignItems: "center",
                 }}
             >

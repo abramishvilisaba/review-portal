@@ -20,13 +20,28 @@ router.post("/photo", upload.single("image"), (req, res) => {
     const file = req.file;
     const id = req.body.reviewId;
 
+    const transformOptions = {
+        width: 800,
+        height: 600,
+        crop: "fill",
+        format: "jpg",
+        quality: "auto:low",
+        public_id: id,
+        resource_type: "auto",
+    };
+
     if (!file) {
         return res.status(400).send("No file uploaded.");
     }
 
     cloudinary.uploader
         .upload_stream(
-            { public_id: id, resource_type: "auto" },
+            {
+                public_id: id,
+                resource_type: "auto",
+                transformation: transformOptions,
+                format: "jpg",
+            },
             (error, result) => {
                 if (error) {
                     return res.status(500).send(error);

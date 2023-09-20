@@ -86,15 +86,20 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
                     style={{ display: "flex", justifyContent: "space-between" }}
                 >
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <Button variant="h2" onClick={() => navigate("/")}>
-                            <Typography
-                                variant="h6"
-                                component="div"
-                                sx={{ flexGrow: 1 }}
+                        <Link to={"/"}>
+                            <Button
+                                variant="h2"
+                                //  onClick={() => navigate("/")}
                             >
-                                Review Portal
-                            </Typography>
-                        </Button>
+                                <Typography
+                                    variant="h6"
+                                    component="div"
+                                    sx={{ flexGrow: 1 }}
+                                >
+                                    Review Portal
+                                </Typography>
+                            </Button>
+                        </Link>
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <Box sx={{ ml: "20px" }}>

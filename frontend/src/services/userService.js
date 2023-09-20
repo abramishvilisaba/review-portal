@@ -16,7 +16,6 @@ export async function getUserData() {
         return {
             id: response.data.userId,
             name: response.data.userName,
-            email: response.data.userEmail,
             likedReviews: response.data.likedReviews,
             ratedReviews: response.data.ratedReviews,
         };

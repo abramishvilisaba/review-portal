@@ -1,5 +1,8 @@
 const express = require("express");
-const passport = require("../auth/auth");
+const googlePassport = require("../auth/googleAuth");
+const githubPassport = require("../auth/githubAuth");
+const facebookPassport = require("../auth/facebookAuth");
+
 const crypto = require("crypto");
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || "http://localhost:3000";
 const cookieParser = require("cookie-parser");
@@ -41,21 +44,90 @@ async function createUser(newUser) {
 
 router.get(
     "/google",
-    passport.authenticate("google", { scope: ["openid", "profile", "email"] })
+    googlePassport.authenticate("google", {
+        scope: ["openid", "profile", "email"],
+    })
 );
 
 router.get(
-    "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/" }),
+    "/github",
+    githubPassport.authenticate("github", { scope: ["user:email"] })
+);
+
+// router.get(
+//     "/facebook",
+//     facebookPassport.authenticate("facebook", { scope: ["user:email"] })
+// );
+
+// router.get(
+//     "/facebook/callback",
+//     githubPassport.authenticate("github", {
+//         successRedirect: "/dashboard",
+//         failureRedirect: "/login",
+//     }),
+//     async (req, res) => {
+//         try {
+//             console.log(req);
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// );
+
+router.get(
+    "/github/callback",
+    githubPassport.authenticate("github", {
+        failureRedirect: "/login",
+    }),
     async (req, res) => {
         try {
             const newUser = {
                 displayName: res.req.user.displayName,
-                email: res.req.user.email,
+                profileId: res.req.user.id,
             };
-
+            console.log("newUser", newUser);
             const existingUser = await User.findOne({
-                where: { email: newUser.email },
+                where: { profileId: newUser.profileId },
+            });
+            console.log("existingUser", existingUser);
+            if (existingUser) {
+                const userId = existingUser.id;
+                newUser.id = userId;
+            } else if (!existingUser) {
+                const createdUser = await User.create(newUser);
+                const userId = createdUser.id;
+                newUser.id = userId;
+            }
+            console.log("newUser", newUser);
+            const jwtToken = jwt.sign(newUser, jwtSecret, { expiresIn: "4h" });
+            res.cookie("jwtToken", jwtToken, {
+                httpOnly: false,
+                maxAge: 1000 * 60 * 60 * 4,
+            });
+            const encodedJwtToken = encodeURIComponent(jwtToken);
+
+            res.redirect(
+                `${ALLOWED_ORIGINS}/dashboard?message=Login%20successful&jwtToken=${encodedJwtToken}`
+            );
+            // res.redirect(`${ALLOWED_ORIGINS}`);
+        } catch (error) {
+            console.log("logging in error: ", error);
+        }
+    }
+);
+
+router.get(
+    "/google/callback",
+    googlePassport.authenticate("google", { failureRedirect: "/" }),
+    async (req, res) => {
+        try {
+            const newUser = {
+                displayName: res.req.user.displayName,
+                profileId: res.req.user.id,
+            };
+            console.log("newUser", newUser);
+            const existingUser = await User.findOne({
+                where: { profileId: newUser.profileId },
             });
             console.log("existingUser", existingUser);
             if (existingUser) {

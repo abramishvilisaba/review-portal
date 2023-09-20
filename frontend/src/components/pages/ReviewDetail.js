@@ -18,6 +18,8 @@ const ReviewDetail = ({}) => {
     const [content, setContent] = useState("");
     const [comments, setComments] = useState([]);
 
+    console.log("content", content);
+
     let { state } = useLocation();
     const { review, user } = state;
 
@@ -57,9 +59,11 @@ const ReviewDetail = ({}) => {
     return (
         <Container
             sx={{
-                width: 2 / 3,
+                // width: 2 / 3,
+                width: { xs: "100%", md: "70%" },
                 bgcolor: "rgba(255, 255, 255, 0.09)",
-                py: "10px",
+                pt: "10px",
+                pb: "48px",
             }}
         >
             <Box
@@ -96,6 +100,7 @@ const ReviewDetail = ({}) => {
                             fullWidth
                             sx={{ maxWidth: "100%", width: "100%" }}
                         />
+
                         <Button
                             type="submit"
                             variant="contained"

@@ -12,7 +12,7 @@ const ratingRoutes = require("./routes/rating");
 const likesRoutes = require("./routes/likes");
 
 const session = require("express-session");
-const passport = require("./auth/auth");
+// const passport = require("./auth/auth");
 
 const PORT = process.env.PORT || 3001;
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || "http://localhost:3000";
@@ -42,8 +42,8 @@ app.use(
         cookie: { secure: false },
     })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use("/rating", ratingRoutes);
 

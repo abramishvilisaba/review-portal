@@ -27,13 +27,15 @@ router.get("/:reviewId", async (req, res) => {
                 {
                     model: User,
                     as: "CommentCreator",
-                    attributes: ["id", "displayName", "email"],
+                    attributes: ["id", "displayName"],
                 },
             ],
         });
 
         if (!comments) {
-            return res.status(404).json({ message: "No comments found for the review" });
+            return res
+                .status(404)
+                .json({ message: "No comments found for the review" });
         }
 
         res.json(comments);
