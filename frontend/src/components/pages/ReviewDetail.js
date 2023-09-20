@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { getReviews, getReviewsWithRetry } from "../services/reviewService";
 
 import {
     Box,
@@ -23,6 +24,27 @@ const ReviewDetail = ({}) => {
 
     let { state } = useLocation();
     const { review, user } = state;
+    // const fetchAndSetReviews = () => {
+    //     console.log("fetchAndSetReviews");
+    //     getReviews()
+    //         .then((reviewData) => {
+    //             setReviews(reviewData);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error loading recently added reviews:", error);
+    //         });
+    // };
+
+    // const fetchAndSetUsers = () => {
+    //     console.log("fetchAndSetUsers");
+    //     getUserData()
+    //         .then((userData) => {
+    //             setUser(userData);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error loading users:", error);
+    //         });
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,7 +144,7 @@ const ReviewDetail = ({}) => {
                         user={user}
                         reviewDetail={true}
                         update={() => {
-                            fetchAndSetReviews();
+                            // fetchAndSetReviews();
                             console.log("update");
                         }}
                     />
