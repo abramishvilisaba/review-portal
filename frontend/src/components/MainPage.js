@@ -43,15 +43,15 @@ function MainPage() {
     const MAX_RETRIES = 20;
     const RETRY_DELAY = 1000;
 
-    // function setToken() {
-    //     const searchParams = new URLSearchParams(location.search);
-    //     const message = searchParams.get("message");
-    //     const jwtToken = searchParams.get("jwtToken");
-    //     if (jwtToken) {
-    //         Cookies.set("jwtToken", jwtToken, { expires: 60 * 60 * 4 });
-    //         // window.location.href = `/`;
-    //     }
-    // }
+    function setToken() {
+        const searchParams = new URLSearchParams(location.search);
+        const message = searchParams.get("message");
+        const jwtToken = searchParams.get("jwtToken");
+        if (jwtToken) {
+            Cookies.set("jwtToken", jwtToken, { expires: 60 * 60 * 4 });
+            // window.location.href = `/`;
+        }
+    }
 
     // useEffect(() => {
     //     setToken();
@@ -87,7 +87,7 @@ function MainPage() {
     };
 
     useEffect(() => {
-        // setToken();
+        setToken();
         // getUserData().then((userData) => {
         //     setUser(userData);
         //     getReviews().then((reviewData) => {

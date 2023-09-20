@@ -31,6 +31,16 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
         toggleLocale(selectedLocale);
     };
 
+    console.log("Navbar", theme.palette.mode);
+
+    useEffect(() => {
+        sessionStorage.setItem("themeMode", theme.palette.mode);
+    }, [theme]);
+
+    useEffect(() => {
+        sessionStorage.setItem("selectedLanguage", locale);
+    }, [locale]);
+
     // const handleChange = (event) => {
     //     const selectedLocale = event.target.value;
     //     toggleLocale(selectedLocale);
