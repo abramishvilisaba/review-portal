@@ -14,7 +14,7 @@ const {
 router.get("/", async (req, res) => {
     const { query } = req.query;
     console.log("------------search-------------");
-    console.log(query);
+    // console.log(query);
 
     // try {
     //     const results = await Review.findAll({
@@ -65,7 +65,7 @@ router.get("/", async (req, res) => {
                 },
             },
         });
-        console.log(reviews, comments);
+        // console.log(reviews, comments);
         res.json({
             reviews: reviews,
             comments: comments,

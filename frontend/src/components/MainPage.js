@@ -5,7 +5,6 @@ import ReviewCard from "./reviewCard/ReviewCard";
 import AddReview from "./AddReview";
 import Search from "./Search";
 // import "../App.css";
-
 import Cookies from "js-cookie";
 import UseTheme from "../UseTheme";
 import { IntlProvider, FormattedMessage } from "react-intl";

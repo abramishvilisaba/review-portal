@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 
 router.get("/:reviewId", async (req, res) => {
     try {
-        console.log("/:reviewId");
+        console.log("/comments");
         const reviewId = req.params.reviewId;
         const comments = await Comment.findAll({
             where: { reviewId: reviewId },
@@ -29,18 +29,37 @@ router.get("/:reviewId", async (req, res) => {
                 {
                     model: User,
                     as: "CommentCreator",
-                    attributes: ["id", "displayName"],
+                    attributes: ["profileId", "displayName"],
                 },
             ],
         });
 
-        if (!comments) {
+        if (!comments || comments.length === 0) {
             return res
                 .status(404)
                 .json({ message: "No comments found for the review" });
         }
 
         res.json(comments);
+        // const comments = await Comment.findAll({
+        //     where: { reviewId: reviewId },
+        //     include: [
+        //         {
+        //             model: User,
+        //             as: "CommentCreator",
+        //             attributes: ["profileId", "displayName"],
+        //         },
+        //     ],
+        // });
+
+        // if (!comments) {
+        //     return res
+        //         .status(404)
+        //         .json({ message: "No comments found for the review" });
+        // }
+        // console.log(comments);
+
+        // res.json(comments);
     } catch (error) {
         console.error("Error retrieving comments:", error);
         res.status(500).json({ message: "Internal Server Error" });

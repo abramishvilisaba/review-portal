@@ -3,6 +3,8 @@ const router = express.Router();
 const _ = require("lodash");
 const { Sequelize } = require("sequelize");
 const db = require("../db/connection");
+const jwt = require("jsonwebtoken");
+
 const {
     User,
     Review,
@@ -10,6 +12,8 @@ const {
     UserReviewLikes,
     UserReviewRatings,
 } = require("../models");
+
+const jwtSecret = process.env.JWT_SECRET || "secret";
 
 router.post("/", async (req, res) => {
     try {
@@ -79,6 +83,41 @@ router.get("/recentlyAdded", async (req, res) => {
         res.status(500).json({
             error: "An error occurred while loading recently added reviews.",
         });
+    }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+    console.log("/reviews/:id");
+    try {
+        const reviewId = req.params.id;
+        const authHeader = req.headers.authorization;
+        const token = authHeader.slice(7);
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const decoded = jwt.verify(token, jwtSecret);
+        const userId = decoded.id;
+
+        const review = await Review.findByPk(reviewId);
+
+        if (!review) {
+            return res.status(404).json({ message: "Review not found." });
+        }
+
+        if (review.creatorId !== userId) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        await Comment.destroy({ where: { reviewId } });
+        await UserReviewLikes.destroy({ where: { reviewId } });
+        await UserReviewRatings.destroy({ where: { reviewId } });
+
+        await review.destroy();
+
+        return res.status(204).send();
+    } catch (error) {
+        console.error("Error deleting review:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
 

@@ -28,7 +28,7 @@ const messages = {
         profile: "პროფილი",
         logout: "გასვლა",
         addReview: "მიმოხილვების დამატება",
-        recentlyAddedReviews: "ბოლოს დამატებული მიმოხილვებები",
+        recentlyAddedReviews: "ბოლოს დამატებული",
         searchResults: "ძებნის შედეგები",
         reviewName: "მიმოხილვის სახელი",
         pieceName: "ნაწარმოების სახელი",

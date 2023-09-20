@@ -303,9 +303,7 @@ function ReviewCard({
                                 >
                                     <LikeButton
                                         liked={liked}
-                                        // onClick={() => handleLikeButton()}
                                         onClick={handleLikeButton}
-                                        // onClick={(e) => console.log(e)}
                                     />
                                 </Grid>
                                 <Grid

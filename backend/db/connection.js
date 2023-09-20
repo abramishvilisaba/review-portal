@@ -1,7 +1,15 @@
 const { Sequelize } = require("sequelize");
 const config = require("./config");
 
-const sequelize = new Sequelize(config.development);
+// const sequelize = new Sequelize(config.development);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    // dialect: "mysql",
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: true,
+        },
+    },
+});
 
 (async () => {
     try {

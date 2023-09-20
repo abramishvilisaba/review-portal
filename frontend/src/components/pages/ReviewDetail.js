@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+
 import {
     Box,
     Button,
@@ -9,6 +11,7 @@ import {
     Container,
 } from "@mui/material";
 import { useParams, useLocation } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import ReviewCard from "../reviewCard/ReviewCard";
 
@@ -17,8 +20,6 @@ const ReviewDetail = ({}) => {
 
     const [content, setContent] = useState("");
     const [comments, setComments] = useState([]);
-
-    console.log("content", content);
 
     let { state } = useLocation();
     const { review, user } = state;
@@ -52,9 +53,35 @@ const ReviewDetail = ({}) => {
             .catch((error) => console.log("error", error));
     };
 
+    function deleteReview(onSuccess, onError) {
+        console.log();
+        console.log("delete");
+        console.log(`${API_URL}/reviews/delete/${review.id}`);
+        const token = Cookies.get("jwtToken");
+
+        axios
+            .delete(`${API_URL}/reviews/delete/${review.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                if (response.status === 204) {
+                    console.log(response);
+                } else {
+                    console.log("Failed to delete review.");
+                }
+            })
+            .catch((error) => {
+                console.log(`Error deleting review: ${error.message}`);
+            });
+    }
+
     useEffect(() => {
         loadComments();
     }, []);
+
+    console.log("comments", comments);
 
     return (
         <Container
@@ -75,12 +102,29 @@ const ReviewDetail = ({}) => {
                     mt: 8,
                 }}
             >
+                <Button
+                    variant="contained"
+                    color="error"
+                    startIcon={<DeleteIcon />}
+                    onClick={deleteReview}
+                >
+                    Delete Review
+                </Button>
                 <Box sx={{ width: "2/3" }}>
-                    <ReviewCard
+                    {/* <ReviewCard
                         review={review}
                         user={user}
                         size={400}
                         reviewDetail={true}
+                    /> */}
+                    <ReviewCard
+                        review={review}
+                        user={user}
+                        reviewDetail={true}
+                        update={() => {
+                            fetchAndSetReviews();
+                            console.log("update");
+                        }}
                     />
                 </Box>
                 {user && (

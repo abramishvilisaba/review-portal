@@ -1,8 +1,57 @@
 const { Sequelize, DataTypes } = require("sequelize");
+const { Client } = require("@planet/client");
+require("dotenv").config();
+const url = require("url");
 
-const config = require("../db/config");
+// const config = require("../db/config");
 
-const sequelize = new Sequelize(config.development);
+// const sequelize = new Sequelize(config.development);
+
+// PlanetScale connection string
+const DATABASE_URL =
+    'mysql://5gnt58s3ak3ajf4f5x2v:pscale_pw_QeGdWQsBXx8aiWoMB3jXNEwgGt7nGmQidzE48nU4QBC@aws.connect.psdb.cloud/review-portal?ssl={"rejectUnauthorized":true}';
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+    // dialect: "mysql",
+
+    dialectOptions: {
+        ssl: {
+            rejectUnauthorized: true,
+        },
+    },
+    logging: false,
+});
+
+// const planetClient = new Client({
+//     apiKey: process.env.PLANETSCALE_API_KEY,
+// });
+
+// async function fetchDatabaseDetails() {
+//     try {
+//         const databaseDetails = await planetClient.getDatabase({
+//             organization: "your_organization_name",
+//             database: "your_database_name",
+//         });
+//         // Handle the database details here
+//     } catch (error) {
+//         // Handle any errors that occur during the database retrieval
+//         console.error(error);
+//     }
+// }
+// fetchDatabaseDetails();
+
+// const sequelize = new Sequelize({
+//     database: databaseDetails.name,
+//     username: databaseDetails.username,
+//     password: databaseDetails.password,
+//     host: databaseDetails.hosts[0].hostname, // Use the first host
+//     port: databaseDetails.hosts[0].port, // Use the first host's port
+//     dialect: "mysql", // or the appropriate dialect for your database
+//     dialectOptions: {
+//         ssl: false, // Set to true if your database requires SSL
+//     },
+//     logging: false, // Disable logging or configure it as needed
+// });
 
 const User = sequelize.define(
     "User",
@@ -29,7 +78,7 @@ const User = sequelize.define(
             },
         },
     },
-    { timestamps: true }
+    { timestamps: true, constraints: false }
 );
 
 const Review = sequelize.define(
@@ -102,7 +151,7 @@ const Review = sequelize.define(
             allowNull: false,
         },
     },
-    { timestamps: true }
+    { timestamps: true, constraints: false }
 );
 
 const Comment = sequelize.define(
@@ -127,7 +176,7 @@ const Comment = sequelize.define(
             allowNull: false,
         },
     },
-    { timestamps: true }
+    { timestamps: true, constraints: false }
 );
 
 const UserReviewLikes = sequelize.define(
@@ -136,53 +185,14 @@ const UserReviewLikes = sequelize.define(
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: User,
-                key: "id",
-            },
         },
         reviewId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Review,
-                key: "id",
-            },
         },
     },
-    { timestamps: true }
+    { timestamps: true, constraints: false }
 );
-
-// const UserReviewRatings = sequelize.define(
-//     "UserReviewRatings",
-//     {
-//         userId: {
-//             type: DataTypes.INTEGER,
-//             allowNull: false,
-//             references: {
-//                 model: User,
-//                 key: "id",
-//             },
-//         },
-//         reviewId: {
-//             type: DataTypes.INTEGER,
-//             allowNull: false,
-//             references: {
-//                 model: Review,
-//                 key: "id",
-//             },
-//         },
-//         rating: {
-//             type: DataTypes.INTEGER,
-//             allowNull: false,
-//             validate: {
-//                 min: 1,
-//                 max: 5,
-//             },
-//         },
-//     },
-//     { timestamps: true }
-// );
 
 const UserReviewRatings = sequelize.define(
     "UserReviewRatings",
@@ -190,18 +200,10 @@ const UserReviewRatings = sequelize.define(
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: User,
-                key: "id",
-            },
         },
         reviewId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Review,
-                key: "id",
-            },
         },
         rating: {
             type: DataTypes.INTEGER,
@@ -212,49 +214,124 @@ const UserReviewRatings = sequelize.define(
             },
         },
     },
-    { timestamps: true }
+    { timestamps: true, constraints: false }
 );
-
-User.hasMany(Review, { foreignKey: "creatorId", as: "ReviewsCreated" });
-Review.belongsTo(User, { foreignKey: "creatorId", as: "ReviewCreator" });
-
-Review.hasMany(Comment, { foreignKey: "reviewId", as: "ReviewComments" });
-Comment.belongsTo(Review, { foreignKey: "reviewId", as: "Review" });
-
-User.hasMany(Comment, { foreignKey: "userId", as: "UserComments" });
-Comment.belongsTo(User, { foreignKey: "userId", as: "CommentCreator" });
 
 // UserReviewLikes.belongsTo(Review, { foreignKey: "reviewId" });
 // Review.hasMany(UserReviewLikes, { foreignKey: "reviewId" });
+
+// User.hasMany(Review, { foreignKey: "creatorId", as: "ReviewsCreated" });
+// Review.belongsTo(User, { foreignKey: "creatorId", as: "ReviewCreator" });
+
+// Review.hasMany(Comment, { foreignKey: "reviewId", as: "ReviewComments" });
+// Comment.belongsTo(Review, { foreignKey: "reviewId", as: "Review" });
+
+// User.hasMany(Comment, { foreignKey: "userId", as: "UserComments" });
+// Comment.belongsTo(User, { foreignKey: "userId", as: "CommentCreator" });
+
+// User.belongsToMany(Review, {
+//     through: UserReviewRatings,
+//     as: "RatedReviews",
+//     foreignKey: "userId",
+// });
+// Review.belongsToMany(User, {
+//     through: UserReviewRatings,
+//     as: "Raters",
+//     foreignKey: "reviewId",
+// });
+// Review.hasMany(UserReviewRatings, {
+//     foreignKey: "reviewId",
+//     as: "Ratings",
+// });
+
+// UserReviewRatings.belongsTo(Review, {
+//     foreignKey: "reviewId",
+// });
+
+// User.belongsToMany(Review, {
+//     through: UserReviewLikes,
+//     as: "LikedReviews",
+//     foreignKey: "userId",
+// });
+// Review.belongsToMany(User, {
+//     through: UserReviewLikes,
+//     as: "Likers",
+//     foreignKey: "reviewId",
+// });
+
+User.hasMany(Review, {
+    foreignKey: "creatorId",
+    as: "ReviewsCreated",
+    constraints: false,
+});
+
+Review.belongsTo(User, {
+    foreignKey: "creatorId",
+    as: "ReviewCreator",
+    constraints: false,
+});
+
+Review.hasMany(Comment, {
+    foreignKey: "reviewId",
+    as: "ReviewComments",
+    constraints: false,
+});
+
+Comment.belongsTo(Review, {
+    foreignKey: "reviewId",
+    as: "Review",
+    constraints: false,
+});
+
+User.hasMany(Comment, {
+    foreignKey: "userId",
+    as: "UserComments",
+    constraints: false,
+});
+
+Comment.belongsTo(User, {
+    foreignKey: "userId",
+    as: "CommentCreator",
+    constraints: false,
+});
 
 User.belongsToMany(Review, {
     through: UserReviewRatings,
     as: "RatedReviews",
     foreignKey: "userId",
+    constraints: false,
 });
+
 Review.belongsToMany(User, {
     through: UserReviewRatings,
     as: "Raters",
     foreignKey: "reviewId",
+    constraints: false,
 });
+
 Review.hasMany(UserReviewRatings, {
     foreignKey: "reviewId",
     as: "Ratings",
+    constraints: false,
 });
 
 UserReviewRatings.belongsTo(Review, {
     foreignKey: "reviewId",
+    constraints: false,
 });
 
 User.belongsToMany(Review, {
     through: UserReviewLikes,
     as: "LikedReviews",
     foreignKey: "userId",
+    constraints: false,
 });
+
 Review.belongsToMany(User, {
     through: UserReviewLikes,
     as: "Likers",
     foreignKey: "reviewId",
+    constraints: false,
 });
 
 sequelize

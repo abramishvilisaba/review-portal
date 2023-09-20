@@ -32,7 +32,7 @@ app.use(
 );
 
 console.log("---------------------------------------------");
-console.log("allowedOrigins", allowedOrigins);
+// console.log("allowedOrigins", allowedOrigins);
 
 app.use(
     session({
