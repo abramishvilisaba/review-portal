@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { getReviews, getReviewsWithRetry } from "../services/reviewService";
+import { getReviews, getReviewsWithRetry } from "../../services/reviewService";
 
 import {
     Box,
@@ -34,7 +34,6 @@ const ReviewDetail = ({}) => {
     //             console.error("Error loading recently added reviews:", error);
     //         });
     // };
-
     // const fetchAndSetUsers = () => {
     //     console.log("fetchAndSetUsers");
     //     getUserData()
