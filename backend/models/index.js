@@ -8,9 +8,6 @@ const url = require("url");
 // const sequelize = new Sequelize(config.development);
 
 // PlanetScale connection string
-const DATABASE_URL =
-    'mysql://5gnt58s3ak3ajf4f5x2v:pscale_pw_QeGdWQsBXx8aiWoMB3jXNEwgGt7nGmQidzE48nU4QBC@aws.connect.psdb.cloud/review-portal?ssl={"rejectUnauthorized":true}';
-
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     // dialect: "mysql",
 

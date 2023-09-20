@@ -10,9 +10,8 @@ import {
     Grid,
     Container,
 } from "@mui/material";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import ReviewCard from "../reviewCard/ReviewCard";
 
 const ReviewDetail = ({}) => {
@@ -20,6 +19,7 @@ const ReviewDetail = ({}) => {
 
     const [content, setContent] = useState("");
     const [comments, setComments] = useState([]);
+    const navigate = useNavigate();
 
     let { state } = useLocation();
     const { review, user } = state;
@@ -67,7 +67,7 @@ const ReviewDetail = ({}) => {
             })
             .then((response) => {
                 if (response.status === 204) {
-                    console.log(response);
+                    navigate("/");
                 } else {
                     console.log("Failed to delete review.");
                 }
