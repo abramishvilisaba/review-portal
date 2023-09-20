@@ -22,7 +22,8 @@ import useTheme from "./UseTheme";
 const Navbar = ({ theme, toggleMode, toggleLocale }) => {
     const navigate = useNavigate();
 
-    const [locale, setLocale] = useState("en");
+    const [locale, setLocale] = useState("");
+    const [currentTheme, setCurrentTheme] = useState("");
 
     const intlMessages = messages[locale];
 
@@ -31,15 +32,35 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
         toggleLocale(selectedLocale);
     };
 
-    console.log("Navbar", theme.palette.mode);
-
     useEffect(() => {
-        sessionStorage.setItem("themeMode", theme.palette.mode);
+        if (currentTheme) {
+            sessionStorage.setItem("themeMode", theme.palette.mode);
+        }
     }, [theme]);
 
     useEffect(() => {
-        sessionStorage.setItem("selectedLanguage", locale);
+        const savedThemeMode = sessionStorage.getItem("themeMode");
+        if (savedThemeMode) {
+            setCurrentTheme(savedThemeMode);
+        } else if (!currentTheme) {
+            setCurrentTheme("light");
+        }
+    }, []);
+
+    useEffect(() => {
+        if (locale) {
+            sessionStorage.setItem("selectedLanguage", locale);
+        }
     }, [locale]);
+
+    useEffect(() => {
+        const savedLanguage = sessionStorage.getItem("selectedLanguage");
+        if (savedLanguage) {
+            setLocale(savedLanguage);
+        } else if (!locale) {
+            setLocale("en");
+        }
+    }, []);
 
     // const handleChange = (event) => {
     //     const selectedLocale = event.target.value;
@@ -121,7 +142,10 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
                         <Box sx={{ ml: "20px" }}>
                             <Switch
                                 checked={theme.palette.mode === "dark"}
-                                onChange={toggleMode}
+                                onChange={() => {
+                                    toggleMode();
+                                    setCurrentTheme(theme.palette.mode);
+                                }}
                                 color="primary"
                             />
                             {theme.palette.mode === "dark"

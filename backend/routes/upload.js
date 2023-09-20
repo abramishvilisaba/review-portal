@@ -14,15 +14,14 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.post("/photo", upload.single("image"), (req, res) => {
-    console.log("body---------------------------------", req.file);
-    console.log("body---------------------------------", req.body.reviewId);
+    console.log("/photo");
 
     const file = req.file;
     const id = req.body.reviewId;
 
     const transformOptions = {
-        width: 800,
-        height: 600,
+        width: 1000,
+        height: 1000,
         crop: "fill",
         format: "jpg",
         quality: "auto:low",

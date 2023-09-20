@@ -24,7 +24,7 @@ const router = express.Router();
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { rating } = req.body;
-    console.log("params", id, rating);
+    console.log("/:id");
 
     try {
         const ratingToUpdate = await UserReviewRatings.findByPk(id);
@@ -46,7 +46,7 @@ router.put("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    console.log("params", req.body);
+    console.log("post rating");
 
     const { userId, reviewId, rating } = req.body;
 

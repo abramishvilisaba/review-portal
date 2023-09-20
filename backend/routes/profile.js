@@ -4,13 +4,14 @@ const router = express.Router();
 const { User, Review, Comment } = require("../models");
 
 router.get("/", (req, res) => {
-    console.log("profileeeee");
+    console.log("profile");
     const userInfo = req.user;
     res.json(userInfo);
 });
 
 async function getReviewsByCreator(creatorId) {
     try {
+        console.log("getReviewsByCreator");
         const reviews = await Review.findAll({
             where: {
                 creatorId: creatorId,
@@ -25,13 +26,16 @@ async function getReviewsByCreator(creatorId) {
 }
 
 router.get("/:creatorId", async (req, res) => {
+    console.log("/:creatorId");
     getReviewsByCreator(req.params.creatorId)
         .then((reviews) => {
             res.status(200).json(reviews);
         })
         .catch((error) => {
             console.error("Error:", error);
-            res.status(500).json({ error: "An error occurred while loading reviews." });
+            res.status(500).json({
+                error: "An error occurred while loading reviews.",
+            });
         });
 });
 

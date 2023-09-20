@@ -6,6 +6,7 @@ const { User, Review, Comment, UserReviewLikes } = require("../models");
 router.post("/like", async (req, res) => {
     const { userId, reviewId } = req.body;
     try {
+        console.log("/like");
         const alreadyLiked = await UserReviewLikes.findOne({
             where: { userId, reviewId },
         });
@@ -32,6 +33,7 @@ router.post("/like", async (req, res) => {
 router.delete("/unlike", async (req, res) => {
     const { userId, reviewId } = req.body;
     try {
+        console.log("/unlike");
         const like = await UserReviewLikes.findOne({
             where: { userId, reviewId },
         });

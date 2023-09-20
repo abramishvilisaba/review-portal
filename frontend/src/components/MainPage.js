@@ -23,6 +23,7 @@ import {
     CardContent,
     GridListTile,
     ListSubheader,
+    CircularProgress,
 } from "@mui/material";
 import messages from "../messages";
 
@@ -77,9 +78,6 @@ function MainPage() {
         getUserData()
             .then((userData) => {
                 setUser(userData);
-                getReviews().then((reviewData) => {
-                    setReviews(reviewData);
-                });
             })
             .catch((error) => {
                 console.error("Error loading users:", error);
@@ -94,7 +92,7 @@ function MainPage() {
         //         setReviews(reviewData);
         //     });
         // });
-
+        console.log("fetchAndSetReviews");
         fetchAndSetUsers();
         fetchAndSetReviews();
     }, []);
@@ -111,113 +109,108 @@ function MainPage() {
 
     let theme = UseTheme().theme;
 
-    // const { locale } = useParams();
-    // useEffect(() => {
-    //     if (locale) {
-    //         if (locale.length === 2 && typeof locale === "string") {
-    //             setCurrentLocale(locale);
-    //         }
-    //     }
-    // }, [locale]);
+    // const [renderCount, setRenderCount] = useState(0);
 
-    const intlMessages = messages[currentLocale];
+    // useEffect(() => {
+    //     setRenderCount((prevCount) => prevCount + 1);
+    // }, []);
 
     return (
-        <IntlProvider locale={currentLocale} messages={intlMessages}>
-            <Container
-                maxWidth="lg"
-                sx={{
-                    minHeight: "100vh",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "start",
-                    alignItems: "center",
-                }}
-            >
-                <Typography variant="h1" mt={8} mb={8}>
-                    <FormattedMessage
-                        id="greeting"
-                        defaultMessage="Review Portal"
-                    />
-                </Typography>
-                {reviews && (
-                    <>
-                        <Grid
-                            container
-                            spacing={2}
-                            marginBottom={4}
-                            alignItems="center"
-                        >
-                            {user && (
-                                <>
-                                    <Grid item>
-                                        {/* <Link
+        // <IntlProvider locale={currentLocale} messages={intlMessages}>
+        <Container
+            maxWidth="lg"
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "start",
+                alignItems: "center",
+            }}
+        >
+            <Typography variant="h1" mt={8} mb={8}>
+                <FormattedMessage
+                    id="greeting"
+                    defaultMessage="Review Portal"
+                />
+            </Typography>
+            {reviews && (
+                <>
+                    <Grid
+                        container
+                        spacing={2}
+                        marginBottom={4}
+                        alignItems="center"
+                    >
+                        {user && (
+                            <>
+                                <Grid item>
+                                    {/* <Link
                                         to={`/profile`}
                                         state={{ userData: user }}
                                     > */}
-                                        <Button variant="contained">
-                                            <FormattedMessage
-                                                id="profile"
-                                                defaultMessage="Profile"
-                                            />
-                                        </Button>
-                                        {/* </Link> */}
-                                    </Grid>
+                                    <Button variant="contained">
+                                        <FormattedMessage
+                                            id="profile"
+                                            defaultMessage="Profile"
+                                        />
+                                    </Button>
+                                    {/* </Link> */}
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => {
+                                            logOut();
+                                            setUser(null);
+                                        }}
+                                    >
+                                        <FormattedMessage
+                                            id="logout"
+                                            defaultMessage="Logout"
+                                        />
+                                    </Button>
+                                </Grid>
+                                {!showAddForm && (
                                     <Grid item>
                                         <Button
                                             variant="contained"
-                                            onClick={() => {
-                                                logOut();
-                                                setUser(null);
-                                            }}
+                                            onClick={() => setShowAddForm(true)}
                                         >
                                             <FormattedMessage
-                                                id="logout"
-                                                defaultMessage="Logout"
+                                                id="addReview"
+                                                defaultMessage="addReview"
                                             />
                                         </Button>
                                     </Grid>
-                                    {!showAddForm && (
-                                        <Grid item>
-                                            <Button
-                                                variant="contained"
-                                                onClick={() =>
-                                                    setShowAddForm(true)
-                                                }
-                                            >
-                                                <FormattedMessage
-                                                    id="addReview"
-                                                    defaultMessage="addReview"
-                                                />
-                                            </Button>
-                                        </Grid>
-                                    )}
-                                </>
-                            )}
-                            {!user && (
-                                <Grid item>
-                                    <Link to={`/login`} state={""}>
-                                        <Button
-                                            variant="contained"
-                                            onClick={() => console.log("login")}
-                                        >
-                                            <FormattedMessage
-                                                id="login"
-                                                defaultMessage="Login"
-                                            />
-                                        </Button>
-                                    </Link>
-                                </Grid>
-                            )}
-                        </Grid>
-                        {showAddForm && (
-                            <AddReview
-                                onAddReview={handleAddReview}
-                                userId={user.id}
-                            />
+                                )}
+                            </>
                         )}
-                    </>
-                )}
+                        {!user && (
+                            <Grid item>
+                                <Link to={`/login`} state={""}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={() => console.log("login")}
+                                    >
+                                        <FormattedMessage
+                                            id="login"
+                                            defaultMessage="Login"
+                                        />
+                                    </Button>
+                                </Link>
+                            </Grid>
+                        )}
+                    </Grid>
+                    {showAddForm && (
+                        <AddReview
+                            onAddReview={handleAddReview}
+                            userId={user.id}
+                        />
+                    )}
+                </>
+            )}
+
+            {reviews.length > 1 ? (
                 <Grid container spacing={2}>
                     <Grid
                         container
@@ -264,7 +257,10 @@ function MainPage() {
                                             <ReviewCard
                                                 review={review}
                                                 user={user}
-                                                update={fetchAndSetReviews}
+                                                update={() => {
+                                                    fetchAndSetReviews();
+                                                    console.log("update");
+                                                }}
                                             />
                                         </Grid>
                                     ))}
@@ -304,8 +300,11 @@ function MainPage() {
                         )}
                     </Grid>
                 </Grid>
-            </Container>
-        </IntlProvider>
+            ) : (
+                <CircularProgress />
+            )}
+        </Container>
+        // </IntlProvider>
     );
 }
 

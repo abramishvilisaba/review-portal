@@ -15,7 +15,7 @@ function LanguageSelector({ onLocaleChange, locale }) {
     const handleChange = (event) => {
         const selectedLocale = event.target.value;
         onLocaleChange(selectedLocale);
-        navigate("/" + selectedLocale);
+        // navigate("/" + selectedLocale);
     };
 
     return (

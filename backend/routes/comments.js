@@ -4,6 +4,7 @@ const { User, Review, Comment } = require("../models");
 
 router.post("/", async (req, res) => {
     try {
+        console.log("post/");
         console.log(req.body);
         const { content, user_id, review_id } = req.body;
         const comment = await Comment.create({
@@ -20,6 +21,7 @@ router.post("/", async (req, res) => {
 
 router.get("/:reviewId", async (req, res) => {
     try {
+        console.log("/:reviewId");
         const reviewId = req.params.reviewId;
         const comments = await Comment.findAll({
             where: { reviewId: reviewId },

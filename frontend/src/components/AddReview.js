@@ -105,7 +105,7 @@ function AddReview({ userId, onAddReview }) {
                     });
                     setLoading(false);
                     onAddReview();
-                }, 3000);
+                }, 5000);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);

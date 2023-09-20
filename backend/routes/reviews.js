@@ -13,6 +13,7 @@ const {
 
 router.post("/", async (req, res) => {
     try {
+        console.log("post reviews");
         const {
             creatorId,
             creatorGrade,
@@ -58,7 +59,9 @@ router.get("/recentlyAdded", async (req, res) => {
             });
             if (ratings.length > 0) {
                 const totalRating = _.sumBy(ratings, "rating");
-                review.dataValues.averageRating = totalRating / ratings.length;
+                review.dataValues.averageRating = (
+                    totalRating / ratings.length
+                ).toFixed(1);
             } else {
                 review.dataValues.averageRating = 0;
             }

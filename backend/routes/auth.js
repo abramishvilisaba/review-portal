@@ -177,12 +177,12 @@ router.get(
 
 router.get("/getuserdata", async (req, res) => {
     try {
+        console.log("/getuserdata");
         const authHeader = req.headers.authorization;
         const token = authHeader.slice(7);
         if (!token) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        console.log("decode");
         const decoded = jwt.verify(token, jwtSecret);
         const userId = decoded.id;
 
@@ -195,8 +195,6 @@ router.get("/getuserdata", async (req, res) => {
         //         },
         //     ],
         // });
-
-        console.log(userId);
 
         const likedReviews = await UserReviewLikes.findAll({
             where: { userId },
