@@ -1,14 +1,5 @@
 import React from "react";
 import { Button, Container, Typography } from "@mui/material";
-import {
-    ClerkProvider,
-    SignedIn,
-    SignedOut,
-    UserButton,
-    useUser,
-    RedirectToSignIn,
-    SignIn,
-} from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -63,17 +54,7 @@ function Login() {
     const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
     return (
-        // <ClerkProvider publishableKey={clerkPubKey}>
-        //     <SignedIn>
-        //         <div>Hello</div>
-        //     </SignedIn>
-
-        //     <SignedOut>
-        //         <RedirectToSignIn />
-        //     </SignedOut>
-        // </ClerkProvider>
         <Container
-            // maxWidth="sm"
             style={{
                 display: "flex",
                 flexDirection: "column",
