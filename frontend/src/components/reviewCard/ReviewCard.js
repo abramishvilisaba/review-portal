@@ -39,6 +39,7 @@ function ReviewCard({
     const [userRating, setUserRating] = useState(0);
     const [liked, setLiked] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
+    const [currentLocale, setCurrentLocale] = useState("en");
 
     const API_URL = process.env.REACT_APP_API_URL;
 
@@ -164,16 +165,15 @@ function ReviewCard({
 
     const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.id}.jpg`;
 
-    const [currentLocale, setCurrentLocale] = useState("en");
-    const { locale } = useParams();
+    // const { locale } = useParams();
+    // useEffect(() => {
+    //     if (locale) {
+    //         if (locale.length === 2 && typeof locale === "string") {
+    //             setCurrentLocale(locale);
+    //         }
+    //     }
+    // }, [locale]);
 
-    useEffect(() => {
-        if (locale) {
-            if (locale.length === 2 && typeof locale === "string") {
-                setCurrentLocale(locale);
-            }
-        }
-    }, [locale]);
     const intlMessages = messages[locale];
 
     const theme = useTheme();

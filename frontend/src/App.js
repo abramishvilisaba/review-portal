@@ -76,9 +76,9 @@ function App() {
                     toggleLocale={handleLocaleChange}
                 />
                 <Routes>
-                    <Route path="/" element={<Navigate to="/en" replace />} />
+                    {/* <Route path="/" element={<Navigate to="/en" replace />} /> */}
                     <Route
-                        path="/:locale"
+                        path="/"
                         element={<MainPage />}
                         slectedLocale={slectedLocale}
                     />

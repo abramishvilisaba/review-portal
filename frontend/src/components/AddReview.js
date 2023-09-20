@@ -119,12 +119,14 @@ function AddReview({ userId, onAddReview }) {
         }));
     };
 
-    const { locale } = useParams();
-    useEffect(() => {
-        if (locale.length === 2 && typeof locale === "string") {
-            setCurrentLocale(locale);
-        }
-    }, [locale]);
+    // const { locale } = useParams();
+    // useEffect(() => {
+    //     if (locale) {
+    //         if (locale.length === 2 && typeof locale === "string") {
+    //             setCurrentLocale(locale);
+    //         }
+    //     }
+    // }, [locale]);
 
     const intlMessages = messages[locale];
 
