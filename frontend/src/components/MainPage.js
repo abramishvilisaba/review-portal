@@ -119,7 +119,8 @@ function MainPage() {
     //         }
     //     }
     // }, [locale]);
-    const intlMessages = messages[locale];
+
+    const intlMessages = messages[currentLocale];
 
     return (
         <IntlProvider locale={currentLocale} messages={intlMessages}>

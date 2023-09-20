@@ -128,7 +128,7 @@ function AddReview({ userId, onAddReview }) {
     //     }
     // }, [locale]);
 
-    const intlMessages = messages[locale];
+    const intlMessages = messages[currentLocale];
 
     console.log(reviewData);
 

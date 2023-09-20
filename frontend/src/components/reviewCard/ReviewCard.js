@@ -174,7 +174,7 @@ function ReviewCard({
     //     }
     // }, [locale]);
 
-    const intlMessages = messages[locale];
+    const intlMessages = messages[currentLocale];
 
     const theme = useTheme();
 
