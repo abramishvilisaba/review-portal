@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
-    console.log("loginn");
+    console.log("login");
     const handleGoogleLogin = () => {
         const loginUrl = `${API_URL}/auth/google`;
         window.location.href = loginUrl;

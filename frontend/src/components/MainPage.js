@@ -116,13 +116,13 @@ function MainPage() {
     //     setRenderCount((prevCount) => prevCount + 1);
     // }, []);
 
-    console.log("reviews", reviews);
-    console.log("searchResults", searchResults, searchResults.reviews);
+    // console.log("reviews", reviews);
+    // console.log("searchResults", searchResults, searchResults.reviews);
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
             sx={{
-                maxWidth: { xs: "90%", md: "80%" },
+                maxWidth: { xs: "100%", md: "90%", lg: "80%" },
                 minHeight: "100vh",
                 display: "flex",
                 flexDirection: "column",
@@ -147,17 +147,17 @@ function MainPage() {
                         {user && (
                             <>
                                 <Grid item>
-                                    {/* <Link
+                                    <Link
                                         to={`/profile`}
                                         state={{ userData: user }}
-                                    > */}
-                                    <Button variant="contained">
-                                        <FormattedMessage
-                                            id="profile"
-                                            defaultMessage="Profile"
-                                        />
-                                    </Button>
-                                    {/* </Link> */}
+                                    >
+                                        <Button variant="contained">
+                                            <FormattedMessage
+                                                id="profile"
+                                                defaultMessage="Profile"
+                                            />
+                                        </Button>
+                                    </Link>
                                 </Grid>
                                 <Grid item>
                                     <Button
@@ -215,25 +215,28 @@ function MainPage() {
 
             {reviews.length > 0 ? (
                 <Grid container spacing={2}>
-                    <Grid
-                        container
-                        alignItems="center"
-                        justifyContent="center"
-                        px={"20px"}
-                    >
-                        <Grid item xs={12} md={6}>
+                    <Box px={"20px"} width={"100%"} mt={2}>
+                        <Grid xs={12} md={12} width={"100%"}>
                             <Search
                                 reviews={reviews}
                                 updateResults={updateSearchResults}
                             />
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid
+                            container
+                            xs={12}
+                            md={12}
+                            width={"100%"}
+                            justifyContent="center"
+                        >
                             <Typography
                                 variant="h2"
                                 sx={{
                                     mb: 4,
-                                    textAlign: "center",
-                                    ml: { xs: 0, md: "-100%" },
+                                    mt: 2,
+                                    // textAlign: "center",
+                                    // alignSelf: "center",
+                                    // ml: { xs: 0, md: "-100%" },
                                 }}
                             >
                                 <FormattedMessage
@@ -242,7 +245,7 @@ function MainPage() {
                                 />
                             </Typography>
                         </Grid>
-                    </Grid>
+                    </Box>
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>

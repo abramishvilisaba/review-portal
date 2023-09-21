@@ -13,6 +13,7 @@ import messages from "./messages";
 import UseTheme from "./UseTheme";
 import MainPage from "./components/MainPage";
 import Login from "./components/pages/Login";
+import Profile from "./components/pages/Profile";
 import ReviewDetail from "./components/pages/ReviewDetail";
 
 import Navbar from "./Navbar";
@@ -32,7 +33,7 @@ function App() {
     const intlMessages = messages[locale];
 
     const handleLocaleChange = (selectedLocale) => {
-        console.log("selectedLocale", selectedLocale);
+        // console.log("selectedLocale", selectedLocale);
         setLocale(selectedLocale);
         toggleLocale(selectedLocale);
     };
@@ -81,6 +82,7 @@ function App() {
                             element={<ReviewDetail />}
                         />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/Profile" element={<Profile />} />
                     </Routes>
                 </Router>
                 {/* </LocalizationProvider>  */}

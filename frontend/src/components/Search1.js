@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Input, Box, Button } from "@mui/material";
 
-function Search({ updateResults }) {
+export function Search({ updateResults }) {
     const [query, setQuery] = useState("");
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
@@ -32,7 +32,7 @@ function Search({ updateResults }) {
                 placeholder="Search reviews..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                // sx={{ marginRight: "8px", flex: 1 }}
+                sx={{ marginRight: "8px", flex: 1 }}
             />
             <Button
                 variant="contained"
@@ -44,5 +44,3 @@ function Search({ updateResults }) {
         </Box>
     );
 }
-
-export default Search;

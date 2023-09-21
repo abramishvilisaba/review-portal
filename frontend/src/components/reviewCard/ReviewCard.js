@@ -10,7 +10,6 @@ import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fill } from "@cloudinary/url-gen/actions/resize";
 import { IntlProvider, FormattedMessage } from "react-intl";
-
 import { useTheme } from "@mui/material/styles";
 import {
     Box,

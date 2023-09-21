@@ -74,7 +74,6 @@ router.get("/recentlyAdded", async (req, res) => {
         });
 
         await Promise.all(ratingPromises);
-        console.log("----------------------------------------------");
         // console.log(recentlyAddedReviews);
 
         res.status(200).json(recentlyAddedReviews);

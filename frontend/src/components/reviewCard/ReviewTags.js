@@ -2,7 +2,6 @@ import React from "react";
 import { Chip, Grid } from "@mui/material";
 
 function ReviewTags({ tags }) {
-    console.log(tags);
     return tags ? (
         <Grid
             container

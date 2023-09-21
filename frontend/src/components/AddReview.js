@@ -25,7 +25,7 @@ function AddReview({ userId, onAddReview }) {
         reviewName: "",
         pieceName: "",
         reviewText: "",
-        creatorGrade: 0,
+        creatorGrade: 1,
         tags: "",
         reviewPhoto: null,
         group: "",
@@ -57,11 +57,10 @@ function AddReview({ userId, onAddReview }) {
             console.log(id);
             formData.append("image", reviewPhoto);
             formData.append("id", id);
-
             axios
                 .post(`${API_URL}/upload/photo`, formData)
                 .then((res) => {
-                    console.log(res.data);
+                    console.log("uploaded", res.data);
                 })
                 .catch((err) => {
                     console.error(err);
@@ -116,7 +115,7 @@ function AddReview({ userId, onAddReview }) {
                     });
                     setLoading(false);
                     onAddReview();
-                }, 5000);
+                }, 6000);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);
@@ -131,7 +130,7 @@ function AddReview({ userId, onAddReview }) {
     };
 
     return (
-        <Container maxWidth="md" width="100px">
+        <Container maxWidth="lg" width="100%">
             <Box
                 marginBottom={8}
                 sx={{
@@ -198,6 +197,7 @@ function AddReview({ userId, onAddReview }) {
                                 name: "group",
                                 id: "group-selector",
                             }}
+                            required
                         >
                             <MenuItem value="Movies">
                                 <FormattedMessage

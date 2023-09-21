@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { getReviews, getReviewsWithRetry } from "../../services/reviewService";
-
+import { deleteReview } from "../../services/reviewService";
 import {
     Box,
     Button,
@@ -74,35 +74,44 @@ const ReviewDetail = ({}) => {
             .catch((error) => console.log("error", error));
     };
 
-    function deleteReview(onSuccess, onError) {
-        console.log();
-        console.log("delete");
-        console.log(`${API_URL}/reviews/delete/${review.id}`);
-        const token = Cookies.get("jwtToken");
+    // function deleteReview() {
+    //     console.log();
+    //     console.log("delete");
+    //     console.log(`${API_URL}/reviews/delete/${review.id}`);
+    //     const token = Cookies.get("jwtToken");
 
-        axios
-            .delete(`${API_URL}/reviews/delete/${review.id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                if (response.status === 204) {
-                    navigate("/");
-                } else {
-                    console.log("Failed to delete review.");
-                }
-            })
-            .catch((error) => {
-                console.log(`Error deleting review: ${error.message}`);
-            });
-    }
+    //     axios
+    //         .delete(`${API_URL}/reviews/delete/${review.id}`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
+    //         .then((response) => {
+    //             if (response.status === 204) {
+    //                 // navigate("/");
+    //                 console.log(response.data);
+    //             } else {
+    //                 console.log("Failed to delete review.");
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.log(`Error deleting review: ${error.message}`);
+    //         });
+    // }
 
     useEffect(() => {
         loadComments();
     }, []);
 
-    console.log("comments", comments);
+    const SortableTableHeaderButton = ({ text, onClick }) => {
+        return (
+            <TableCell>
+                <Button onClick={onClick} fullWidth>
+                    {text}
+                </Button>
+            </TableCell>
+        );
+    };
 
     return (
         <Container
@@ -123,14 +132,14 @@ const ReviewDetail = ({}) => {
                     mt: 8,
                 }}
             >
-                <Button
+                {/* <Button
                     variant="contained"
                     color="error"
                     startIcon={<DeleteIcon />}
                     onClick={deleteReview}
                 >
                     Delete Review
-                </Button>
+                </Button> */}
                 <Box sx={{ width: "2/3" }}>
                     {/* <ReviewCard
                         review={review}
