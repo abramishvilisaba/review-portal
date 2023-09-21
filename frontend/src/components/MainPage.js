@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
 import ReviewCard from "./reviewCard/ReviewCard";
+import SearchResultCard from "./reviewCard/SearchResultCard";
 import AddReview from "./AddReview";
 import Search from "./Search";
-// import "../App.css";
+import _ from "lodash";
 import Cookies from "js-cookie";
 import UseTheme from "../UseTheme";
 import { IntlProvider, FormattedMessage } from "react-intl";
@@ -105,19 +106,14 @@ function MainPage() {
     };
 
     const updateSearchResults = (results) => {
+        console.log("results", results);
         setSearchResults(results);
     };
 
     let theme = UseTheme().theme;
 
-    // const [renderCount, setRenderCount] = useState(0);
-
-    // useEffect(() => {
-    //     setRenderCount((prevCount) => prevCount + 1);
-    // }, []);
-
-    // console.log("reviews", reviews);
-    // console.log("searchResults", searchResults, searchResults.reviews);
+    console.log("reviews", reviews);
+    console.log("searchResults", searchResults);
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
@@ -296,7 +292,7 @@ function MainPage() {
                                                       xl={3}
                                                       key={result.id}
                                                   >
-                                                      <ReviewCard
+                                                      {/* <ReviewCard
                                                           review={result}
                                                           user={user}
                                                           update={() => {
@@ -305,7 +301,53 @@ function MainPage() {
                                                                   "update"
                                                               );
                                                           }}
+                                                      /> */}
+                                                      <SearchResultCard
+                                                          review={result}
                                                       />
+                                                  </Grid>
+                                              )
+                                          )
+                                        : null}
+                                    {searchResults.comments
+                                        ? searchResults.comments.map(
+                                              (result) => (
+                                                  <Grid
+                                                      item
+                                                      xs={12}
+                                                      sm={6}
+                                                      md={6}
+                                                      lg={4}
+                                                      xl={3}
+                                                      key={result.id}
+                                                  >
+                                                      <Link
+                                                          to={`/reviews/${result.id}`}
+                                                          state={{
+                                                              review: _.find(
+                                                                  reviews,
+                                                                  {
+                                                                      id: result.id,
+                                                                  }
+                                                              ),
+                                                              user: user,
+                                                          }}
+                                                      >
+                                                          {"Comments :"}
+                                                          <Typography
+                                                              variant="h2"
+                                                              sx={{
+                                                                  mb: 4,
+                                                                  mt: 2,
+                                                                  // textAlign: "center",
+                                                                  // alignSelf: "center",
+                                                                  // ml: { xs: 0, md: "-100%" },
+                                                              }}
+                                                          >
+                                                              {result.id}
+                                                              {result.content}
+                                                          </Typography>
+                                                      </Link>
                                                   </Grid>
                                               )
                                           )

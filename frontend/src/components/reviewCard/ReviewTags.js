@@ -18,10 +18,14 @@ function ReviewTags({ tags }) {
                             label={tag}
                             variant="outlined"
                             sx={{
-                                height: "30px",
+                                height: "35px",
                                 px: "0px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
                             }}
-                            color="primary"
+                            color="secondary"
+                            // color="#DFA18A"
                         />
                     </Grid>
                 ) : null

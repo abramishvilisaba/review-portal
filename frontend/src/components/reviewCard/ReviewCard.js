@@ -217,12 +217,18 @@ function ReviewCard({
     return (
         <IntlProvider locale={currentLocale} messages={intlMessages}>
             <Card
-                sx={{ width: "100%", maxWidth: "500px", borderRadius: "20px" }}
+                sx={{
+                    width: "100%",
+                    maxWidth: "500px",
+                    borderRadius: "20px",
+                    border: "1px solid #E8E8E8",
+                    pb: "10px",
+                }}
             >
                 <div style={{ position: "relative" }}>
                     <CustomCardMedia />
                     {user && (
-                        <Grid
+                        <Box
                             xs={6}
                             mb={1}
                             sx={{
@@ -231,13 +237,15 @@ function ReviewCard({
                                 left: "5%",
                                 display: "flex",
                                 alignItems: "center",
+                                padding: "0px",
                             }}
                         >
                             <LikeButton
                                 liked={liked}
                                 onClick={handleLikeButton}
+                                version={2}
                             />
-                        </Grid>
+                        </Box>
                     )}
                 </div>
 
@@ -295,13 +303,23 @@ function ReviewCard({
                             <Typography
                                 variant="h4"
                                 component="div"
+                                // sx={{
+                                //     textAlign: "start",
+                                //     height: "35px",
+                                //     fontSize: "24px",
+                                //     fontWeight: "700",
+                                //     lineHeight: "1",
+                                // }}
                                 sx={{
                                     textAlign: "start",
-                                    height: "35px",
-
                                     fontSize: "24px",
                                     fontWeight: "700",
                                     lineHeight: "1",
+                                    height: "45px",
+                                    // maxHeight: "60px",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "normal",
                                 }}
                             >
                                 {review.reviewName}
@@ -309,12 +327,22 @@ function ReviewCard({
                             <Typography
                                 variant="h6"
                                 color="text.primary"
+                                // sx={{
+                                //     marginBottom: "4px",
+                                //     alignSelf: "start",
+                                //     fontSize: "18px",
+                                //     fontWeight: "600",
+                                //     mt: "4px",
+                                // }}
                                 sx={{
                                     marginBottom: "4px",
                                     alignSelf: "start",
                                     fontSize: "18px",
                                     fontWeight: "600",
                                     mt: "8px",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
                                 }}
                             >
                                 {review.pieceName}
@@ -329,7 +357,7 @@ function ReviewCard({
                                     fontSize: "16px",
                                     lineHeight: "1.5",
                                     px: "2px",
-                                    mb: "20px",
+                                    mb: "8px",
                                     textAlign: "justify",
                                     whiteSpace: "normal",
                                     overflow: "hidden",
@@ -340,15 +368,29 @@ function ReviewCard({
                             </Typography>
                         </Box>
 
-                        <Grid container spacing={2}>
+                        <Grid container spacing={2} height="48px">
                             <Grid
                                 item
                                 xs={12}
                                 sx={{
                                     display: "flex",
-                                    alignItems: "flex-end",
-                                    height: "64px",
+                                    alignItems: "flex-start",
+                                    height: "52px",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "nowrap",
                                 }}
+                                // sx={{
+                                //     marginBottom: "4px",
+                                //     height: "30px",
+                                //     alignSelf: "start",
+                                //     fontSize: "18px",
+                                //     fontWeight: "600",
+                                //     mt: "8px",
+                                //     overflow: "hidden",
+                                //     textOverflow: "ellipsis",
+                                //     whiteSpace: "nowrap",
+                                // }}
                             >
                                 <ReviewTags tags={review.tags} />
                             </Grid>
@@ -359,12 +401,38 @@ function ReviewCard({
                             spacing={2}
                             padding={0}
                             mt={"0px"}
-                            sx={{ alignSelf: "flex-end" }}
+                            height="40px"
+                            sx={{
+                                justifyContent: "start",
+                                alignItems: "center",
+                            }}
                         >
-                            <Grid item xs={6}>
+                            <Grid
+                                item
+                                xs={4}
+                                sx={{ padding: "0px" }}
+                                spacing={0}
+                            >
+                                <LikeButton
+                                    liked={liked}
+                                    onClick={handleLikeButton}
+                                />
+                            </Grid>
+                            <Grid
+                                item
+                                xs={4}
+                                sx={{
+                                    padding: "0px",
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                    justifyContent: "end",
+                                }}
+                            >
                                 <Typography
                                     variant="body1"
                                     color="text.secondary"
+                                    textAlign={"end"}
+                                    sx={{ justifyContent: "end" }}
                                 >
                                     <FormattedMessage
                                         id="likes"
@@ -373,11 +441,20 @@ function ReviewCard({
                                     {review.likes}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid
+                                item
+                                xs={4}
+                                sx={{
+                                    padding: "0px",
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                }}
+                            >
                                 <Typography
                                     variant="body1"
                                     color="text.secondary"
-                                    textAlign={"end"}
+                                    textAlign={"start"}
+                                    sx={{ justifyContent: "end" }}
                                 >
                                     <FormattedMessage
                                         id="grade"

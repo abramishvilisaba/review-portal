@@ -8,11 +8,15 @@ function Search({ updateResults }) {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`${API_URL}/search`, {
-                params: { query },
-            });
-            console.log("data", response.data);
-            updateResults(response.data);
+            if (query.length > 1) {
+                const response = await axios.get(`${API_URL}/search`, {
+                    params: { query },
+                });
+                console.log("data", response.data);
+                updateResults(response.data);
+            } else if (query.length === 0) {
+                updateResults([]);
+            }
         } catch (error) {
             console.error("Error fetching search results:", error);
         }

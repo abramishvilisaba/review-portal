@@ -15,7 +15,7 @@ const UseTheme = () => {
                         main: "#756BFF",
                     },
                     secondary: {
-                        main: "#6BEBFF",
+                        main: "#DFA18A",
                     },
                     // background: {
                     //     default: "#f0f0f0",
