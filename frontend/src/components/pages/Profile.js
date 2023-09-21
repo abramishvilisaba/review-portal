@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, Link } from "react-router-dom";
 import ReviewCard from "../reviewCard/ReviewCard";
+import EditReview from "../EditReview";
 import _ from "lodash";
 import { deleteReview } from "../../services/reviewService";
 import {
@@ -322,7 +323,12 @@ function Profile({}) {
                                             </TableCell>
                                             <TableCell>
                                                 <Button
-                                                    // onClick={() => editReview(review.id)}
+                                                    component={Link}
+                                                    to={`/EditReview`}
+                                                    state={{
+                                                        review: review,
+                                                        user: user,
+                                                    }}
                                                     sx={{ ml: "-14px" }}
                                                 >
                                                     Edit

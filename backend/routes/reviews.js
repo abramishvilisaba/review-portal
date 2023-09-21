@@ -51,6 +51,39 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.put("/:reviewId", async (req, res) => {
+    try {
+        console.log("put=============");
+        console.log(req.body.reviewData.reviewName);
+        const reviewId = req.params.reviewId;
+        console.log(reviewId);
+        const { reviewName, pieceName, group, reviewText, creatorGrade, tags } =
+            req.body.reviewData;
+        console.log("updating");
+        const existingReview = await Review.findByPk(reviewId);
+        console.log(existingReview);
+        if (!existingReview) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+        console.log(reviewName);
+
+        existingReview.reviewName = reviewName;
+        existingReview.pieceName = pieceName;
+        existingReview.group = group;
+        existingReview.reviewText = reviewText;
+        existingReview.creatorGrade = creatorGrade;
+        existingReview.tags = tags;
+        await existingReview.save();
+
+        res.status(200).json({ message: "Review updated successfully" });
+    } catch (error) {
+        console.log("Error updating review:", error);
+        res.status(500).json({
+            error: "An error occurred while updating the review.",
+        });
+    }
+});
+
 router.get("/recentlyAdded", async (req, res) => {
     try {
         console.log("recentlyAdded---------------------------");

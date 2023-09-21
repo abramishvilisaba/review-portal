@@ -32,7 +32,7 @@ function Search({ updateResults }) {
                 placeholder="Search reviews..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                // sx={{ marginRight: "8px", flex: 1 }}
+                sx={{ marginRight: "8px" }}
             />
             <Button
                 variant="contained"

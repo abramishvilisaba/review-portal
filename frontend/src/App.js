@@ -15,6 +15,7 @@ import MainPage from "./components/MainPage";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
 import ReviewDetail from "./components/pages/ReviewDetail";
+import EditReview from "./components/EditReview";
 
 import Navbar from "./Navbar";
 import {
@@ -83,6 +84,7 @@ function App() {
                         />
                         <Route path="/login" element={<Login />} />
                         <Route path="/Profile" element={<Profile />} />
+                        <Route path="/EditReview" element={<EditReview />} />
                     </Routes>
                 </Router>
                 {/* </LocalizationProvider>  */}
