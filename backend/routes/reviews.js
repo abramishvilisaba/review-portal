@@ -54,12 +54,19 @@ router.post("/", async (req, res) => {
 router.put("/:reviewId", async (req, res) => {
     try {
         console.log("put=============");
-        console.log(req.body.reviewData.reviewName);
+
         const reviewId = req.params.reviewId;
-        console.log(reviewId);
         const { reviewName, pieceName, group, reviewText, creatorGrade, tags } =
             req.body.reviewData;
         console.log("updating");
+        console.log(
+            reviewName,
+            pieceName,
+            group,
+            reviewText,
+            creatorGrade,
+            tags
+        );
         const existingReview = await Review.findByPk(reviewId);
         console.log(existingReview);
         if (!existingReview) {
@@ -72,7 +79,7 @@ router.put("/:reviewId", async (req, res) => {
         existingReview.group = group;
         existingReview.reviewText = reviewText;
         existingReview.creatorGrade = creatorGrade;
-        existingReview.tags = tags;
+        existingReview.tags = [tags];
         await existingReview.save();
 
         res.status(200).json({ message: "Review updated successfully" });

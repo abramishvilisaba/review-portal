@@ -208,7 +208,6 @@ router.get("/getuserdata", async (req, res) => {
 
         ratedReviews.forEach((element, i) => {
             console.log("--------------------------------------------------");
-            console.log(element.dataValues.reviewId);
         });
 
         // likedReviews.forEach((element, i) => {

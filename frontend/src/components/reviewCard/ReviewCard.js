@@ -164,14 +164,51 @@ function ReviewCard({
 
     const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
 
-    // const { locale } = useParams();
-    // useEffect(() => {
-    //     if (locale) {
-    //         if (locale.length === 2 && typeof locale === "string") {
-    //             setCurrentLocale(locale);
-    //         }
-    //     }
-    // }, [locale]);
+    const CustomCardMedia = () => {
+        return (
+            <Link
+                to={`/reviews/${review.id}`}
+                state={{
+                    review: review,
+                    user: user,
+                }}
+            >
+                <StyledCardMedia>
+                    <CardActionArea disabled={reviewDetail}>
+                        <Box
+                            sx={{
+                                width: "100%",
+                                bgcolor: "gray",
+                            }}
+                        >
+                            {/* <ReviewImage
+                    id={review.id}
+                    // sx={{
+                    //     width: "100%",
+                    //     height: "100%",
+                    // }}
+                    // imageSize={500}
+                /> */}
+                            <CardMedia
+                                component="img"
+                                // height={300}
+                                // height={
+                                //     reviewDetail ? "heightOption2" : undefined
+                                // }
+                                height={
+                                    reviewDetail
+                                        ? theme.heightOptions.option2
+                                        : theme.heightOptions.option1
+                                }
+                                image={url}
+                                // alt="Review Image"
+                            />
+                        </Box>
+                    </CardActionArea>
+                </StyledCardMedia>
+            </Link>
+        );
+    };
 
     const intlMessages = messages[currentLocale];
 
@@ -179,163 +216,154 @@ function ReviewCard({
 
     return (
         <IntlProvider locale={currentLocale} messages={intlMessages}>
-            <Card sx={{ width: "100%", maxWidth: "500px" }}>
-                <Link
-                    to={`/reviews/${review.id}`}
-                    state={{
-                        review: review,
-                        user: user,
-                    }}
-                >
-                    <StyledCardMedia>
-                        <CardActionArea disabled={reviewDetail}>
-                            <Box
+            <Card
+                sx={{ width: "100%", maxWidth: "500px", borderRadius: "20px" }}
+            >
+                <div style={{ position: "relative" }}>
+                    <CustomCardMedia />
+                    {user && (
+                        <Grid
+                            xs={6}
+                            mb={1}
+                            sx={{
+                                position: "absolute",
+                                top: "5%",
+                                left: "5%",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            <LikeButton
+                                liked={liked}
+                                onClick={handleLikeButton}
+                            />
+                        </Grid>
+                    )}
+                </div>
+
+                <CardContent sx={{ pt: "10px", px: "20px" }}>
+                    <Box
+                        container
+                        spacing={0}
+                        direction="column"
+                        sx={{ justifyContent: "space-around" }}
+                    >
+                        <Grid container spacing={0} pt={1} pb={1}>
+                            <Grid
                                 sx={{
-                                    width: "100%",
-                                    bgcolor: "gray",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    height: "max-content",
                                 }}
                             >
-                                {/* <ReviewImage
-                                id={review.id}
-                                // sx={{
-                                //     width: "100%",
-                                //     height: "100%",
-                                // }}
-                                // imageSize={500}
-                            /> */}
-                                <CardMedia
-                                    component="img"
-                                    // height={300}
-                                    // height={
-                                    //     reviewDetail ? "heightOption2" : undefined
-                                    // }
-                                    height={
-                                        reviewDetail
-                                            ? theme.heightOptions.option2
-                                            : theme.heightOptions.option1
-                                    }
-                                    image={url}
-                                    alt="Review Image"
+                                <UserRating
+                                    userRating={userRating}
+                                    // onUserRatingChange={(rating, e) => {
+                                    //     console.log(
+                                    //         "onUserRatingChange"
+                                    //     );
+                                    //     submitRating(rating, e);
+                                    // }}
+                                    onUserRatingChange={(rating, e) => {
+                                        console.log(rating);
+                                        submitRating(rating, e);
+                                    }}
+                                    averageRating={averageRating}
                                 />
-                            </Box>
-                        </CardActionArea>
-                    </StyledCardMedia>
-                </Link>
-
-                <CardContent sx={{ pt: "10px", px: "15px" }}>
-                    <Grid container spacing={0} direction="column">
-                        <Typography
-                            variant="h4"
-                            component="div"
-                            sx={{
-                                textAlign: "center",
-                                height: "90px",
-                                fontSize: "32px",
-                            }}
-                        >
-                            {review.reviewName}
-                        </Typography>
-                        <Typography
-                            variant="h6"
-                            color="text.primary"
-                            sx={{ marginBottom: "4px", alignSelf: "center" }}
-                        >
-                            {review.pieceName}
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            color="text.primary"
-                            sx={{
-                                height: reviewDetail ? "fit" : "125px",
-                                maxHeight: reviewDetail ? "500px" : "125px",
-                                overflow: "hidden",
-                                fontSize: "14px",
-                                lineHeight: "1.5",
-                                px: "2px",
-                                mb: "20px",
-                                textAlign: "justify",
-                                whiteSpace: "normal",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                            }}
-                        >
-                            {review.reviewText}
-                        </Typography>
-
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                            </Grid>
+                            <Grid>
                                 <Typography
                                     variant="body2"
                                     color="text.secondary"
-                                    mt={1}
-                                    mb={1}
+                                    sx={{
+                                        pl: "4px",
+                                        fontSize: "16px",
+                                        color: "#A7A7A7",
+                                    }}
                                 >
-                                    <FormattedMessage
-                                        id="grade"
-                                        defaultMessage="grade :"
-                                    />
-                                    {review.creatorGrade}
+                                    {/* <FormattedMessage
+                                        id="averageRating"
+                                        defaultMessage="Average Rating:"
+                                    /> */}
+                                    {"("}
+                                    {review.averageRating}
+                                    {")"}
                                 </Typography>
                             </Grid>
+                        </Grid>
+                        <Box container spacing={2} direction="column">
+                            <Typography
+                                variant="h4"
+                                component="div"
+                                sx={{
+                                    textAlign: "start",
+                                    height: "35px",
+
+                                    fontSize: "24px",
+                                    fontWeight: "700",
+                                    lineHeight: "1",
+                                }}
+                            >
+                                {review.reviewName}
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                                color="text.primary"
+                                sx={{
+                                    marginBottom: "4px",
+                                    alignSelf: "start",
+                                    fontSize: "18px",
+                                    fontWeight: "600",
+                                    mt: "8px",
+                                }}
+                            >
+                                {review.pieceName}
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.primary"
+                                sx={{
+                                    height: reviewDetail ? "fit" : "140px",
+                                    maxHeight: reviewDetail ? "500px" : "140px",
+                                    overflow: "hidden",
+                                    fontSize: "16px",
+                                    lineHeight: "1.5",
+                                    px: "2px",
+                                    mb: "20px",
+                                    textAlign: "justify",
+                                    whiteSpace: "normal",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                }}
+                            >
+                                {review.reviewText}
+                            </Typography>
+                        </Box>
+
+                        <Grid container spacing={2}>
                             <Grid
                                 item
-                                xs={6}
+                                xs={12}
                                 sx={{
                                     display: "flex",
                                     alignItems: "flex-end",
+                                    height: "64px",
                                 }}
                             >
                                 <ReviewTags tags={review.tags} />
                             </Grid>
                         </Grid>
 
-                        {user && (
-                            <Grid container spacing={2}>
-                                <Grid
-                                    item
-                                    xs={6}
-                                    mb={1}
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <LikeButton
-                                        liked={liked}
-                                        onClick={handleLikeButton}
-                                    />
-                                </Grid>
-                                <Grid
-                                    item
-                                    xs={6}
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        height: "max-content",
-                                    }}
-                                >
-                                    <UserRating
-                                        userRating={userRating}
-                                        // onUserRatingChange={(rating, e) => {
-                                        //     console.log(
-                                        //         "onUserRatingChange"
-                                        //     );
-                                        //     submitRating(rating, e);
-                                        // }}
-                                        onUserRatingChange={(rating, e) => {
-                                            console.log(rating);
-                                            submitRating(rating, e);
-                                        }}
-                                        averageRating={averageRating}
-                                    />
-                                </Grid>
-                            </Grid>
-                        )}
-
-                        <Grid container spacing={2} padding={0}>
+                        <Grid
+                            container
+                            spacing={2}
+                            padding={0}
+                            mt={"0px"}
+                            sx={{ alignSelf: "flex-end" }}
+                        >
                             <Grid item xs={6}>
                                 <Typography
-                                    variant="body2"
+                                    variant="body1"
                                     color="text.secondary"
                                 >
                                     <FormattedMessage
@@ -347,19 +375,19 @@ function ReviewCard({
                             </Grid>
                             <Grid item xs={6}>
                                 <Typography
-                                    variant="body2"
+                                    variant="body1"
                                     color="text.secondary"
-                                    sx={{}}
+                                    textAlign={"end"}
                                 >
                                     <FormattedMessage
-                                        id="averageRating"
-                                        defaultMessage="Average Rating:"
+                                        id="grade"
+                                        defaultMessage="grade :"
                                     />
-                                    {review.averageRating}
+                                    {review.creatorGrade}
                                 </Typography>
                             </Grid>
                         </Grid>
-                    </Grid>
+                    </Box>
                 </CardContent>
             </Card>
         </IntlProvider>

@@ -16,12 +16,12 @@ function UserRating({ userRating, onUserRatingChange, averageRating }) {
                         key={star}
                         style={{
                             cursor: "pointer",
-                            marginRight: "4px",
+                            marginRight: "2px",
                             color: star <= userRating ? "#FFD437" : "#FCF5B6",
                         }}
                         onClick={(e) => onUserRatingChange(star, e)}
                     >
-                        <FontAwesomeIcon icon={faStar} size="1x" />
+                        <FontAwesomeIcon icon={faStar} size="sm" />
                     </span>
                 ))}
             </Box>
