@@ -103,16 +103,6 @@ const ReviewDetail = ({}) => {
         loadComments();
     }, []);
 
-    const SortableTableHeaderButton = ({ text, onClick }) => {
-        return (
-            <TableCell>
-                <Button onClick={onClick} fullWidth>
-                    {text}
-                </Button>
-            </TableCell>
-        );
-    };
-
     return (
         <Container
             sx={{
