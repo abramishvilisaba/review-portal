@@ -66,13 +66,13 @@ function App() {
                     />
                     <Routes>
                         {/* <Route path="/" element={<Navigate to="/en" replace />} /> */}
-                        <Route path="/*" element={<MainPage />} slectedLocale={locale} />
 
                         <Route path="/reviews/:reviewId" element={<ReviewDetail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/EditReview" element={<EditReview />} />
                         <Route path="/AdminPage" element={<AdminPage />} />
+                        <Route path="/*" element={<MainPage />} slectedLocale={locale} />
                     </Routes>
                 </Router>
                 {/* </LocalizationProvider>  */}
