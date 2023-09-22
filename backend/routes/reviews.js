@@ -49,7 +49,7 @@ module.exports = (io) => {
 
     router.put("/:reviewId", async (req, res) => {
         try {
-            console.log("put=============");
+            console.log("put/:reviewId");
 
             const reviewId = req.params.reviewId;
             const { reviewName, pieceName, group, reviewText, creatorGrade, tags } =

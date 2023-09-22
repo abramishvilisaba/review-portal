@@ -58,7 +58,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
     const uploadPhoto = (reviewPhoto, reviewId, reviewName) => {
         try {
             const formData = new FormData();
-            const id = reviewName + "/" + reviewId.toString();
+            const id = reviewId;
             formData.append("id", id);
             formData.append("image", reviewPhoto);
 

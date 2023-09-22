@@ -122,17 +122,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
 
     let canRun = true;
     const handleImageError = () => {
-        if (canRun) {
-            canRun = false;
-            setTimeout(() => {
-                if (canRun) {
-                    setImageSrc(alturl);
-                } else {
-                    setImageSrc(url);
-                    canRun = true;
-                }
-            }, 5000);
-        }
+        setImageSrc(alturl);
     };
 
     // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
@@ -163,7 +153,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 }
                                 src={imageSrc}
                                 alt={"Review Image"}
-                                onError={handleImageError}
+                                // onError={handleImageError}
                             />
                         </Box>
                     </CardActionArea>

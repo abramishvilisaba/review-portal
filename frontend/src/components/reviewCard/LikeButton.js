@@ -22,20 +22,11 @@ function LikeButton({ liked, onClick, stopPropagation, version = 1 }) {
                     width: { xs: "95px", sm: "80px", md: "95px" },
                     borderRadius: "100px",
                     border: "1px solid #7670FC",
-                    // backgroundColor: liked ? "primary.main" : "grey.300",
-                    // color: liked ? "#ffffff" : "grey.600",
-                    // "&:hover": {
-                    //     backgroundColor: liked ? "primary.dark" : "grey.400",
-                    // },
                     backgroundColor: liked ? "primary.main" : "primary.main",
                     color: liked ? "white" : "white",
                     "&:hover": {
-                        backgroundColor: liked
-                            ? "primary.dark"
-                            : "primary.dark",
+                        backgroundColor: liked ? "primary.dark" : "primary.dark",
                     },
-
-                    // fontSize: "small",
                 }}
             >
                 {liked ? "Liked" : "Like"}
@@ -83,9 +74,7 @@ function LikeButton({ liked, onClick, stopPropagation, version = 1 }) {
                     minWidth: "30px",
                     backgroundColor: liked ? "primary" : "primary",
                     "&:hover": {
-                        backgroundColor: liked
-                            ? "primary.dark"
-                            : "primary.dark",
+                        backgroundColor: liked ? "primary.dark" : "primary.dark",
                     },
                 }}
             >
