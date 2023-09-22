@@ -14,6 +14,7 @@ const commentsRoutes = require("./routes/comments");
 const uploadRoutes = require("./routes/upload");
 const ratingRoutes = require("./routes/rating");
 const likesRoutes = require("./routes/likes");
+const adminRoutes = require("./routes/admin");
 
 // const passport = require("./auth/auth");
 
@@ -82,6 +83,8 @@ app.use("/profile", profileRoutes);
 app.use("/comments", commentsRoutes(io));
 
 app.use("/upload", uploadRoutes);
+
+app.use("/admin", adminRoutes);
 
 // app.get("/profile", (req, res) => {
 //     console.log(req.sessionID);

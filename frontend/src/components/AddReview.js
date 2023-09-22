@@ -18,8 +18,10 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { useIntl, FormattedMessage } from "react-intl";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
+import Autocomplete from "@mui/material/Autocomplete";
+// import _ from "lodash";
 
-function AddReview({ userId, onAddReview }) {
+function AddReview({ userId, onAddReview, uniqueTags }) {
     const intl = useIntl();
 
     const [reviewData, setReviewData] = useState({
@@ -55,7 +57,6 @@ function AddReview({ userId, onAddReview }) {
         try {
             const formData = new FormData();
             const id = reviewName + "/" + reviewId.toString();
-            console.log(id);
             formData.append("image", reviewPhoto);
             formData.append("id", id);
             axios
@@ -75,15 +76,8 @@ function AddReview({ userId, onAddReview }) {
         event.preventDefault();
         setLoading(true);
 
-        const {
-            reviewName,
-            pieceName,
-            reviewText,
-            creatorGrade,
-            reviewPhoto,
-            tags,
-            group,
-        } = reviewData;
+        const { reviewName, pieceName, reviewText, creatorGrade, reviewPhoto, tags, group } =
+            reviewData;
 
         axios
             .post(`${API_URL}/reviews`, {
@@ -98,11 +92,7 @@ function AddReview({ userId, onAddReview }) {
             .then((response) => {
                 console.log("User review stored:", response.data);
                 if (reviewPhoto) {
-                    uploadPhoto(
-                        reviewPhoto,
-                        response.data.reviewId,
-                        reviewName
-                    );
+                    uploadPhoto(reviewPhoto, response.data.reviewId, reviewName);
                 }
                 setTimeout(() => {
                     setReviewData({
@@ -130,6 +120,8 @@ function AddReview({ userId, onAddReview }) {
         }));
     };
 
+    console.log(reviewData);
+
     return (
         <Container maxWidth="lg" width="100%">
             <Box
@@ -141,18 +133,13 @@ function AddReview({ userId, onAddReview }) {
                     borderRadius: "8px",
                 }}
             >
-                <Typography
-                    variant="h5"
-                    sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}
-                >
-                    <FormattedMessage
-                        id="addNewReview"
-                        defaultMessage="Add a New Review"
-                    />
+                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}>
+                    <FormattedMessage id="addNewReview" defaultMessage="Add a New Review" />
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
                     {/* Review Name */}
+
                     <TextField
                         label={intl.formatMessage({
                             id: "reviewName",
@@ -183,10 +170,7 @@ function AddReview({ userId, onAddReview }) {
                     {/* Group */}
                     <FormControl fullWidth sx={{ mb: 3 }}>
                         <InputLabel htmlFor="group-selector">
-                            <FormattedMessage
-                                id="group"
-                                defaultMessage="Group"
-                            />
+                            <FormattedMessage id="group" defaultMessage="Group" />
                         </InputLabel>
                         <Select
                             label={intl.formatMessage({
@@ -202,22 +186,13 @@ function AddReview({ userId, onAddReview }) {
                             required
                         >
                             <MenuItem value="Movies">
-                                <FormattedMessage
-                                    id="moviesGroup"
-                                    defaultMessage="Movies"
-                                />
+                                <FormattedMessage id="moviesGroup" defaultMessage="Movies" />
                             </MenuItem>
                             <MenuItem value="Books">
-                                <FormattedMessage
-                                    id="booksGroup"
-                                    defaultMessage="Books"
-                                />
+                                <FormattedMessage id="booksGroup" defaultMessage="Books" />
                             </MenuItem>
                             <MenuItem value="Games">
-                                <FormattedMessage
-                                    id="gamesGroup"
-                                    defaultMessage="Games"
-                                />
+                                <FormattedMessage id="gamesGroup" defaultMessage="Games" />
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -245,14 +220,8 @@ function AddReview({ userId, onAddReview }) {
                         spacing={2}
                         sx={{ mb: 1, display: "flex", flexDirection: "row" }}
                     >
-                        <Typography
-                            variant="subtitle1"
-                            sx={{ pb: 2, height: "100%" }}
-                        >
-                            <FormattedMessage
-                                id="grade"
-                                defaultMessage="Grade : "
-                            />
+                        <Typography variant="subtitle1" sx={{ pb: 2, height: "100%" }}>
+                            <FormattedMessage id="grade" defaultMessage="Grade : " />
                         </Typography>
                         <Slider
                             id="creatorGrade"
@@ -271,15 +240,37 @@ function AddReview({ userId, onAddReview }) {
                             }
                             sx={{ mx: 2, mb: 0, width: "150px" }}
                         />
-                        <Typography
-                            variant="body1"
-                            sx={{ alignSelf: "start", mt: "4px" }}
-                        >
+                        <Typography variant="body1" sx={{ alignSelf: "start", mt: "4px" }}>
                             {reviewData.creatorGrade}
                         </Typography>
                     </Box>
                     {/* Tags */}
-                    <TextField
+                    <Autocomplete
+                        id="tags"
+                        name="tags"
+                        multiple
+                        freeSolo
+                        options={uniqueTags}
+                        onChange={(event, newValue) => {
+                            setReviewData((prevData) => ({
+                                ...prevData,
+                                tags: newValue.join(","),
+                            }));
+                        }}
+                        value={reviewData.tags.split(",").filter((tag) => tag !== "")}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label={intl.formatMessage({
+                                    id: "tags",
+                                    defaultMessage: "Tags (comma-separated)",
+                                })}
+                                fullWidth
+                                sx={{ mb: 4 }}
+                            />
+                        )}
+                    />
+                    {/* <TextField
                         label={intl.formatMessage({
                             id: "tags",
                             defaultMessage: "Tags (comma-separated)",
@@ -290,7 +281,7 @@ function AddReview({ userId, onAddReview }) {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{ mb: 3 }}
-                    />
+                    /> */}
                     {/* Dropzone */}
                     <Dropzone onDrop={handleDrop}>
                         {({ getRootProps, getInputProps }) => (
@@ -305,7 +296,7 @@ function AddReview({ userId, onAddReview }) {
                                         alignItems: "center",
                                         justifyContent: "center",
                                         cursor: "pointer",
-                                        height: "160px",
+                                        height: "200px",
                                     }}
                                 >
                                     <Typography variant="body1" mb={2}>
@@ -318,9 +309,7 @@ function AddReview({ userId, onAddReview }) {
                                     {reviewData.reviewPhoto ? (
                                         <CloudDoneIcon sx={{ fontSize: 36 }} />
                                     ) : (
-                                        <CloudUploadIcon
-                                            sx={{ fontSize: 36 }}
-                                        />
+                                        <CloudUploadIcon sx={{ fontSize: 36 }} />
                                     )}
                                 </div>
                             </section>
@@ -328,15 +317,8 @@ function AddReview({ userId, onAddReview }) {
                     </Dropzone>
                     {/* Submit Button */}
                     {!loading && (
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ mt: 6 }}
-                        >
-                            <FormattedMessage
-                                id="addReview"
-                                defaultMessage="Add Review"
-                            />
+                        <Button type="submit" variant="contained" sx={{ mt: 6 }}>
+                            <FormattedMessage id="addReview" defaultMessage="Add Review" />
                         </Button>
                     )}
                     {loading && (

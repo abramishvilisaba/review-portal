@@ -16,7 +16,7 @@ import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
 import ReviewDetail from "./components/pages/ReviewDetail";
 import AdminPage from "./components/pages/AdminPage";
-
+import AdminLogin from "./components/pages/AdminLogin";
 import EditReview from "./components/EditReview";
 
 import Navbar from "./Navbar";
@@ -72,6 +72,7 @@ function App() {
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/EditReview" element={<EditReview />} />
                         <Route path="/AdminPage" element={<AdminPage />} />
+                        <Route path="/AdminLogin" element={<AdminLogin />} />
                         <Route path="/" element={<MainPage />} slectedLocale={locale} />
                         <Route path="/dashboard/*" element={<MainPage />} slectedLocale={locale} />
                     </Routes>

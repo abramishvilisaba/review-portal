@@ -45,26 +45,6 @@ router.get(
 
 router.get("/github", githubPassport.authenticate("github", { scope: ["user:email"] }));
 
-// router.get(
-//     "/facebook",
-//     facebookPassport.authenticate("facebook", { scope: ["user:email"] })
-// );
-
-// router.get(
-//     "/facebook/callback",
-//     githubPassport.authenticate("github", {
-//         successRedirect: "/dashboard",
-//         failureRedirect: "/login",
-//     }),
-//     async (req, res) => {
-//         try {
-//             console.log(req);
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// );
-
 router.get(
     "/github/callback",
     githubPassport.authenticate("github", {
@@ -129,7 +109,6 @@ router.get(
                 const userId = createdUser.id;
                 newUser.id = userId;
             }
-            console.log("newUser", newUser);
             const jwtToken = jwt.sign(newUser, jwtSecret, { expiresIn: "4h" });
             res.cookie("jwtToken", jwtToken, {
                 httpOnly: false,
@@ -147,25 +126,6 @@ router.get(
     }
 );
 
-// router.get("/getuserdata", (req, res) => {
-//     try {
-//         const authHeader = req.headers.authorization;
-//         const token = authHeader.slice(7);
-//         if (!token) {
-//             return res.status(401).json({ message: "Unauthorized" });
-//         }
-//         const decoded = jwt.verify(token, jwtSecret);
-//         res.status(200).json({
-//             userName: decoded.displayName,
-//             userEmail: decoded.email,
-//             userId: decoded.id,
-//         });
-//     } catch (error) {
-//         console.error("JWT verification error:", error);
-//         res.status(401).json({ message: "Unauthorized" });
-//     }
-// });
-
 router.get("/getuserdata", async (req, res) => {
     try {
         console.log("/getuserdata");
@@ -176,16 +136,6 @@ router.get("/getuserdata", async (req, res) => {
         }
         const decoded = jwt.verify(token, jwtSecret);
         const userId = decoded.id;
-
-        // const likedReviews = await UserReviewLikes.findAll({
-        //     where: { userId },
-        //     include: [
-        //         {
-        //             model: Review,
-        //             attributes: ["id", "title", "content"],
-        //         },
-        //     ],
-        // });
 
         const likedReviews = await UserReviewLikes.findAll({
             where: { userId },
@@ -200,12 +150,6 @@ router.get("/getuserdata", async (req, res) => {
         ratedReviews.forEach((element, i) => {
             console.log("--------------------------------------------------");
         });
-
-        // likedReviews.forEach((element, i) => {
-        //     console.log("--------------------------------------------------");
-        //     console.log("i= ", i);
-        //     console.log(element.dataValues.reviewId);
-        // });
 
         res.status(200).json({
             userName: decoded.displayName,
@@ -230,34 +174,3 @@ router.post("/logout", (req, res) => {
 });
 
 module.exports = router;
-
-// router.get("/login/success", async (req, res) => {
-//     console.log("login", req.body);
-//     if (req.user) {
-//         console.log("/login/success", req.user);
-//         const newUser = {
-//             id: generateIdFromEmail(req.user.id),
-//             displayName: req.user.displayName,
-//             email: req.user.email,
-//         };
-//         try {
-//             await createUser(newUser);
-//             res.status(200).json({
-//                 success: true,
-//                 message: "Successful",
-//                 user: newUser,
-//             });
-//         } catch (error) {
-//             console.error("Error creating user:", error);
-//             res.status(500).json({
-//                 success: false,
-//                 message: "Error creating user",
-//             });
-//         }
-//     } else {
-//         res.status(401).json({
-//             success: false,
-//             message: "Unauthorized",
-//         });
-//     }
-// });

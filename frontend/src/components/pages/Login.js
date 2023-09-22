@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Container, Typography } from "@mui/material";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate, Link } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -59,13 +59,13 @@ function Login() {
             }}
         >
             <Typography variant="h2" align="center" gutterBottom>
-                Login Page
+                Login
             </Typography>
             <Button
                 variant="contained"
                 color="primary"
                 onClick={handleGoogleLogin}
-                sx={{ width: "40%" }}
+                sx={{ width: { xs: "60%", sm: "40%", md: "25%", lg: "20%" } }}
             >
                 Login with Google
             </Button>
@@ -73,10 +73,20 @@ function Login() {
                 variant="contained"
                 color="primary"
                 onClick={handleGithubLogin}
-                sx={{ width: "40%" }}
+                sx={{ width: { xs: "60%", sm: "40%", md: "25%", lg: "20%" } }}
             >
                 Login with Github
             </Button>
+            <Link to={`/AdminLogin`}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    // onClick={}
+                    sx={{ width: { xs: "60%", sm: "40%", md: "25%", lg: "20%" } }}
+                >
+                    Login
+                </Button>
+            </Link>
         </Container>
     );
 }

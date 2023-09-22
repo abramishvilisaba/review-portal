@@ -79,13 +79,14 @@ module.exports = (io) => {
             console.log("recentlyAdded---------------------------");
             const recentlyAddedReviews = await Review.findAll({
                 order: [["createdAt", "DESC"]],
-                limit: 10,
+                limit: 40,
             });
 
             const ratingPromises = recentlyAddedReviews.map(async (review) => {
                 const ratings = await UserReviewRatings.findAll({
                     where: { reviewId: review.id },
                 });
+                console.log(ratings);
                 if (ratings.length > 0) {
                     const totalRating = _.sumBy(ratings, "rating");
                     review.dataValues.averageRating = (totalRating / ratings.length).toFixed(1);
@@ -141,37 +142,5 @@ module.exports = (io) => {
         }
     });
 
-    // router.get("/recentlyAdded", async (req, res) => {
-    //     try {
-    //         console.log("recentlyAdded---------------------------");
-    //         const recentlyAddedReviews = await Review.findAll({
-    //             order: [["createdAt", "DESC"]],
-    //             limit: 10,
-    //             include: [
-    //                 {
-    //                     model: UserReviewRatings,
-    //                     as: "Ratings",
-    //                     attributes: [
-    //                         [
-    //                             Sequelize.fn(
-    //                                 "AVG",
-    //                                 Sequelize.col("Ratings.rating")
-    //                             ),
-    //                             "averageRating",
-    //                         ],
-    //                     ],
-    //                 },
-    //             ],
-    //         });
-    //         res.status(200).json(recentlyAddedReviews);
-    //     } catch (error) {
-    //         console.error("Error loading recently added reviews:", error);
-    //         res.status(500).json({
-    //             error: "An error occurred while loading recently added reviews.",
-    //         });
-    //     }
-    // });
-
     return router;
 };
-// module.exports = router;

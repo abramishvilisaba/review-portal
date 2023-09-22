@@ -96,11 +96,7 @@ function EditReview() {
             .then((response) => {
                 console.log("User review stored:", response.data);
                 if (reviewData.reviewPhoto) {
-                    uploadPhoto(
-                        reviewPhoto,
-                        response.data.reviewId,
-                        reviewData.reviewName
-                    );
+                    uploadPhoto(reviewPhoto, response.data.reviewId, reviewData.reviewName);
                 }
                 setTimeout(() => {
                     setLoading(false);
@@ -118,10 +114,7 @@ function EditReview() {
 
     const updateReview = async (reviewId, updatedReviewData) => {
         try {
-            const response = await axios.put(
-                `${API_URL}/reviews/${reviewId}`,
-                updatedReviewData
-            );
+            const response = await axios.put(`${API_URL}/reviews/${reviewId}`, updatedReviewData);
             if (response.status === 200) {
                 console.log("Review updated successfully.");
                 return true;
@@ -146,14 +139,8 @@ function EditReview() {
                     borderRadius: "8px",
                 }}
             >
-                <Typography
-                    variant="h5"
-                    sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}
-                >
-                    <FormattedMessage
-                        id="editReview"
-                        defaultMessage="Edit Review"
-                    />
+                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}>
+                    <FormattedMessage id="editReview" defaultMessage="Edit Review" />
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
@@ -192,10 +179,7 @@ function EditReview() {
                     {/* Group */}
                     <FormControl fullWidth sx={{ mb: 3 }}>
                         <InputLabel htmlFor="group-selector">
-                            <FormattedMessage
-                                id="group"
-                                defaultMessage="Group"
-                            />
+                            <FormattedMessage id="group" defaultMessage="Group" />
                         </InputLabel>
                         <Select
                             label={intl.formatMessage({
@@ -213,22 +197,13 @@ function EditReview() {
                             required
                         >
                             <MenuItem value="Movies">
-                                <FormattedMessage
-                                    id="moviesGroup"
-                                    defaultMessage="Movies"
-                                />
+                                <FormattedMessage id="moviesGroup" defaultMessage="Movies" />
                             </MenuItem>
                             <MenuItem value="Books">
-                                <FormattedMessage
-                                    id="booksGroup"
-                                    defaultMessage="Books"
-                                />
+                                <FormattedMessage id="booksGroup" defaultMessage="Books" />
                             </MenuItem>
                             <MenuItem value="Games">
-                                <FormattedMessage
-                                    id="gamesGroup"
-                                    defaultMessage="Games"
-                                />
+                                <FormattedMessage id="gamesGroup" defaultMessage="Games" />
                             </MenuItem>
                         </Select>
                     </FormControl>
@@ -257,14 +232,8 @@ function EditReview() {
                         spacing={2}
                         sx={{ mb: 1, display: "flex", flexDirection: "row" }}
                     >
-                        <Typography
-                            variant="subtitle1"
-                            sx={{ pb: 2, height: "100%" }}
-                        >
-                            <FormattedMessage
-                                id="grade"
-                                defaultMessage="Grade : "
-                            />
+                        <Typography variant="subtitle1" sx={{ pb: 2, height: "100%" }}>
+                            <FormattedMessage id="grade" defaultMessage="Grade : " />
                         </Typography>
                         <Slider
                             id="creatorGrade"
@@ -285,10 +254,7 @@ function EditReview() {
                             }
                             sx={{ mx: 2, mb: 0, width: "150px" }}
                         />
-                        <Typography
-                            variant="body1"
-                            sx={{ alignSelf: "start", mt: "4px" }}
-                        >
+                        <Typography variant="body1" sx={{ alignSelf: "start", mt: "4px" }}>
                             {reviewData.creatorGrade}
                         </Typography>
                     </Box>
@@ -333,9 +299,7 @@ function EditReview() {
                                     {reviewPhoto ? (
                                         <CloudDoneIcon sx={{ fontSize: 36 }} />
                                     ) : (
-                                        <CloudUploadIcon
-                                            sx={{ fontSize: 36 }}
-                                        />
+                                        <CloudUploadIcon sx={{ fontSize: 36 }} />
                                     )}
                                 </div>
                             </section>
@@ -343,15 +307,8 @@ function EditReview() {
                     </Dropzone>
                     {/* Submit Button */}
                     {!loading && (
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            sx={{ mt: 6 }}
-                        >
-                            <FormattedMessage
-                                id="addReview"
-                                defaultMessage="Add Review"
-                            />
+                        <Button type="submit" variant="contained" sx={{ mt: 6 }}>
+                            <FormattedMessage id="addReview" defaultMessage="Add Review" />
                         </Button>
                     )}
                     {loading && (

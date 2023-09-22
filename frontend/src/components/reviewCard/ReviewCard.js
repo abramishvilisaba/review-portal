@@ -28,13 +28,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/system";
 import messages from "../../messages";
 
-function ReviewCard({
-    review,
-    user,
-    update,
-    size = 350,
-    reviewDetail = false,
-}) {
+function ReviewCard({ review, user, update, size = 350, reviewDetail = false }) {
     const [userRating, setUserRating] = useState(0);
     const [liked, setLiked] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
@@ -63,11 +57,8 @@ function ReviewCard({
     useEffect(() => {
         if (user) {
             if (user.ratedReviews && !userRating) {
-                const ratingObj = user.ratedReviews.find(
-                    (rating) => rating.reviewId === review.id
-                );
+                const ratingObj = user.ratedReviews.find((rating) => rating.reviewId === review.id);
                 if (ratingObj) {
-                    // console.log("found------------", ratingObj.rating);
                     setUserRating(ratingObj.rating);
                 }
             }
@@ -81,7 +72,6 @@ function ReviewCard({
 
     const handleLikeButton = async (e) => {
         console.log("handleLikeButton");
-        // e.preventDefault();
         const action = liked ? "unlike" : "like";
         const method = liked ? "delete" : "post";
         const url = `${API_URL}/likes/${action}`;
@@ -103,18 +93,15 @@ function ReviewCard({
         }
     };
 
+    const handleTagClick = async (tag) => {
+        console.log(tag);
+    };
     const submitRating = async (rating, e) => {
         e.preventDefault();
         setUserRating(rating);
         const userId = user.id;
         const reviewId = review.id;
-        const isRated = user.ratedReviews.some(
-            (ratedReview) => ratedReview.reviewId === reviewId
-        );
-        // const url = isRated
-        //     ? `${API_URL}/rating/${reviewId}`
-        //     : `${API_URL}/rating`;
-        // const method = isRated ? "PUT" : "POST";
+        const isRated = user.ratedReviews.some((ratedReview) => ratedReview.reviewId === reviewId);
         const url = `${API_URL}/rating`;
         const method = "POST";
         const data = { userId, reviewId, rating };
@@ -130,32 +117,8 @@ function ReviewCard({
         }
     };
 
-    // async function submitRating(rating) {
-    //     setUserRating(rating);
-    //     const userId = user.id;
-    //     const reviewId = review.id;
-
-    //     const isRated = user.ratedReviews.some(
-    //         (ratedReview) => ratedReview.reviewId === reviewId
-    //     );
-    //     const url = isRated
-    //         ? `${API_URL}/rating/${reviewId}`
-    //         : `${API_URL}/rating`;
-    //     const method = isRated ? "PUT" : "POST";
-    //     const data = { userId, reviewId, rating };
-
-    //     try {
-    //         const response = await axios({ method, url, data });
-    //         update();
-    //         return response.data;
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
     const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
-    const alturl =
-        "https://res.cloudinary.com/dp30nyp5m/image/upload/v1695340392/review2.jpg";
+    const alturl = "https://res.cloudinary.com/dp30nyp5m/image/upload/v1695340392/review2.jpg";
     const [imageSrc, setImageSrc] = useState(url);
     const handleImageError = () => {
         setImageSrc(alturl);
@@ -179,16 +142,6 @@ function ReviewCard({
                                 bgcolor: "gray",
                             }}
                         >
-                            {/* <CardMedia
-                                component="img"
-                                height={
-                                    reviewDetail
-                                        ? theme.heightOptions.option2
-                                        : theme.heightOptions.option1
-                                }
-                                image={url}
-                                alt={"Review Image"}
-                            /> */}
                             <CardMedia
                                 component="img"
                                 height={
@@ -237,11 +190,7 @@ function ReviewCard({
                                 padding: "0px",
                             }}
                         >
-                            <LikeButton
-                                liked={liked}
-                                onClick={handleLikeButton}
-                                version={2}
-                            />
+                            <LikeButton liked={liked} onClick={handleLikeButton} version={2} />
                         </Box>
                     )}
                 </div>
@@ -292,10 +241,12 @@ function ReviewCard({
                                 component="div"
                                 sx={{
                                     textAlign: "start",
+                                    display: "flex",
+                                    alignItems: "center",
                                     fontSize: "24px",
                                     fontWeight: "700",
                                     lineHeight: "1",
-                                    height: "45px",
+                                    height: "48px",
                                     // maxHeight: "60px",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
@@ -312,7 +263,7 @@ function ReviewCard({
                                     alignSelf: "start",
                                     fontSize: "18px",
                                     fontWeight: "600",
-                                    mt: "8px",
+                                    // mt: "8px",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
                                     whiteSpace: "nowrap",
@@ -354,7 +305,10 @@ function ReviewCard({
                                     whiteSpace: "nowrap",
                                 }}
                             >
-                                <ReviewTags tags={review.tags} />
+                                <ReviewTags
+                                    tags={review.tags}
+                                    onClick={(tag) => handleTagClick(tag)}
+                                />
                             </Grid>
                         </Grid>
 
@@ -369,18 +323,8 @@ function ReviewCard({
                                 alignItems: "center",
                             }}
                         >
-                            <Grid
-                                item
-                                xs={4}
-                                sx={{ padding: "0px" }}
-                                spacing={0}
-                            >
-                                {user && (
-                                    <LikeButton
-                                        liked={liked}
-                                        onClick={handleLikeButton}
-                                    />
-                                )}
+                            <Grid item xs={4} sx={{ padding: "0px" }} spacing={0}>
+                                {user && <LikeButton liked={liked} onClick={handleLikeButton} />}
                             </Grid>
 
                             <Grid
@@ -399,10 +343,7 @@ function ReviewCard({
                                     textAlign={"end"}
                                     sx={{ justifyContent: "end" }}
                                 >
-                                    <FormattedMessage
-                                        id="likes"
-                                        defaultMessage="Likes:"
-                                    />
+                                    <FormattedMessage id="likes" defaultMessage="Likes:" />
                                     {review.likes}
                                 </Typography>
                             </Grid>
@@ -421,10 +362,7 @@ function ReviewCard({
                                     textAlign={"start"}
                                     sx={{ justifyContent: "end" }}
                                 >
-                                    <FormattedMessage
-                                        id="grade"
-                                        defaultMessage="grade :"
-                                    />
+                                    <FormattedMessage id="grade" defaultMessage="grade :" />
                                     {review.creatorGrade}
                                 </Typography>
                             </Grid>
