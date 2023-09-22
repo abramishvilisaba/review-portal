@@ -17,6 +17,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import { useIntl, FormattedMessage } from "react-intl";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
 
 function AddReview({ userId, onAddReview }) {
     const intl = useIntl();
@@ -134,14 +135,15 @@ function AddReview({ userId, onAddReview }) {
             <Box
                 marginBottom={8}
                 sx={{
-                    p: 6,
+                    py: 6,
+                    px: { xs: 2, sm: 4, md: 6, lg: 8 },
                     boxShadow: "0px 4px 6px rgba(200, 200, 200, 0.5)",
                     borderRadius: "8px",
                 }}
             >
                 <Typography
                     variant="h5"
-                    sx={{ fontWeight: "bold", mb: 6, textAlign: "start" }}
+                    sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}
                 >
                     <FormattedMessage
                         id="addNewReview"
@@ -313,7 +315,13 @@ function AddReview({ userId, onAddReview }) {
                                         />
                                     </Typography>
                                     <input {...getInputProps()} />
-                                    <CloudUploadIcon sx={{ fontSize: 32 }} />
+                                    {reviewData.reviewPhoto ? (
+                                        <CloudDoneIcon sx={{ fontSize: 36 }} />
+                                    ) : (
+                                        <CloudUploadIcon
+                                            sx={{ fontSize: 36 }}
+                                        />
+                                    )}
                                 </div>
                             </section>
                         )}

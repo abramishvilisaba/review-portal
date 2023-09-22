@@ -61,15 +61,6 @@ function ReviewCard({
     };
 
     useEffect(() => {
-        // if (review) {
-        //     if (review.Ratings) {
-        //         if (review.Ratings[0]) {
-        //             setAverageRating(
-        //                 parseFloat(review.Ratings[0].averageRating).toFixed(1)
-        //             );
-        //         }
-        //     }
-        // }
         if (user) {
             if (user.ratedReviews && !userRating) {
                 const ratingObj = user.ratedReviews.find(
@@ -163,6 +154,13 @@ function ReviewCard({
     // }
 
     const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
+    // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
+    const alturl =
+        "https://res.cloudinary.com/dp30nyp5m/image/upload/v1695340392/review2.jpg";
+    const [imageSrc, setImageSrc] = useState(url);
+    const handleImageError = () => {
+        setImageSrc(alturl);
+    };
 
     const CustomCardMedia = () => {
         return (
@@ -181,27 +179,26 @@ function ReviewCard({
                                 bgcolor: "gray",
                             }}
                         >
-                            {/* <ReviewImage
-                    id={review.id}
-                    // sx={{
-                    //     width: "100%",
-                    //     height: "100%",
-                    // }}
-                    // imageSize={500}
-                /> */}
-                            <CardMedia
+                            {/* <CardMedia
                                 component="img"
-                                // height={300}
-                                // height={
-                                //     reviewDetail ? "heightOption2" : undefined
-                                // }
                                 height={
                                     reviewDetail
                                         ? theme.heightOptions.option2
                                         : theme.heightOptions.option1
                                 }
                                 image={url}
-                                // alt="Review Image"
+                                alt={"Review Image"}
+                            /> */}
+                            <CardMedia
+                                component="img"
+                                height={
+                                    reviewDetail
+                                        ? theme.heightOptions.option2
+                                        : theme.heightOptions.option1
+                                }
+                                src={imageSrc}
+                                alt={"Review Image"}
+                                onError={handleImageError}
                             />
                         </Box>
                     </CardActionArea>
@@ -266,12 +263,6 @@ function ReviewCard({
                             >
                                 <UserRating
                                     userRating={userRating}
-                                    // onUserRatingChange={(rating, e) => {
-                                    //     console.log(
-                                    //         "onUserRatingChange"
-                                    //     );
-                                    //     submitRating(rating, e);
-                                    // }}
                                     onUserRatingChange={(rating, e) => {
                                         console.log(rating);
                                         submitRating(rating, e);
@@ -289,10 +280,6 @@ function ReviewCard({
                                         color: "#A7A7A7",
                                     }}
                                 >
-                                    {/* <FormattedMessage
-                                        id="averageRating"
-                                        defaultMessage="Average Rating:"
-                                    /> */}
                                     {"("}
                                     {review.averageRating}
                                     {")"}
@@ -303,13 +290,6 @@ function ReviewCard({
                             <Typography
                                 variant="h4"
                                 component="div"
-                                // sx={{
-                                //     textAlign: "start",
-                                //     height: "35px",
-                                //     fontSize: "24px",
-                                //     fontWeight: "700",
-                                //     lineHeight: "1",
-                                // }}
                                 sx={{
                                     textAlign: "start",
                                     fontSize: "24px",
@@ -327,13 +307,6 @@ function ReviewCard({
                             <Typography
                                 variant="h6"
                                 color="text.primary"
-                                // sx={{
-                                //     marginBottom: "4px",
-                                //     alignSelf: "start",
-                                //     fontSize: "18px",
-                                //     fontWeight: "600",
-                                //     mt: "4px",
-                                // }}
                                 sx={{
                                     marginBottom: "4px",
                                     alignSelf: "start",
@@ -380,17 +353,6 @@ function ReviewCard({
                                     textOverflow: "ellipsis",
                                     whiteSpace: "nowrap",
                                 }}
-                                // sx={{
-                                //     marginBottom: "4px",
-                                //     height: "30px",
-                                //     alignSelf: "start",
-                                //     fontSize: "18px",
-                                //     fontWeight: "600",
-                                //     mt: "8px",
-                                //     overflow: "hidden",
-                                //     textOverflow: "ellipsis",
-                                //     whiteSpace: "nowrap",
-                                // }}
                             >
                                 <ReviewTags tags={review.tags} />
                             </Grid>
@@ -413,11 +375,14 @@ function ReviewCard({
                                 sx={{ padding: "0px" }}
                                 spacing={0}
                             >
-                                <LikeButton
-                                    liked={liked}
-                                    onClick={handleLikeButton}
-                                />
+                                {user && (
+                                    <LikeButton
+                                        liked={liked}
+                                        onClick={handleLikeButton}
+                                    />
+                                )}
                             </Grid>
+
                             <Grid
                                 item
                                 xs={4}

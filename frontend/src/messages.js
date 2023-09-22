@@ -20,6 +20,8 @@ const messages = {
         averageRating: "Rating: ",
         addNewReview: "Add a New Review",
         addReview: "Add Review",
+        editReview: "Edit Review",
+        search: "Search",
     },
     ka: {
         greeting: "მიმოხილვების პორტალი",
@@ -42,6 +44,8 @@ const messages = {
         averageRating: "შეფასებები: ",
         addNewReview: "დაამატეთ ახალი მიმოხილვა",
         addReview: "დაამატეთ მიმოხილვა",
+        editReview: "ჩაასწორეთ მიმოხილვა",
+        search: "ძებნა",
     },
 };
 

@@ -16,8 +16,9 @@ import {
     Select,
 } from "@mui/material";
 import messages from "./messages";
-
 import useTheme from "./UseTheme";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import NightsStayIcon from "@mui/icons-material/NightsStay";
 
 const Navbar = ({ theme, toggleMode, toggleLocale }) => {
     const navigate = useNavigate();
@@ -139,18 +140,28 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
                                 locale={locale}
                             />
                         </Box>
-                        <Box sx={{ ml: "20px" }}>
+                        <Box
+                            sx={{
+                                ml: "20px",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
                             <Switch
                                 checked={theme.palette.mode === "dark"}
+                                size="medium"
                                 onChange={() => {
                                     toggleMode();
                                     setCurrentTheme(theme.palette.mode);
                                 }}
                                 color="primary"
                             />
-                            {theme.palette.mode === "dark"
-                                ? "Light Mode"
-                                : "Dark Mode"}
+                            {theme.palette.mode === "dark" ? (
+                                <LightModeIcon fontSize={"medium"} />
+                            ) : (
+                                <NightsStayIcon fontSize={"medium"} />
+                            )}
                         </Box>
                     </div>
                 </Toolbar>

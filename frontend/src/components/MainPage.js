@@ -147,7 +147,15 @@ function MainPage() {
                                         to={`/profile`}
                                         state={{ userData: user }}
                                     >
-                                        <Button variant="contained">
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                borderRadius: "100px",
+                                                border: "1px none ##7670FC",
+                                                px: 2,
+                                                py: 1,
+                                            }}
+                                        >
                                             <FormattedMessage
                                                 id="profile"
                                                 defaultMessage="Profile"
@@ -158,6 +166,12 @@ function MainPage() {
                                 <Grid item>
                                     <Button
                                         variant="contained"
+                                        sx={{
+                                            borderRadius: "100px",
+                                            border: "1px none ##7670FC",
+                                            px: 2,
+                                            py: 1,
+                                        }}
                                         onClick={() => {
                                             logOut();
                                             setUser(null);
@@ -174,6 +188,12 @@ function MainPage() {
                                         <Button
                                             variant="contained"
                                             onClick={() => setShowAddForm(true)}
+                                            sx={{
+                                                borderRadius: "100px",
+                                                border: "1px none ##7670FC",
+                                                px: 2,
+                                                py: 1,
+                                            }}
                                         >
                                             <FormattedMessage
                                                 id="addReview"
@@ -190,6 +210,12 @@ function MainPage() {
                                     <Button
                                         variant="contained"
                                         onClick={() => console.log("login")}
+                                        sx={{
+                                            borderRadius: "100px",
+                                            border: "1px none ##7670FC",
+                                            px: 2,
+                                            py: 1,
+                                        }}
                                     >
                                         <FormattedMessage
                                             id="login"

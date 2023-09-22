@@ -19,20 +19,18 @@ import axios from "axios";
 import Dropzone from "react-dropzone";
 import { useIntl, FormattedMessage } from "react-intl";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
+import CloudDoneIcon from "@mui/icons-material/CloudDone";
 
 function EditReview() {
     const intl = useIntl();
 
+    const [prevReviewData, setPrevReviewData] = useState({});
     const [reviewData, setReviewData] = useState({});
     const [reviewPhoto, setReviewPhoto] = useState(null);
 
     const navigate = useNavigate();
     let { state } = useLocation();
-    const { review, user } = state;
-
-    useEffect(() => {
-        setReviewData(review);
-    }, []);
+    let { review, user } = state;
 
     // setReviewData(review);
 
@@ -59,6 +57,12 @@ function EditReview() {
             userRating: newRating,
         }));
     };
+
+    useEffect(() => {
+        setReviewData(review);
+        setPrevReviewData(review);
+        console.log(review);
+    }, []);
 
     const uploadPhoto = (reviewPhoto, reviewId, reviewName) => {
         try {
@@ -136,18 +140,19 @@ function EditReview() {
             <Box
                 marginBottom={8}
                 sx={{
-                    p: 6,
+                    py: 6,
+                    px: { xs: 2, sm: 4, md: 6, lg: 8 },
                     boxShadow: "0px 4px 6px rgba(200, 200, 200, 0.5)",
                     borderRadius: "8px",
                 }}
             >
                 <Typography
                     variant="h5"
-                    sx={{ fontWeight: "bold", mb: 6, textAlign: "start" }}
+                    sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}
                 >
                     <FormattedMessage
-                        id="addNewReview"
-                        defaultMessage="Add a New Review"
+                        id="editReview"
+                        defaultMessage="Edit Review"
                     />
                 </Typography>
 
@@ -269,6 +274,7 @@ function EditReview() {
                             step={1}
                             value={reviewData.creatorGrade}
                             valueLabelDisplay={"auto"}
+                            defaultValue={review.creatorGrade}
                             onChange={(_, newValue) =>
                                 handleInputChange({
                                     target: {
@@ -324,7 +330,13 @@ function EditReview() {
                                         />
                                     </Typography>
                                     <input {...getInputProps()} />
-                                    <CloudUploadIcon sx={{ fontSize: 32 }} />
+                                    {reviewPhoto ? (
+                                        <CloudDoneIcon sx={{ fontSize: 36 }} />
+                                    ) : (
+                                        <CloudUploadIcon
+                                            sx={{ fontSize: 36 }}
+                                        />
+                                    )}
                                 </div>
                             </section>
                         )}
