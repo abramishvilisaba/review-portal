@@ -154,13 +154,13 @@ function ReviewCard({
     // }
 
     const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
-    // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
     const alturl =
         "https://res.cloudinary.com/dp30nyp5m/image/upload/v1695340392/review2.jpg";
     const [imageSrc, setImageSrc] = useState(url);
     const handleImageError = () => {
         setImageSrc(alturl);
     };
+    // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
 
     const CustomCardMedia = () => {
         return (

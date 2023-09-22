@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import ReviewCard from "./reviewCard/ReviewCard";
-import SearchResultCard from "./reviewCard/SearchResultCard";
-import AddReview from "./AddReview";
-import Search from "./Search";
+
 import _ from "lodash";
 import Cookies from "js-cookie";
 import UseTheme from "../UseTheme";
+import io from "socket.io-client";
 import { IntlProvider, FormattedMessage } from "react-intl";
 
 import {
@@ -26,11 +24,13 @@ import {
     CircularProgress,
 } from "@mui/material";
 import messages from "../messages";
+import ReviewCard from "./reviewCard/ReviewCard";
+import SearchResultCard from "./reviewCard/SearchResultCard";
+import AddReview from "./AddReview";
+import Search from "./Search";
 
 import { getReviews, getReviewsWithRetry } from "../services/reviewService";
 import { getUserData, logOut } from "../services/userService";
-
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 function MainPage() {
     const [showAddForm, setShowAddForm] = useState(false);
@@ -43,6 +43,19 @@ function MainPage() {
 
     const MAX_RETRIES = 20;
     const RETRY_DELAY = 1000;
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
+    const socket = io(API_URL);
+
+    // useEffect(() => {
+    //     socket.on("new-comment", (data) => {
+    //         console.log("new-comment=======================");
+    //         console.log(data);
+    //     });
+    //     return () => {
+    //         socket.disconnect();
+    //     };
+    // }, []);
 
     function setToken() {
         const searchParams = new URLSearchParams(location.search);
@@ -112,8 +125,9 @@ function MainPage() {
 
     let theme = UseTheme().theme;
 
-    console.log("reviews", reviews);
-    console.log("searchResults", searchResults);
+    // console.log("reviews", reviews);
+    // console.log("searchResults", searchResults);
+    // console.log("user", user);
     return (
         // <IntlProvider locale={currentLocale} messages={intlMessages}>
         <Container
@@ -127,26 +141,15 @@ function MainPage() {
             }}
         >
             <Typography variant="h1" mt={8} mb={8}>
-                <FormattedMessage
-                    id="greeting"
-                    defaultMessage="Review Portal"
-                />
+                <FormattedMessage id="greeting" defaultMessage="Review Portal" />
             </Typography>
             {reviews && (
                 <>
-                    <Grid
-                        container
-                        spacing={2}
-                        marginBottom={4}
-                        alignItems="center"
-                    >
+                    <Grid container spacing={2} marginBottom={4} alignItems="center">
                         {user && (
                             <>
                                 <Grid item>
-                                    <Link
-                                        to={`/profile`}
-                                        state={{ userData: user }}
-                                    >
+                                    <Link to={`/profile`} state={{ userData: user }}>
                                         <Button
                                             variant="contained"
                                             sx={{
@@ -177,10 +180,7 @@ function MainPage() {
                                             setUser(null);
                                         }}
                                     >
-                                        <FormattedMessage
-                                            id="logout"
-                                            defaultMessage="Logout"
-                                        />
+                                        <FormattedMessage id="logout" defaultMessage="Logout" />
                                     </Button>
                                 </Grid>
                                 {!showAddForm && (
@@ -217,21 +217,13 @@ function MainPage() {
                                             py: 1,
                                         }}
                                     >
-                                        <FormattedMessage
-                                            id="login"
-                                            defaultMessage="Login"
-                                        />
+                                        <FormattedMessage id="login" defaultMessage="Login" />
                                     </Button>
                                 </Link>
                             </Grid>
                         )}
                     </Grid>
-                    {showAddForm && (
-                        <AddReview
-                            onAddReview={handleAddReview}
-                            userId={user.id}
-                        />
-                    )}
+                    {showAddForm && <AddReview onAddReview={handleAddReview} userId={user.id} />}
                 </>
             )}
 
@@ -239,18 +231,9 @@ function MainPage() {
                 <Grid container spacing={2}>
                     <Box px={"20px"} width={"100%"} mt={2}>
                         <Grid xs={12} md={12} width={"100%"}>
-                            <Search
-                                reviews={reviews}
-                                updateResults={updateSearchResults}
-                            />
+                            <Search reviews={reviews} updateResults={updateSearchResults} />
                         </Grid>
-                        <Grid
-                            container
-                            xs={12}
-                            md={12}
-                            width={"100%"}
-                            justifyContent="center"
-                        >
+                        <Grid container xs={12} md={12} width={"100%"} justifyContent="center">
                             <Typography
                                 variant="h2"
                                 sx={{
@@ -296,29 +279,25 @@ function MainPage() {
                             </>
                         ) : (
                             <>
-                                <Typography
-                                    variant="h2"
-                                    sx={{ mt: 0, mb: 4, width: "100%" }}
-                                >
+                                <Typography variant="h2" sx={{ mt: 0, mb: 4, width: "100%" }}>
                                     <FormattedMessage
-                                        id="searchResults"
-                                        defaultMessage="Search Results"
+                                        id="searchReviewsText"
+                                        defaultMessage="Reviews Found"
                                     />
                                 </Typography>
                                 <Grid container spacing={2}>
                                     {searchResults.reviews
-                                        ? searchResults.reviews.map(
-                                              (result) => (
-                                                  <Grid
-                                                      item
-                                                      xs={12}
-                                                      sm={6}
-                                                      md={6}
-                                                      lg={4}
-                                                      xl={3}
-                                                      key={result.id}
-                                                  >
-                                                      {/* <ReviewCard
+                                        ? searchResults.reviews.map((result) => (
+                                              <Grid
+                                                  item
+                                                  xs={12}
+                                                  sm={6}
+                                                  md={6}
+                                                  lg={4}
+                                                  xl={3}
+                                                  key={result.id}
+                                              >
+                                                  {/* <ReviewCard
                                                           review={result}
                                                           user={user}
                                                           update={() => {
@@ -328,55 +307,37 @@ function MainPage() {
                                                               );
                                                           }}
                                                       /> */}
-                                                      <SearchResultCard
-                                                          review={result}
-                                                      />
-                                                  </Grid>
-                                              )
-                                          )
+                                                  <SearchResultCard review={result} user={user} />
+                                              </Grid>
+                                          ))
                                         : null}
+                                </Grid>
+                                <Typography variant="h2" sx={{ mt: 2, mb: 4, width: "100%" }}>
+                                    <FormattedMessage
+                                        id="searchCommentsText"
+                                        defaultMessage="Comments Found"
+                                    />
+                                </Typography>
+                                <Grid container spacing={2}>
                                     {searchResults.comments
-                                        ? searchResults.comments.map(
-                                              (result) => (
-                                                  <Grid
-                                                      item
-                                                      xs={12}
-                                                      sm={6}
-                                                      md={6}
-                                                      lg={4}
-                                                      xl={3}
-                                                      key={result.id}
-                                                  >
-                                                      <Link
-                                                          to={`/reviews/${result.id}`}
-                                                          state={{
-                                                              review: _.find(
-                                                                  reviews,
-                                                                  {
-                                                                      id: result.id,
-                                                                  }
-                                                              ),
-                                                              user: user,
-                                                          }}
-                                                      >
-                                                          {"Comments :"}
-                                                          <Typography
-                                                              variant="h2"
-                                                              sx={{
-                                                                  mb: 4,
-                                                                  mt: 2,
-                                                                  // textAlign: "center",
-                                                                  // alignSelf: "center",
-                                                                  // ml: { xs: 0, md: "-100%" },
-                                                              }}
-                                                          >
-                                                              {result.id}
-                                                              {result.content}
-                                                          </Typography>
-                                                      </Link>
-                                                  </Grid>
-                                              )
-                                          )
+                                        ? searchResults.comments.map((result) => (
+                                              <Grid
+                                                  item
+                                                  xs={12}
+                                                  sm={6}
+                                                  md={6}
+                                                  lg={4}
+                                                  xl={3}
+                                                  key={result.id}
+                                              >
+                                                  <SearchResultCard
+                                                      review={_.find(reviews, {
+                                                          id: result.reviewId,
+                                                      })}
+                                                      user={user}
+                                                  />
+                                              </Grid>
+                                          ))
                                         : null}
                                 </Grid>
                             </>

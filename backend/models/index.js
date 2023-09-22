@@ -172,6 +172,10 @@ const Comment = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        creatorName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
     { timestamps: true, constraints: false }
 );

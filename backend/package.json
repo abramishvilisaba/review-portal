@@ -29,6 +29,8 @@
         "passport-facebook2": "^1.0.3",
         "passport-github2": "^0.1.12",
         "passport-google-oauth20": "^2.0.0",
-        "sequelize": "^6.33.0"
+        "sequelize": "^6.33.0",
+        "socket.io": "^4.7.2",
+        "socket.io-client": "^4.7.2"
     }
 }

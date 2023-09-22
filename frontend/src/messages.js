@@ -8,7 +8,11 @@ const messages = {
         logout: "Log Out",
         addReview: "Add Review",
         recentlyAddedReviews: "Recently Added Reviews",
+        topReviews: "Top Rated Reviews",
         searchResults: "Search Results",
+        search: "Search",
+        searchReviewsText: "Reviews Found",
+        searchCommentsText: "Comments Found",
         reviewName: "Review Name in English",
         pieceName: "Piece Name in English",
         group: "Group",
@@ -21,8 +25,8 @@ const messages = {
         addNewReview: "Add a New Review",
         addReview: "Add Review",
         editReview: "Edit Review",
-        search: "Search",
     },
+
     ka: {
         greeting: "მიმოხილვების პორტალი",
         username: "მომხმარებელი",
@@ -32,7 +36,11 @@ const messages = {
         logout: "გასვლა",
         addReview: "მიმოხილვების დამატება",
         recentlyAddedReviews: "ბოლოს დამატებული",
+        topReviews: "ტოპ მიმოხილვები",
+        search: "ძებნა",
         searchResults: "ძებნის შედეგები",
+        searchReviewsText: "ნაპოვნი მიმოხილვები",
+        searchCommentsText: "ნაპოვნი კომენტარები",
         reviewName: "მიმოხილვის სახელი",
         pieceName: "ნაწარმოების სახელი",
         group: "კატეგორია",
@@ -45,7 +53,6 @@ const messages = {
         addNewReview: "დაამატეთ ახალი მიმოხილვა",
         addReview: "დაამატეთ მიმოხილვა",
         editReview: "ჩაასწორეთ მიმოხილვა",
-        search: "ძებნა",
     },
 };
 

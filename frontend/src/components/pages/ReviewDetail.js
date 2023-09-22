@@ -3,14 +3,10 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { getReviews, getReviewsWithRetry } from "../../services/reviewService";
 import { deleteReview } from "../../services/reviewService";
-import {
-    Box,
-    Button,
-    TextField,
-    Typography,
-    Grid,
-    Container,
-} from "@mui/material";
+import io from "socket.io-client";
+import _ from "lodash";
+
+import { Box, Button, TextField, Typography, Grid, Container } from "@mui/material";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReviewCard from "../reviewCard/ReviewCard";
@@ -24,6 +20,22 @@ const ReviewDetail = ({}) => {
 
     let { state } = useLocation();
     const { review, user } = state;
+
+    useEffect(() => {
+        const socket = io(API_URL);
+        socket.on("new-comment", (data) => {
+            loadComments();
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
+    console.log("comments", comments);
+
+    // console.log(review, user);
+
     // const fetchAndSetReviews = () => {
     //     console.log("fetchAndSetReviews");
     //     getReviews()
@@ -44,7 +56,6 @@ const ReviewDetail = ({}) => {
     //             console.error("Error loading users:", error);
     //         });
     // };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (content.length > 0) {
@@ -54,6 +65,7 @@ const ReviewDetail = ({}) => {
                 const response = await axios.post(`${API_URL}/comments`, {
                     content,
                     user_id: user.id,
+                    creator_name: user.name,
                     review_id: review.id,
                 });
                 setContent("");
@@ -195,7 +207,7 @@ const ReviewDetail = ({}) => {
                                         borderRadius: "10px",
                                     }}
                                 >
-                                    {comment.CommentCreator.displayName}
+                                    {comment.creatorName}
                                     {" : "}
                                     {comment.content}
                                 </Typography>
