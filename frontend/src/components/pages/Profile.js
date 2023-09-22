@@ -27,6 +27,8 @@ function Profile({}) {
     let { state } = useLocation();
     const userData = state.userData;
 
+    console.log(userData);
+
     const [user, setUser] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [sortOption, setSortOption] = useState(null);
@@ -103,16 +105,10 @@ function Profile({}) {
         setFilterValue(newFilterValue);
 
         const filteredReviews = reviews.filter((review) =>
-            review.reviewName
-                .toLowerCase()
-                .includes(newFilterValue.toLowerCase())
+            review.reviewName.toLowerCase().includes(newFilterValue.toLowerCase())
         );
 
-        const sortedReviews = sortReviews(
-            filteredReviews,
-            sortOrder,
-            "reviewName"
-        );
+        const sortedReviews = sortReviews(filteredReviews, sortOrder, "reviewName");
 
         setFilteredReviews(sortedReviews);
     };
@@ -149,9 +145,7 @@ function Profile({}) {
     const handleReviewDelete = async (reviewId) => {
         try {
             await deleteReview(reviewId);
-            setReviews((prevReviews) =>
-                prevReviews.filter((review) => review.id !== reviewId)
-            );
+            setReviews((prevReviews) => prevReviews.filter((review) => review.id !== reviewId));
             setFilteredReviews((prevReviews) =>
                 prevReviews.filter((review) => review.id !== reviewId)
             );
@@ -186,11 +180,7 @@ function Profile({}) {
                 {user && reviews && filteredReviews ? (
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Typography
-                                variant="h2"
-                                align="center"
-                                gutterBottom
-                            >
+                            <Typography variant="h2" align="center" gutterBottom>
                                 Profile Page {user.displayName}
                             </Typography>
                         </Grid>
@@ -276,18 +266,12 @@ function Profile({}) {
                                             text="Piece Name"
                                             name="pieceName"
                                         />
-                                        <SortableTableHeaderButton
-                                            text="Group"
-                                            name="group"
-                                        />
+                                        <SortableTableHeaderButton text="Group" name="group" />
                                         <SortableTableHeaderButton
                                             text="Creation Time"
                                             name="createdAt"
                                         />
-                                        <SortableTableHeaderButton
-                                            text="Likes"
-                                            name="likes"
-                                        />
+                                        <SortableTableHeaderButton text="Likes" name="likes" />
                                         <SortableTableHeaderButton
                                             text="Rating"
                                             name="averageRating"
@@ -301,26 +285,14 @@ function Profile({}) {
                                 <TableBody>
                                     {filteredReviews.map((review) => (
                                         <TableRow key={review.id}>
+                                            <TableCell>{review.reviewName}</TableCell>
+                                            <TableCell>{review.pieceName}</TableCell>
+                                            <TableCell>{review.group}</TableCell>
                                             <TableCell>
-                                                {review.reviewName}
+                                                {formatDateTime(review.createdAt)}
                                             </TableCell>
-                                            <TableCell>
-                                                {review.pieceName}
-                                            </TableCell>
-                                            <TableCell>
-                                                {review.group}
-                                            </TableCell>
-                                            <TableCell>
-                                                {formatDateTime(
-                                                    review.createdAt
-                                                )}
-                                            </TableCell>
-                                            <TableCell>
-                                                {review.likes}
-                                            </TableCell>
-                                            <TableCell>
-                                                {review.averageRating}
-                                            </TableCell>
+                                            <TableCell>{review.likes}</TableCell>
+                                            <TableCell>{review.averageRating}</TableCell>
                                             <TableCell>
                                                 <Button
                                                     component={Link}
@@ -351,9 +323,7 @@ function Profile({}) {
                                                 <Button
                                                     onClick={() => {
                                                         // deleteReview(review.id)
-                                                        handleReviewDelete(
-                                                            review.id
-                                                        );
+                                                        handleReviewDelete(review.id);
                                                     }}
                                                     sx={{ ml: "-14px" }}
                                                 >

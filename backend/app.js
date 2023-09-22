@@ -56,6 +56,10 @@ io.on("connection", (socket) => {
         console.log("new-comment:", data);
     });
 
+    socket.on("new-review", (data) => {
+        console.log("new-review:", data);
+    });
+
     socket.on("disconnect", () => {
         console.log("A user disconnected!");
     });
@@ -71,7 +75,7 @@ app.use("/likes", likesRoutes);
 
 app.use("/auth", authRoutes);
 
-app.use("/reviews", reviewRoutes);
+app.use("/reviews", reviewRoutes(io));
 
 app.use("/profile", profileRoutes);
 

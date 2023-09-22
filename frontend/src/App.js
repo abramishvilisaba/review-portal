@@ -15,26 +15,20 @@ import MainPage from "./components/MainPage";
 import Login from "./components/pages/Login";
 import Profile from "./components/pages/Profile";
 import ReviewDetail from "./components/pages/ReviewDetail";
+import AdminPage from "./components/pages/AdminPage";
+
 import EditReview from "./components/EditReview";
 
 import Navbar from "./Navbar";
-import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-    Navigate,
-    useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useParams } from "react-router-dom";
 
 function App() {
     const [locale, setLocale] = useState("en");
     const [currentTheme, setCurrentTheme] = useState("");
     const { theme, toggleMode, toggleLocale } = UseTheme();
-    // Set the initial locale here
     const intlMessages = messages[locale];
 
     const handleLocaleChange = (selectedLocale) => {
-        // console.log("selectedLocale", selectedLocale);
         setLocale(selectedLocale);
         toggleLocale(selectedLocale);
     };
@@ -72,19 +66,13 @@ function App() {
                     />
                     <Routes>
                         {/* <Route path="/" element={<Navigate to="/en" replace />} /> */}
-                        <Route
-                            path="/*"
-                            element={<MainPage />}
-                            slectedLocale={locale}
-                        />
+                        <Route path="/*" element={<MainPage />} slectedLocale={locale} />
 
-                        <Route
-                            path="/reviews/:reviewId"
-                            element={<ReviewDetail />}
-                        />
+                        <Route path="/reviews/:reviewId" element={<ReviewDetail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/EditReview" element={<EditReview />} />
+                        <Route path="/AdminPage" element={<AdminPage />} />
                     </Routes>
                 </Router>
                 {/* </LocalizationProvider>  */}

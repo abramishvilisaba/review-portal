@@ -45,17 +45,16 @@ function MainPage() {
     const RETRY_DELAY = 1000;
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
-    const socket = io(API_URL);
-
-    // useEffect(() => {
-    //     socket.on("new-comment", (data) => {
-    //         console.log("new-comment=======================");
-    //         console.log(data);
-    //     });
-    //     return () => {
-    //         socket.disconnect();
-    //     };
-    // }, []);
+    useEffect(() => {
+        const socket = io(API_URL);
+        socket.on("new-review", (data) => {
+            console.log("new-review");
+            fetchAndSetReviews();
+        });
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
 
     function setToken() {
         const searchParams = new URLSearchParams(location.search);
