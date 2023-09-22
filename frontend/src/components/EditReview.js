@@ -110,22 +110,6 @@ function EditReview() {
         setReviewPhoto(acceptedFiles[0]);
     };
 
-    // const updateReview = async (reviewId, updatedReviewData) => {
-    //     try {
-    //         const response = await axios.put(`${API_URL}/reviews/${reviewId}`, updatedReviewData);
-    //         if (response.status === 200) {
-    //             console.log("Review updated successfully.");
-    //             return true;
-    //         } else {
-    //             console.log("Failed to update review.");
-    //             return false;
-    //         }
-    //     } catch (error) {
-    //         console.error("Error updating review:", error);
-    //         return false;
-    //     }
-    // };
-
     return (
         <Container maxWidth="lg" width="100%">
             <Box
@@ -258,32 +242,7 @@ function EditReview() {
                         </Typography>
                     </Box>
                     {/* Tags */}
-                    {/* <Autocomplete
-                        id="tags"
-                        name="tags"
-                        multiple
-                        freeSolo
-                        options={"uniqueTags"}
-                        onChange={(event, newValue) => {
-                            setReviewData((prevData) => ({
-                                ...prevData,
-                                tags: newValue.join(","),
-                            }));
-                        }}
-                        // value={reviewData.tags}
-                        defaultValue={reviewData.tags}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label={intl.formatMessage({
-                                    id: "tags",
-                                    defaultMessage: "Tags (comma-separated)",
-                                })}
-                                fullWidth
-                                sx={{ mb: 4 }}
-                            />
-                        )}
-                    /> */}
+
                     <TextField
                         label={intl.formatMessage({
                             id: "tags",

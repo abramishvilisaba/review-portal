@@ -37,28 +37,6 @@ const ReviewDetail = ({}) => {
 
     console.log("comments", comments);
 
-    // console.log(review, user);
-
-    // const fetchAndSetReviews = () => {
-    //     console.log("fetchAndSetReviews");
-    //     getReviews()
-    //         .then((reviewData) => {
-    //             setReviews(reviewData);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error loading recently added reviews:", error);
-    //         });
-    // };
-    // const fetchAndSetUsers = () => {
-    //     console.log("fetchAndSetUsers");
-    //     getUserData()
-    //         .then((userData) => {
-    //             setUser(userData);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error loading users:", error);
-    //         });
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (content.length > 0) {
@@ -89,31 +67,6 @@ const ReviewDetail = ({}) => {
             .catch((error) => console.log("error", error));
     };
 
-    // function deleteReview() {
-    //     console.log();
-    //     console.log("delete");
-    //     console.log(`${API_URL}/reviews/delete/${review.id}`);
-    //     const token = Cookies.get("jwtToken");
-
-    //     axios
-    //         .delete(`${API_URL}/reviews/delete/${review.id}`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //         })
-    //         .then((response) => {
-    //             if (response.status === 204) {
-    //                 // navigate("/");
-    //                 console.log(response.data);
-    //             } else {
-    //                 console.log("Failed to delete review.");
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.log(`Error deleting review: ${error.message}`);
-    //         });
-    // }
-
     useEffect(() => {
         loadComments();
     }, []);
@@ -137,21 +90,7 @@ const ReviewDetail = ({}) => {
                     mt: 8,
                 }}
             >
-                {/* <Button
-                    variant="contained"
-                    color="error"
-                    startIcon={<DeleteIcon />}
-                    onClick={deleteReview}
-                >
-                    Delete Review
-                </Button> */}
                 <Box sx={{ width: "2/3" }}>
-                    {/* <ReviewCard
-                        review={review}
-                        user={user}
-                        size={400}
-                        reviewDetail={true}
-                    /> */}
                     <ReviewCard
                         review={review}
                         user={user}
@@ -214,9 +153,6 @@ const ReviewDetail = ({}) => {
                                     {" : "}
                                     {comment.content}
                                 </Typography>
-                                {/* <Typography align="center">
-                                    {comment.content}
-                                </Typography> */}
                             </Box>
                         );
                     })}

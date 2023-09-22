@@ -223,24 +223,6 @@ function MainPage() {
                         </Link>
                     </Grid>
                 )}
-                {/* {!user && (
-                    <Grid item xs={12} md={6}>
-                        <Link to={`/login`} state={""}>
-                            <Button
-                                variant="contained"
-                                onClick={() => console.log("login")}
-                                sx={{
-                                    borderRadius: "100px",
-                                    border: "1px none ##7670FC",
-                                    px: 2,
-                                    py: 1,
-                                }}
-                            >
-                                <FormattedMessage id="login" defaultMessage="Login" />
-                            </Button>
-                        </Link>
-                    </Grid>
-                )} */}
             </Grid>
             {showAddForm && (
                 <AddReview
