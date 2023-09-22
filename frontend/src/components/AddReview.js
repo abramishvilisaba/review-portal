@@ -109,7 +109,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                     });
                     setLoading(false);
                     onAddReview();
-                }, 6000);
+                }, 8000);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);
