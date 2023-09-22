@@ -3,7 +3,7 @@ import axios from "axios";
 import { Input, Box, Button } from "@mui/material";
 import { IntlProvider, FormattedMessage, FilteredMessage } from "react-intl";
 
-function Search({ updateResults }) {
+function Search({ updateResults, searchTag }) {
     const [query, setQuery] = useState("");
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 

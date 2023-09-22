@@ -7,25 +7,12 @@ const crypto = require("crypto");
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || "http://localhost:3000";
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
-// const { User } = require("../models");
 const { User, Review, Comment, UserReviewLikes, UserReviewRatings } = require("../models");
 
 const router = express.Router();
 
 const secretKey = "secret-key";
 const jwtSecret = process.env.JWT_SECRET || "secret";
-
-function generateIdFromEmail(email) {
-    const hash = crypto
-        .createHash("sha256")
-        .update(email.toLowerCase() + secretKey)
-        .digest("hex");
-    console.log("hashhh");
-    console.log(parseInt(hash, 14));
-    const numericId = parseInt(hash.substring(0, 12), 16);
-    console.log(numericId);
-    return numericId;
-}
 
 async function createUser(newUser) {
     try {
@@ -56,11 +43,9 @@ router.get(
                 displayName: res.req.user.displayName,
                 profileId: res.req.user.id,
             };
-            console.log("newUser", newUser);
             const existingUser = await User.findOne({
                 where: { profileId: newUser.profileId },
             });
-            console.log("existingUser", existingUser);
             if (existingUser) {
                 const userId = existingUser.id;
                 newUser.id = userId;
@@ -69,7 +54,6 @@ router.get(
                 const userId = createdUser.id;
                 newUser.id = userId;
             }
-            console.log("newUser", newUser);
             const jwtToken = jwt.sign(newUser, jwtSecret, { expiresIn: "4h" });
             res.cookie("jwtToken", jwtToken, {
                 httpOnly: false,
@@ -80,7 +64,6 @@ router.get(
             res.redirect(
                 `${ALLOWED_ORIGINS}/dashboard/?message=Login%20successful&jwtToken=${encodedJwtToken}`
             );
-            // res.redirect(`${ALLOWED_ORIGINS}`);
         } catch (error) {
             console.log("logging in error: ", error);
         }
@@ -96,11 +79,10 @@ router.get(
                 displayName: res.req.user.displayName,
                 profileId: res.req.user.id,
             };
-            console.log("newUser", newUser);
             const existingUser = await User.findOne({
                 where: { profileId: newUser.profileId },
             });
-            console.log("existingUser", existingUser);
+
             if (existingUser) {
                 const userId = existingUser.id;
                 newUser.id = userId;
@@ -109,17 +91,16 @@ router.get(
                 const userId = createdUser.id;
                 newUser.id = userId;
             }
+
             const jwtToken = jwt.sign(newUser, jwtSecret, { expiresIn: "4h" });
             res.cookie("jwtToken", jwtToken, {
                 httpOnly: false,
                 maxAge: 1000 * 60 * 60 * 4,
             });
             const encodedJwtToken = encodeURIComponent(jwtToken);
-
             res.redirect(
                 `${ALLOWED_ORIGINS}/dashboard/?message=Login%20successful&jwtToken=${encodedJwtToken}`
             );
-            // res.redirect(`${ALLOWED_ORIGINS}`);
         } catch (error) {
             console.log("logging in error: ", error);
         }
@@ -145,10 +126,6 @@ router.get("/getuserdata", async (req, res) => {
         const ratedReviews = await UserReviewRatings.findAll({
             where: { userId },
             attributes: ["reviewId", "rating"],
-        });
-
-        ratedReviews.forEach((element, i) => {
-            console.log("--------------------------------------------------");
         });
 
         res.status(200).json({

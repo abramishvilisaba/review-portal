@@ -28,7 +28,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { styled } from "@mui/system";
 import messages from "../../messages";
 
-function ReviewCard({ review, user, update, size = 350, reviewDetail = false }) {
+function ReviewCard({ review, user, update, size = 350, reviewDetail = false, handleTagClick }) {
     const [userRating, setUserRating] = useState(0);
     const [liked, setLiked] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
@@ -95,9 +95,6 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false }) 
         }
     };
 
-    const handleTagClick = async (tag) => {
-        console.log(tag);
-    };
     const submitRating = async (rating, e) => {
         e.preventDefault();
         setUserRating(rating);
@@ -309,7 +306,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false }) 
                             >
                                 <ReviewTags
                                     tags={review.tags}
-                                    onClick={(tag) => handleTagClick(tag)}
+                                    handleTagClick={(tag) => handleTagClick(tag)}
                                 />
                             </Grid>
                         </Grid>

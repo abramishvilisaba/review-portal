@@ -3,33 +3,11 @@ const router = express.Router();
 const { Sequelize } = require("sequelize");
 const { Op, fn, col } = require("sequelize");
 
-const {
-    User,
-    Review,
-    Comment,
-    UserReviewLikes,
-    UserReviewRatings,
-} = require("../models");
+const { User, Review, Comment, UserReviewLikes, UserReviewRatings } = require("../models");
 
 router.get("/", async (req, res) => {
     const { query } = req.query;
     console.log("------------search-------------");
-    // console.log(query);
-
-    // try {
-    //     const results = await Review.findAll({
-    //         where: {
-    //             reviewName: {
-    //                 [Op.like]: `%${query}%`,
-    //             },
-    //         },
-    //     });
-
-    //     res.json({ results });
-    // } catch (error) {
-    //     console.error("Error searching reviews:", error);
-    //     res.status(500).json({ error: "Internal Server Error" });
-    // }
     try {
         const reviews = await Review.findAll({
             where: {
@@ -65,7 +43,6 @@ router.get("/", async (req, res) => {
                 },
             },
         });
-        // console.log(reviews, comments);
         res.json({
             reviews: reviews,
             comments: comments,

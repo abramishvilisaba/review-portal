@@ -77,23 +77,21 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
         event.preventDefault();
         setLoading(true);
 
-        const { reviewName, pieceName, reviewText, creatorGrade, reviewPhoto, tags, group } =
-            reviewData;
+        // const { reviewName, pieceName, reviewText, creatorGrade, reviewPhoto, tags, group } =
+        //     reviewData;
 
         axios
             .post(`${API_URL}/reviews`, {
-                creatorId: userId,
-                reviewName: reviewName,
-                pieceName: pieceName,
-                creatorGrade: creatorGrade,
-                reviewText: reviewText,
-                tags: [tags],
-                group: group,
+                reviewData,
             })
             .then((response) => {
                 console.log("User review stored:", response.data);
-                if (reviewPhoto) {
-                    uploadPhoto(reviewPhoto, response.data.reviewId, reviewName);
+                if (reviewData.reviewPhoto) {
+                    uploadPhoto(
+                        reviewData.reviewPhoto,
+                        response.data.reviewId,
+                        reviewData.reviewName
+                    );
                 }
                 setTimeout(() => {
                     setReviewData({

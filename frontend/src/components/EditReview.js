@@ -87,8 +87,6 @@ function EditReview() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("submit", reviewData);
-        console.log(`${API_URL}/reviews/${reviewData.id}`);
         setLoading(true);
         axios
             .put(`${API_URL}/reviews/${reviewData.id}`, {
@@ -113,21 +111,21 @@ function EditReview() {
         setReviewPhoto(acceptedFiles[0]);
     };
 
-    const updateReview = async (reviewId, updatedReviewData) => {
-        try {
-            const response = await axios.put(`${API_URL}/reviews/${reviewId}`, updatedReviewData);
-            if (response.status === 200) {
-                console.log("Review updated successfully.");
-                return true;
-            } else {
-                console.log("Failed to update review.");
-                return false;
-            }
-        } catch (error) {
-            console.error("Error updating review:", error);
-            return false;
-        }
-    };
+    // const updateReview = async (reviewId, updatedReviewData) => {
+    //     try {
+    //         const response = await axios.put(`${API_URL}/reviews/${reviewId}`, updatedReviewData);
+    //         if (response.status === 200) {
+    //             console.log("Review updated successfully.");
+    //             return true;
+    //         } else {
+    //             console.log("Failed to update review.");
+    //             return false;
+    //         }
+    //     } catch (error) {
+    //         console.error("Error updating review:", error);
+    //         return false;
+    //     }
+    // };
 
     return (
         <Container maxWidth="lg" width="100%">

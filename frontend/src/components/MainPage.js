@@ -104,6 +104,8 @@ function MainPage() {
             });
     };
 
+    // const updateQuery = (newQuery) => {};
+
     const handleAddReview = (newReview) => {
         console.log("review added");
         setShowAddForm(false);
@@ -113,6 +115,10 @@ function MainPage() {
     const updateSearchResults = (results) => {
         console.log("results", results);
         setSearchResults(results);
+    };
+
+    const searchTag = (tag) => {
+        return tag;
     };
 
     let theme = UseTheme().theme;
@@ -136,10 +142,14 @@ function MainPage() {
             </Typography>
             {/* {title and buttons} */}
 
-            <Grid container spacing={2} marginBottom={4} alignItems="center" width={"100%"}>
+            <Grid container spacing={2} marginBottom={2} alignItems="center" width={"100%"}>
                 <Grid item xs={12} md={6}>
-                    <Grid xs={12} md={12} width={"100%"}>
-                        <Search reviews={reviews} updateResults={updateSearchResults} />
+                    <Grid width={"100%"}>
+                        <Search
+                            reviews={reviews}
+                            updateResults={updateSearchResults}
+                            searchTag={["1", "2", "3"]}
+                        />
                     </Grid>
                 </Grid>
                 {user ? (
@@ -278,6 +288,7 @@ function MainPage() {
                                             <ReviewCard
                                                 review={review}
                                                 user={user}
+                                                handleTagClick={(tag) => searchTag(tag)}
                                                 update={() => {
                                                     fetchAndSetReviews();
                                                     console.log("update");

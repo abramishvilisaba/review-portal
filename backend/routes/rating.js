@@ -2,25 +2,6 @@ const express = require("express");
 const { UserReviewRatings } = require("../models");
 const router = express.Router();
 
-// router.post("/", async (req, res) => {
-//     console.log("params", req.body);
-
-//     const { userId, reviewId, rating } = req.body;
-
-//     try {
-//         const newRating = await UserReviewRatings.create({
-//             userId,
-//             reviewId,
-//             rating,
-//         });
-
-//         res.json(newRating);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ error: error.message });
-//     }
-// });
-
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { rating } = req.body;
@@ -37,9 +18,6 @@ router.put("/:id", async (req, res) => {
             res.status(404).json({ error: "Rating not found" });
         }
     } catch (error) {
-        console.log(
-            "=================================================================="
-        );
         console.log(error);
         res.status(500).json({ error: error.message });
     }
@@ -67,9 +45,7 @@ router.post("/", async (req, res) => {
             res.json(newRating);
         }
     } catch (error) {
-        console.log(
-            "=================================================================="
-        );
+        console.log("==================================================================");
         console.log(error);
         res.status(500).json({ error: error.message });
     }

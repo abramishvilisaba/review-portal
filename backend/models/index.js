@@ -3,14 +3,7 @@ const { Client } = require("@planet/client");
 require("dotenv").config();
 const url = require("url");
 
-// const config = require("../db/config");
-
-// const sequelize = new Sequelize(config.development);
-
-// PlanetScale connection string
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-    // dialect: "mysql",
-
     dialectOptions: {
         ssl: {
             rejectUnauthorized: true,
@@ -18,37 +11,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     },
     logging: false,
 });
-
-// const planetClient = new Client({
-//     apiKey: process.env.PLANETSCALE_API_KEY,
-// });
-
-// async function fetchDatabaseDetails() {
-//     try {
-//         const databaseDetails = await planetClient.getDatabase({
-//             organization: "your_organization_name",
-//             database: "your_database_name",
-//         });
-//         // Handle the database details here
-//     } catch (error) {
-//         // Handle any errors that occur during the database retrieval
-//         console.error(error);
-//     }
-// }
-// fetchDatabaseDetails();
-
-// const sequelize = new Sequelize({
-//     database: databaseDetails.name,
-//     username: databaseDetails.username,
-//     password: databaseDetails.password,
-//     host: databaseDetails.hosts[0].hostname, // Use the first host
-//     port: databaseDetails.hosts[0].port, // Use the first host's port
-//     dialect: "mysql", // or the appropriate dialect for your database
-//     dialectOptions: {
-//         ssl: false, // Set to true if your database requires SSL
-//     },
-//     logging: false, // Disable logging or configure it as needed
-// });
 
 const User = sequelize.define(
     "User",
@@ -217,48 +179,6 @@ const UserReviewRatings = sequelize.define(
     },
     { timestamps: true, constraints: false }
 );
-
-// UserReviewLikes.belongsTo(Review, { foreignKey: "reviewId" });
-// Review.hasMany(UserReviewLikes, { foreignKey: "reviewId" });
-
-// User.hasMany(Review, { foreignKey: "creatorId", as: "ReviewsCreated" });
-// Review.belongsTo(User, { foreignKey: "creatorId", as: "ReviewCreator" });
-
-// Review.hasMany(Comment, { foreignKey: "reviewId", as: "ReviewComments" });
-// Comment.belongsTo(Review, { foreignKey: "reviewId", as: "Review" });
-
-// User.hasMany(Comment, { foreignKey: "userId", as: "UserComments" });
-// Comment.belongsTo(User, { foreignKey: "userId", as: "CommentCreator" });
-
-// User.belongsToMany(Review, {
-//     through: UserReviewRatings,
-//     as: "RatedReviews",
-//     foreignKey: "userId",
-// });
-// Review.belongsToMany(User, {
-//     through: UserReviewRatings,
-//     as: "Raters",
-//     foreignKey: "reviewId",
-// });
-// Review.hasMany(UserReviewRatings, {
-//     foreignKey: "reviewId",
-//     as: "Ratings",
-// });
-
-// UserReviewRatings.belongsTo(Review, {
-//     foreignKey: "reviewId",
-// });
-
-// User.belongsToMany(Review, {
-//     through: UserReviewLikes,
-//     as: "LikedReviews",
-//     foreignKey: "userId",
-// });
-// Review.belongsToMany(User, {
-//     through: UserReviewLikes,
-//     as: "Likers",
-//     foreignKey: "reviewId",
-// });
 
 User.hasMany(Review, {
     foreignKey: "creatorId",

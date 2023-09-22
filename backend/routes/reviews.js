@@ -14,9 +14,7 @@ module.exports = (io) => {
         try {
             console.log("post reviews");
             const { creatorId, creatorGrade, reviewText, reviewName, pieceName, group, tags } =
-                req.body;
-            console.log("--------------------------------------");
-            console.log(req.body);
+                req.body.reviewData;
             const createdReview = await Review.create({
                 creatorId: creatorId,
                 reviewName: reviewName,
@@ -24,9 +22,8 @@ module.exports = (io) => {
                 group: group,
                 reviewText: reviewText,
                 creatorGrade: creatorGrade,
-                tags: tags,
+                tags: [tags],
             });
-            console.log("createdReview", createdReview);
             io.emit("new-review", { createdReview });
 
             res.status(200).json({
@@ -48,14 +45,10 @@ module.exports = (io) => {
             const reviewId = req.params.reviewId;
             const { reviewName, pieceName, group, reviewText, creatorGrade, tags } =
                 req.body.reviewData;
-            console.log("updating");
-            console.log(reviewName, pieceName, group, reviewText, creatorGrade, tags);
             const existingReview = await Review.findByPk(reviewId);
-            console.log(existingReview);
             if (!existingReview) {
                 return res.status(404).json({ message: "Review not found" });
             }
-            console.log(reviewName);
 
             existingReview.reviewName = reviewName;
             existingReview.pieceName = pieceName;
@@ -63,6 +56,7 @@ module.exports = (io) => {
             existingReview.reviewText = reviewText;
             existingReview.creatorGrade = creatorGrade;
             existingReview.tags = [tags];
+
             await existingReview.save();
             io.emit("new-review", { existingReview });
             res.status(200).json({ message: "Review updated successfully" });
@@ -86,7 +80,6 @@ module.exports = (io) => {
                 const ratings = await UserReviewRatings.findAll({
                     where: { reviewId: review.id },
                 });
-                console.log(ratings);
                 if (ratings.length > 0) {
                     const totalRating = _.sumBy(ratings, "rating");
                     review.dataValues.averageRating = (totalRating / ratings.length).toFixed(1);
@@ -96,8 +89,6 @@ module.exports = (io) => {
             });
 
             await Promise.all(ratingPromises);
-            // console.log(recentlyAddedReviews);
-
             res.status(200).json(recentlyAddedReviews);
         } catch (error) {
             console.error("Error loading recently added reviews:", error);

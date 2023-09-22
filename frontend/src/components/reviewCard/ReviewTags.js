@@ -1,7 +1,7 @@
 import React from "react";
 import { Chip, Grid } from "@mui/material";
 
-function ReviewTags({ tags, onClick }) {
+function ReviewTags({ tags, handleTagClick }) {
     return tags ? (
         <Grid
             container
@@ -26,7 +26,7 @@ function ReviewTags({ tags, onClick }) {
                             }}
                             color="secondary"
                             // color="#DFA18A"
-                            onClick={() => onClick(tag)}
+                            onClick={() => handleTagClick(tag)}
                         />
                     </Grid>
                 ) : null

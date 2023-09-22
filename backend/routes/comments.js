@@ -7,7 +7,6 @@ module.exports = (io) => {
     router.post("/", async (req, res) => {
         try {
             console.log("post/");
-            console.log(req.body);
             const { content, user_id, creator_name, review_id } = req.body;
             const comment = await Comment.create({
                 content: content,

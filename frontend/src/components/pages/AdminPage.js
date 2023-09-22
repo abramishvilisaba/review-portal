@@ -73,7 +73,6 @@ function AdminPage() {
                         <TableRow>
                             <TableCell>User ID</TableCell>
                             <TableCell>Username</TableCell>
-                            <TableCell>Email</TableCell>
                             <TableCell style={actionButtonStyle}>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -81,8 +80,7 @@ function AdminPage() {
                         {users.map((user) => (
                             <TableRow key={user.id}>
                                 <TableCell>{user.id}</TableCell>
-                                <TableCell>{user.username}</TableCell>
-                                <TableCell>{user.email}</TableCell>
+                                <TableCell>{user.displayName}</TableCell>
                                 <TableCell>
                                     <Link to={`/profile`} state={{ userData: user }}>
                                         <Button
