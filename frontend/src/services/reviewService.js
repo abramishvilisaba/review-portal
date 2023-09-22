@@ -13,10 +13,7 @@ export async function getReviews() {
     }
 }
 export async function deleteReview(reviewId) {
-    console.log("delete");
-    console.log(`${API_URL}/reviews/delete/${reviewId}`);
     const token = Cookies.get("jwtToken");
-
     axios
         .delete(`${API_URL}/reviews/delete/${reviewId}`, {
             headers: {

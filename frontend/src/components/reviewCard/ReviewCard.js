@@ -62,10 +62,12 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false }) 
                     setUserRating(ratingObj.rating);
                 }
             }
-            if (user.likedReviews.includes(review.id)) {
-                setLiked(true);
-            } else {
-                setLiked(false);
+            if (user.likedReviews) {
+                if (user.likedReviews.includes(review.id)) {
+                    setLiked(true);
+                } else {
+                    setLiked(false);
+                }
             }
         }
     }, [user]);

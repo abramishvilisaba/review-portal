@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 import {
     Button,
     Table,
@@ -13,10 +16,36 @@ import {
 
 function AdminPage() {
     const [users, setUsers] = useState([]);
+    const API_URL = process.env.REACT_APP_API_URL;
 
     useEffect(() => {}, []);
 
     const navigateToUserProfile = (userId) => {};
+
+    function fetchUserData() {
+        const token = Cookies.get("adminToken");
+
+        axios
+            .get(`${API_URL}/admin/users`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                const userData = response.data;
+                console.log("Fetched user data:", userData);
+                setUsers(userData);
+            })
+            .catch((error) => {
+                console.error("Error fetching user data:", error);
+            });
+    }
+
+    useEffect(() => {
+        fetchUserData();
+    }, []);
+
+    console.log(users);
 
     const containerStyle = {
         maxWidth: "50%",
@@ -55,14 +84,16 @@ function AdminPage() {
                                 <TableCell>{user.username}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={() => navigateToUserProfile(user.id)}
-                                        style={actionButtonStyle}
-                                    >
-                                        View Profile
-                                    </Button>
+                                    <Link to={`/profile`} state={{ userData: user }}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => navigateToUserProfile(user.id)}
+                                            style={actionButtonStyle}
+                                        >
+                                            View Profile
+                                        </Button>
+                                    </Link>
                                 </TableCell>
                             </TableRow>
                         ))}

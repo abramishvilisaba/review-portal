@@ -19,7 +19,10 @@ const ReviewDetail = ({}) => {
     const navigate = useNavigate();
 
     let { state } = useLocation();
+
     const { review, user } = state;
+
+    console.log("review, user", review, user);
 
     useEffect(() => {
         const socket = io(API_URL);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography, Box } from "@mui/material";
 import { BrowserRouter, Route, Routes, useNavigate, Link } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
@@ -77,14 +77,16 @@ function Login() {
             >
                 Login with Github
             </Button>
+
             <Link to={`/AdminLogin`}>
                 <Button
                     variant="contained"
                     color="primary"
+
                     // onClick={}
-                    sx={{ width: { xs: "60%", sm: "40%", md: "25%", lg: "20%" } }}
+                    // sx={{ width: { xs: "60%", sm: "40%", md: "25%", lg: "20%" } }}
                 >
-                    Login
+                    Admin Login
                 </Button>
             </Link>
         </Container>
