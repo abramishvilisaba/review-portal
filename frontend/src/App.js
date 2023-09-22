@@ -72,7 +72,8 @@ function App() {
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/EditReview" element={<EditReview />} />
                         <Route path="/AdminPage" element={<AdminPage />} />
-                        <Route path="/*" element={<MainPage />} slectedLocale={locale} />
+                        <Route path="/" element={<MainPage />} slectedLocale={locale} />
+                        <Route path="/dashboard/*" element={<MainPage />} slectedLocale={locale} />
                     </Routes>
                 </Router>
                 {/* </LocalizationProvider>  */}

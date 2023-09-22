@@ -8,13 +8,7 @@ const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || "http://localhost:3000";
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 // const { User } = require("../models");
-const {
-    User,
-    Review,
-    Comment,
-    UserReviewLikes,
-    UserReviewRatings,
-} = require("../models");
+const { User, Review, Comment, UserReviewLikes, UserReviewRatings } = require("../models");
 
 const router = express.Router();
 
@@ -49,10 +43,7 @@ router.get(
     })
 );
 
-router.get(
-    "/github",
-    githubPassport.authenticate("github", { scope: ["user:email"] })
-);
+router.get("/github", githubPassport.authenticate("github", { scope: ["user:email"] }));
 
 // router.get(
 //     "/facebook",
@@ -107,7 +98,7 @@ router.get(
             const encodedJwtToken = encodeURIComponent(jwtToken);
 
             res.redirect(
-                `${ALLOWED_ORIGINS}/dashboard?message=Login%20successful&jwtToken=${encodedJwtToken}`
+                `${ALLOWED_ORIGINS}/dashboard/?message=Login%20successful&jwtToken=${encodedJwtToken}`
             );
             // res.redirect(`${ALLOWED_ORIGINS}`);
         } catch (error) {
@@ -147,7 +138,7 @@ router.get(
             const encodedJwtToken = encodeURIComponent(jwtToken);
 
             res.redirect(
-                `${ALLOWED_ORIGINS}/dashboard?message=Login%20successful&jwtToken=${encodedJwtToken}`
+                `${ALLOWED_ORIGINS}/dashboard/?message=Login%20successful&jwtToken=${encodedJwtToken}`
             );
             // res.redirect(`${ALLOWED_ORIGINS}`);
         } catch (error) {
@@ -220,9 +211,7 @@ router.get("/getuserdata", async (req, res) => {
             userName: decoded.displayName,
             userEmail: decoded.email,
             userId: decoded.id,
-            likedReviews: likedReviews.map(
-                (review) => review.dataValues.reviewId
-            ),
+            likedReviews: likedReviews.map((review) => review.dataValues.reviewId),
             ratedReviews: ratedReviews.map((rating) => ({
                 reviewId: rating.dataValues.reviewId,
                 rating: rating.dataValues.rating,
