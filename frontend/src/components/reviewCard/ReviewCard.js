@@ -116,12 +116,25 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
         }
     };
 
-    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.reviewName}/${review.id}.jpg`;
+    const url = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/${review.id}.jpg`;
     const alturl = "https://res.cloudinary.com/dp30nyp5m/image/upload/v1695340392/review2.jpg";
     const [imageSrc, setImageSrc] = useState(url);
+
+    let canRun = true;
     const handleImageError = () => {
-        setImageSrc(alturl);
+        if (canRun) {
+            canRun = false;
+            setTimeout(() => {
+                if (canRun) {
+                    setImageSrc(alturl);
+                } else {
+                    setImageSrc(url);
+                    canRun = true;
+                }
+            }, 5000);
+        }
     };
+
     // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
 
     const CustomCardMedia = () => {

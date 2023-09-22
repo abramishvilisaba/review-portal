@@ -26,6 +26,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
     const intl = useIntl();
 
     const [reviewData, setReviewData] = useState({
+        creatorId: userId,
         reviewName: "",
         pieceName: "",
         reviewText: "",
@@ -58,8 +59,9 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
         try {
             const formData = new FormData();
             const id = reviewName + "/" + reviewId.toString();
-            formData.append("image", reviewPhoto);
             formData.append("id", id);
+            formData.append("image", reviewPhoto);
+
             axios
                 .post(`${API_URL}/upload/photo`, formData)
                 .then((res) => {
@@ -87,6 +89,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
             .then((response) => {
                 console.log("User review stored:", response.data);
                 if (reviewData.reviewPhoto) {
+                    console.log("uploading");
                     uploadPhoto(
                         reviewData.reviewPhoto,
                         response.data.reviewId,
@@ -95,6 +98,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                 }
                 setTimeout(() => {
                     setReviewData({
+                        creatorId: userId,
                         reviewName: "",
                         pieceName: "",
                         reviewText: "",

@@ -13,11 +13,17 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post("/photo", upload.single("image"), (req, res) => {
+router.post("/photo", upload.single("image"), async (req, res) => {
     console.log("/photo");
 
     const file = req.file;
     const id = req.body.id;
+
+    try {
+        await cloudinary.uploader.destroy(id, { invalidate: true });
+    } catch (deleteError) {
+        console.error("Error deleting existing image:", deleteError);
+    }
 
     const transformOptions = {
         width: 1000,
@@ -50,5 +56,24 @@ router.post("/photo", upload.single("image"), (req, res) => {
         )
         .end(file.buffer);
 });
+
+// router.post("/rename-image", async (req, res) => {
+//     try {
+//         const { oldPublicId, newPublicId } = req.body;
+
+//         cloudinary.uploader.rename(oldPublicId, newPublicId, (error, result) => {
+//             if (error) {
+//                 console.error("Error renaming image:", error);
+//                 res.status(500).json({ error: "Error renaming image" });
+//             } else {
+//                 console.log("Image renamed successfully:", result);
+//                 res.status(200).json({ message: "Image renamed successfully" });
+//             }
+//         });
+//     } catch (error) {
+//         console.error("Error:", error);
+//         res.status(500).json({ error: "Internal server error" });
+//     }
+// });
 
 module.exports = router;

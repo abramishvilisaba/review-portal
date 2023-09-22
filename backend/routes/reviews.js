@@ -4,6 +4,14 @@ const _ = require("lodash");
 const { Sequelize } = require("sequelize");
 const db = require("../db/connection");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+});
 
 const { User, Review, Comment, UserReviewLikes, UserReviewRatings } = require("../models");
 
@@ -15,6 +23,7 @@ module.exports = (io) => {
             console.log("post reviews");
             const { creatorId, creatorGrade, reviewText, reviewName, pieceName, group, tags } =
                 req.body.reviewData;
+            console.log(creatorId, creatorGrade, reviewText, reviewName, pieceName, group, tags);
             const createdReview = await Review.create({
                 creatorId: creatorId,
                 reviewName: reviewName,

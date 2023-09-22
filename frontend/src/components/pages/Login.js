@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Routes, useNavigate, Link } from "react-router-do
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
-    console.log("login");
     const handleGoogleLogin = () => {
         const loginUrl = `${API_URL}/auth/google`;
         window.location.href = loginUrl;
@@ -15,37 +14,8 @@ function Login() {
     const handleGithubLogin = () => {
         const loginUrl = `${API_URL}/auth/github`;
         window.location.href = loginUrl;
-
         // window.open(loginUrl, "_blank");
     };
-
-    // handleGithubLogin;
-
-    // const handleAuthenticationResponse = () => {
-    //     console.log("handleAuthenticationResponse");
-    //     const urlParams = new URLSearchParams(window.location.search);
-    //     if (urlParams.has("jwtToken")) {
-    //         const jwtToken = urlParams.get("jwtToken");
-    //         localStorage.setItem("jwtToken", jwtToken);
-    //         window.location.href = `${ALLOWED_ORIGINS}/dashboard`;
-    //     } else {
-    //         console.log("Authentication failed");
-    //     }
-    // };
-
-    // handleAuthenticationResponse();
-
-    // const handleGoogleLogin = () => {
-    //     const url = `${API_URL}/auth/google`;
-    //     window.open(url, "_blank");
-    // };
-
-    // return (
-    //     <div>
-    //         <h2>Login Page</h2>
-    //         <button onClick={handleGoogleLogin}>Login with Google</button>
-    //     </div>
-    // );
 
     return (
         <Container

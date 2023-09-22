@@ -28,6 +28,7 @@ function EditReview() {
     const [prevReviewData, setPrevReviewData] = useState({});
     const [reviewData, setReviewData] = useState({});
     const [reviewPhoto, setReviewPhoto] = useState(null);
+    const [oldPublicId, setOldPublicId] = useState(null);
 
     const navigate = useNavigate();
     let { state } = useLocation();
@@ -37,8 +38,6 @@ function EditReview() {
 
     // console.log(review);
     // console.log(user);
-    console.log(reviewData);
-    console.log(reviewPhoto);
 
     const [loading, setLoading] = useState(false);
 
@@ -68,8 +67,8 @@ function EditReview() {
     const uploadPhoto = (reviewPhoto, reviewId, reviewName) => {
         try {
             const formData = new FormData();
-            const id = reviewName + "/" + reviewId.toString();
-            console.log(id);
+            // const id = reviewName + "/" + reviewId.toString();
+            const id = reviewId;
             formData.append("image", reviewPhoto);
             formData.append("id", id);
             axios
@@ -84,7 +83,7 @@ function EditReview() {
             console.log("error uploading photo", error);
         }
     };
-
+    console.log(reviewData);
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -94,8 +93,8 @@ function EditReview() {
             })
             .then((response) => {
                 console.log("User review stored:", response.data);
-                if (reviewData.reviewPhoto) {
-                    uploadPhoto(reviewPhoto, response.data.reviewId, reviewData.reviewName);
+                if (reviewPhoto) {
+                    uploadPhoto(reviewPhoto, reviewData.id, reviewData.reviewName);
                 }
                 setTimeout(() => {
                     setLoading(false);
@@ -185,7 +184,8 @@ function EditReview() {
                                 id: "group",
                                 defaultMessage: "Group",
                             })}
-                            value={review.group}
+                            value={reviewData.group}
+                            defaultValue={review.group}
                             focused={"true"}
                             // defaultOpen={"false"}
                             onChange={handleInputChange}
