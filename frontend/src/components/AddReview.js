@@ -12,16 +12,17 @@ import {
     InputLabel,
     Select,
     MenuItem,
+    Autocomplete,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
 import Dropzone from "react-dropzone";
 import { useIntl, FormattedMessage } from "react-intl";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
-import Autocomplete from "@mui/material/Autocomplete";
 // import _ from "lodash";
+import CloseIcon from "@mui/icons-material/Close";
 
-function AddReview({ userId, onAddReview, uniqueTags }) {
+function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
     const intl = useIntl();
 
     const [reviewData, setReviewData] = useState({
@@ -133,9 +134,23 @@ function AddReview({ userId, onAddReview, uniqueTags }) {
                     borderRadius: "8px",
                 }}
             >
-                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 4, textAlign: "start" }}>
-                    <FormattedMessage id="addNewReview" defaultMessage="Add a New Review" />
-                </Typography>
+                <Box
+                    width={"100%"}
+                    sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}
+                >
+                    <Typography
+                        variant="h5"
+                        fontSize="32px"
+                        sx={{ fontWeight: "bold", mb: 6, textAlign: "start" }}
+                    >
+                        <FormattedMessage id="addNewReview" defaultMessage="Add a New Review" />
+                    </Typography>
+                    <CloseIcon
+                        onClick={onCloseForm}
+                        fontSize="large"
+                        sx={{ textAlign: "right", cursor: "pointer" }}
+                    />
+                </Box>
 
                 <form onSubmit={handleSubmit}>
                     {/* Review Name */}

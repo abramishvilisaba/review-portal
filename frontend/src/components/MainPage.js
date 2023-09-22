@@ -27,6 +27,7 @@ import ReviewCard from "./reviewCard/ReviewCard";
 import SearchResultCard from "./reviewCard/SearchResultCard";
 import AddReview from "./AddReview";
 import Search from "./Search";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { getReviews, getReviewsWithRetry } from "../services/reviewService";
 import { getUserData, logOut } from "../services/userService";
@@ -134,111 +135,122 @@ function MainPage() {
                 <FormattedMessage id="greeting" defaultMessage="Review Portal" />
             </Typography>
             {/* {title and buttons} */}
-            {reviews && (
-                <>
-                    <Grid container spacing={2} marginBottom={4} alignItems="center">
-                        {user && (
-                            <>
-                                <Grid item>
-                                    <Link to={`/profile`} state={{ userData: user }}>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "100px",
-                                                border: "1px none ##7670FC",
-                                                px: 2,
-                                                py: 1,
-                                            }}
-                                        >
-                                            <FormattedMessage
-                                                id="profile"
-                                                defaultMessage="Profile"
-                                            />
-                                        </Button>
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        variant="contained"
-                                        sx={{
-                                            borderRadius: "100px",
-                                            border: "1px none ##7670FC",
-                                            px: 2,
-                                            py: 1,
-                                        }}
-                                        onClick={() => {
-                                            logOut();
-                                            setUser(null);
-                                        }}
-                                    >
-                                        <FormattedMessage id="logout" defaultMessage="Logout" />
-                                    </Button>
-                                </Grid>
-                                {!showAddForm && (
-                                    <Grid item>
-                                        <Button
-                                            variant="contained"
-                                            onClick={() => setShowAddForm(true)}
-                                            sx={{
-                                                borderRadius: "100px",
-                                                border: "1px none ##7670FC",
-                                                px: 2,
-                                                py: 1,
-                                            }}
-                                        >
-                                            <FormattedMessage
-                                                id="addReview"
-                                                defaultMessage="addReview"
-                                            />
-                                        </Button>
-                                    </Grid>
-                                )}
-                            </>
-                        )}
-                        {!user && (
-                            <Grid item>
-                                <Link to={`/login`} state={""}>
-                                    <Button
-                                        variant="contained"
-                                        onClick={() => console.log("login")}
-                                        sx={{
-                                            borderRadius: "100px",
-                                            border: "1px none ##7670FC",
-                                            px: 2,
-                                            py: 1,
-                                        }}
-                                    >
-                                        <FormattedMessage id="login" defaultMessage="Login" />
-                                    </Button>
-                                </Link>
-                            </Grid>
-                        )}
+
+            <Grid container spacing={2} marginBottom={4} alignItems="center" width={"100%"}>
+                <Grid item xs={12} md={6}>
+                    <Grid xs={12} md={12} width={"100%"}>
+                        <Search reviews={reviews} updateResults={updateSearchResults} />
                     </Grid>
-                    {showAddForm && (
-                        <AddReview
-                            onAddReview={handleAddReview}
-                            userId={user.id}
-                            uniqueTags={uniqueTags}
-                        />
-                    )}
-                </>
+                </Grid>
+                {user ? (
+                    <>
+                        <Grid item xs={12} md={6} width={"100%"} sx={{ textAlign: "right" }}>
+                            {/* <Grid item xs={12} md={6}> */}
+                            <Link to={`/profile`} state={{ userData: user }}>
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        borderRadius: "100px",
+                                        border: "1px none ##7670FC",
+                                        px: 2,
+                                        py: 1,
+                                        mx: "2px",
+                                    }}
+                                >
+                                    <FormattedMessage id="profile" defaultMessage="Profile" />
+                                </Button>
+                            </Link>
+                            {/* </Grid> */}
+
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    borderRadius: "100px",
+                                    border: "1px none ##7670FC",
+                                    px: 2,
+                                    py: 1,
+                                    mx: "2px",
+                                }}
+                                onClick={() => {
+                                    logOut();
+                                    setUser(null);
+                                }}
+                            >
+                                <FormattedMessage id="logout" defaultMessage="Logout" />
+                            </Button>
+                            {!showAddForm && (
+                                <Button
+                                    variant="contained"
+                                    onClick={() => setShowAddForm(true)}
+                                    sx={{
+                                        borderRadius: "100px",
+                                        border: "1px none ##7670FC",
+                                        px: 2,
+                                        py: 1,
+                                        mx: "2px",
+                                    }}
+                                >
+                                    <FormattedMessage id="addReview" defaultMessage="addReview" />
+                                </Button>
+                            )}
+                        </Grid>
+                    </>
+                ) : (
+                    <Grid item xs={12} md={6} sx={{ textAlign: "right" }}>
+                        <Link to={`/login`} state={""}>
+                            <Button
+                                variant="contained"
+                                onClick={() => console.log("login")}
+                                sx={{
+                                    borderRadius: "100px",
+                                    border: "1px none ##7670FC",
+                                    px: 2,
+                                    py: 1,
+                                }}
+                            >
+                                <FormattedMessage id="login" defaultMessage="Login" />
+                            </Button>
+                        </Link>
+                    </Grid>
+                )}
+                {/* {!user && (
+                    <Grid item xs={12} md={6}>
+                        <Link to={`/login`} state={""}>
+                            <Button
+                                variant="contained"
+                                onClick={() => console.log("login")}
+                                sx={{
+                                    borderRadius: "100px",
+                                    border: "1px none ##7670FC",
+                                    px: 2,
+                                    py: 1,
+                                }}
+                            >
+                                <FormattedMessage id="login" defaultMessage="Login" />
+                            </Button>
+                        </Link>
+                    </Grid>
+                )} */}
+            </Grid>
+            {showAddForm && (
+                <AddReview
+                    onAddReview={handleAddReview}
+                    onCloseForm={() => setShowAddForm(false)}
+                    userId={user.id}
+                    uniqueTags={uniqueTags}
+                />
             )}
+
             {/* {Reviews} */}
             {reviews.length > 0 ? (
                 <Grid container spacing={2}>
-                    <Box px={"20px"} width={"100%"} mt={2}>
-                        <Grid xs={12} md={12} width={"100%"}>
-                            <Search reviews={reviews} updateResults={updateSearchResults} />
-                        </Grid>
+                    <Box item xs={12} md={6} width={"100%"}>
                         <Grid container xs={12} md={12} width={"100%"} justifyContent="center">
                             <Typography
                                 variant="h2"
                                 sx={{
                                     mb: 4,
                                     mt: 2,
-                                    // textAlign: "center",
-                                    // alignSelf: "center",
-                                    // ml: { xs: 0, md: "-100%" },
                                 }}
                             >
                                 <FormattedMessage

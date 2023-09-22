@@ -13,6 +13,7 @@ import {
     Select,
     MenuItem,
     OutlinedInput,
+    Autocomplete,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
@@ -259,6 +260,32 @@ function EditReview() {
                         </Typography>
                     </Box>
                     {/* Tags */}
+                    {/* <Autocomplete
+                        id="tags"
+                        name="tags"
+                        multiple
+                        freeSolo
+                        options={"uniqueTags"}
+                        onChange={(event, newValue) => {
+                            setReviewData((prevData) => ({
+                                ...prevData,
+                                tags: newValue.join(","),
+                            }));
+                        }}
+                        // value={reviewData.tags}
+                        defaultValue={reviewData.tags}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label={intl.formatMessage({
+                                    id: "tags",
+                                    defaultMessage: "Tags (comma-separated)",
+                                })}
+                                fullWidth
+                                sx={{ mb: 4 }}
+                            />
+                        )}
+                    /> */}
                     <TextField
                         label={intl.formatMessage({
                             id: "tags",
