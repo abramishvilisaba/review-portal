@@ -1,6 +1,8 @@
 # Review Portal 
 
-Welcome to the Review Portal! This platform is designed to provide a space for users to share reviews of movies, books, and games. With features like personal user pages, full-text search, and social network authentication, it offers a comprehensive experience for both creators and consumers of reviews.
+Welcome to the Review Portal! This platform is designed to provide a space for users to share reviews of movies, books, and games. With features like personal user pages, advanced data Search, and social network authentication, it offers a comprehensive experience for both creators and consumers of reviews.
+
+![App Preview](app-preview.png)
 
 ## Features
 
@@ -35,10 +37,6 @@ Welcome to the Review Portal! This platform is designed to provide a space for u
    - Create your own reviews.
 5. Customize your experience by toggling themes (light/dark) and choosing your preferred language (English/Georgian).
 Enjoy exploring and sharing reviews on the Art Review Platform!
-
-### Screenshot
-
-![Screenshot](./screenshot.jpg)
 
 ## Links
 
