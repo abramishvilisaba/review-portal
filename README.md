@@ -7,7 +7,7 @@ Welcome to the Review Portal! This platform is designed to provide a space for u
 ## Features
 
 -   **User Authentication**: Users can authenticate via social networks for easy access.
--   **Review Creation**: Create detailed reviews with a review name, piece of art name, "group" (e.g., "Movies," "Books"), tags, review text , optional image upload, and a grade from 0 to 10.
+-   **Review Creation**: Create detailed reviews with optional image upload.
 -   **Review Interaction**: Users can ratings (1 to 5 stars) and "likes" for reviews.
 -   **Commenting**: Users can leave comments on reviews, creating interactive discussions.
 -   **Automatic Updates**: Comments and reviews are updated automatically when left by other users.

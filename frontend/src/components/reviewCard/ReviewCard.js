@@ -22,6 +22,7 @@ import {
     CardMedia,
     CssBaseline,
     Container,
+    Rating,
 } from "@mui/material";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -203,7 +204,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                         direction="column"
                         sx={{ justifyContent: "space-around" }}
                     >
-                        <Grid container spacing={0} pt={1} pb={1}>
+                        <Grid container spacing={0} pt={"2px"} pb={"6px"}>
                             <Grid
                                 sx={{
                                     display: "flex",
@@ -211,53 +212,32 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     height: "max-content",
                                 }}
                             >
-                                {user && (
+                                {
                                     <UserRating
                                         userRating={userRating}
                                         onUserRatingChange={(rating, e) => {
-                                            console.log(rating);
+                                            console.log("rating = ", rating);
                                             submitRating(rating, e);
                                         }}
-                                        averageRating={review.averageRating}
+                                        averageRating={parseFloat(review.averageRating)}
+                                        user={user ? true : false}
                                     />
-                                )}
+                                }
                             </Grid>
                             <Grid>
-                                {user ? (
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{
-                                            pl: "4px",
-                                            fontSize: "16px",
-                                            color: "#A7A7A7",
-                                        }}
-                                    >
-                                        {"("}
-                                        {review.averageRating}
-                                        {")"}
-                                    </Typography>
-                                ) : (
-                                    <Typography
-                                        variant="body"
-                                        color="text.secondary"
-                                        sx={{
-                                            pl: "4px",
-                                            fontSize: "18px",
-                                            color: "#A7A7A7",
-                                        }}
-                                    >
-                                        <FontAwesomeIcon
-                                            icon={faStar}
-                                            style={{
-                                                marginRight: "6px",
-                                                color: "#FFD437",
-                                            }}
-                                            size="md"
-                                        />
-                                        {review.averageRating}
-                                    </Typography>
-                                )}
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{
+                                        pl: "4px",
+                                        fontSize: "18px",
+                                        color: "#A7A7A7",
+                                    }}
+                                >
+                                    {"("}
+                                    {review.averageRating}
+                                    {")"}
+                                </Typography>
                             </Grid>
                         </Grid>
                         <Box container spacing={2} direction="column">
@@ -265,16 +245,18 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 variant="h4"
                                 component="div"
                                 sx={{
+                                    width: "100%",
                                     textAlign: "start",
                                     display: "flex",
-                                    alignItems: "center",
+                                    // alignItems: "center",
                                     fontSize: "24px",
                                     fontWeight: "700",
                                     lineHeight: "1",
-                                    height: "48px",
-                                    // maxHeight: "60px",
+                                    height: "26px",
+                                    maxHeight: "26px",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
+                                    marginBottom: "4px",
                                     whiteSpace: "normal",
                                 }}
                             >

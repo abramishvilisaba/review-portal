@@ -137,9 +137,24 @@ function MainPage() {
                 alignItems: "center",
             }}
         >
-            <Typography variant="h1" mt={8} mb={8}>
+            {/* <Typography variant="h1" mt={8} mb={8}>
                 <FormattedMessage id="greeting" defaultMessage="Review Portal" />
-            </Typography>
+            </Typography> */}
+            <Grid container xs={12} md={12} width={"100%"} justifyContent="start">
+                <Typography
+                    variant="h1"
+                    sx={{
+                        mb: 2,
+                        mt: 8,
+                    }}
+                >
+                    <FormattedMessage
+                        id="recentlyAddedReviews"
+                        defaultMessage="Recently Added Reviews"
+                    />
+                </Typography>
+            </Grid>
+
             {/* {title and buttons} */}
 
             <Grid container spacing={2} marginBottom={2} alignItems="center" width={"100%"}>
@@ -237,7 +252,7 @@ function MainPage() {
             {reviews.length > 0 ? (
                 <Grid container spacing={2}>
                     <Box item xs={12} md={6} width={"100%"}>
-                        <Grid container xs={12} md={12} width={"100%"} justifyContent="center">
+                        {/* <Grid container xs={12} md={12} width={"100%"} justifyContent="center">
                             <Typography
                                 variant="h2"
                                 sx={{
@@ -250,13 +265,13 @@ function MainPage() {
                                     defaultMessage="Recently Added Reviews"
                                 />
                             </Typography>
-                        </Grid>
+                        </Grid> */}
                     </Box>
                     {/* {Recently Added Reviews and search} */}
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>
-                                <Grid container spacing={2} marginBottom={8}>
+                                <Grid container spacing={2} marginBottom={8} marginTop={1}>
                                     {recentReviews.map((review) => (
                                         <Grid
                                             item
@@ -341,7 +356,7 @@ function MainPage() {
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>
-                                <Grid
+                                {/* <Grid
                                     container
                                     xs={12}
                                     md={12}
@@ -356,6 +371,26 @@ function MainPage() {
                                             // textAlign: "center",
                                             // alignSelf: "center",
                                             // ml: { xs: 0, md: "-100%" },
+                                        }}
+                                    >
+                                        <FormattedMessage
+                                            id="topRatedReviews"
+                                            defaultMessage="Rop Rated Reviews"
+                                        />
+                                    </Typography>
+                                </Grid> */}
+                                <Grid
+                                    container
+                                    xs={12}
+                                    md={12}
+                                    width={"100%"}
+                                    justifyContent="start"
+                                >
+                                    <Typography
+                                        variant="h1"
+                                        sx={{
+                                            mb: 2,
+                                            mt: 1,
                                         }}
                                     >
                                         <FormattedMessage

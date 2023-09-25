@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Input, Box, Button } from "@mui/material";
+import { Input, TextField, Box, Button } from "@mui/material";
 import { IntlProvider, FormattedMessage, FilteredMessage } from "react-intl";
 
 function Search({ updateResults, searchTag }) {
@@ -23,6 +23,8 @@ function Search({ updateResults, searchTag }) {
         }
     };
 
+    const searchPlaceholder = <FormattedMessage id="search" defaultMessage="Search" />;
+
     return (
         <Box
             width={"100%"}
@@ -33,8 +35,10 @@ function Search({ updateResults, searchTag }) {
                 marginBottom: "0px",
             }}
         >
-            <Input
-                placeholder="Search..."
+            {/* <Input
+                // placeholder={<FormattedMessage id="search" defaultMessage="Search" />}
+                // placeholder={searchPlaceholder}
+                label={searchPlaceholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 disableUnderline
@@ -45,6 +49,25 @@ function Search({ updateResults, searchTag }) {
                     px: 2,
                     py: 1,
                 }}
+            /> */}
+            <TextField
+                id="outlined-search"
+                label={<FormattedMessage id="searchBox" defaultMessage="Search" />}
+                value={query}
+                sx={{
+                    marginRight: "8px",
+                    width: { xs: "80%", lg: "60%" },
+                }}
+                InputProps={{
+                    style: {
+                        paddingLeft: "10px",
+                        height: "50px",
+                        borderRadius: 50,
+                        textAlign: "center",
+                    },
+                }}
+                onChange={(e) => setQuery(e.target.value)}
+                type="search"
             />
             <Button
                 variant="contained"
