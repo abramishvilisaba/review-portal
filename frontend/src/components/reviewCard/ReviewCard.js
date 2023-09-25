@@ -250,13 +250,13 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     // alignItems: "center",
                                     fontSize: "24px",
                                     fontWeight: "600",
-                                    lineHeight: "1",
-                                    height: "26px",
-                                    maxHeight: "26px",
+                                    height: "30px",
+                                    maxHeight: "30px",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
                                     marginBottom: "4px",
                                     whiteSpace: "normal",
+                                    fontFamily: "Roboto Slab, serif",
                                 }}
                             >
                                 {review.reviewName}
@@ -265,7 +265,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 variant="h6"
                                 color="text.primary"
                                 sx={{
-                                    marginBottom: "4px",
+                                    marginBottom: "0px",
                                     alignSelf: "start",
                                     fontSize: "18px",
                                     fontWeight: "600",
@@ -298,16 +298,16 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 variant="body1"
                                 color="text.primary"
                                 sx={{
-                                    height: reviewDetail ? "fit" : "140px",
-                                    maxHeight: reviewDetail ? "500px" : "140px",
+                                    height: reviewDetail ? "fit" : "150px",
+                                    maxHeight: reviewDetail ? "1000px" : "150px",
                                     overflow: "hidden",
                                     fontSize: "16px",
                                     lineHeight: "1.5",
-                                    px: "2px",
+                                    // px: "2px",
                                     mb: "8px",
                                     textAlign: "justify",
                                     whiteSpace: "normal",
-                                    overflow: "hidden",
+                                    overflow: reviewDetail ? "auto" : "hidden",
                                     textOverflow: "ellipsis",
                                 }}
                             >
