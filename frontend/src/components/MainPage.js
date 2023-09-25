@@ -53,6 +53,7 @@ function MainPage() {
 
     useEffect(() => {
         setRecentAndTopReviews();
+        console.log("reviews", reviews);
     }, [reviews]);
 
     const initializeApp = () => {

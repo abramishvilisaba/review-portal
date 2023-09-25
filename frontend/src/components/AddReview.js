@@ -39,6 +39,9 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
     const [loading, setLoading] = useState(false);
 
     const API_URL = process.env.REACT_APP_API_URL;
+    const updateTime = process.env.REACT_APP_REVIEWS_UPDATE_TIME || 5000;
+
+    console.log("updateTime", updateTime);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -109,7 +112,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                     });
                     setLoading(false);
                     onAddReview();
-                }, 5000);
+                }, updateTime);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);

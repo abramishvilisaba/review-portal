@@ -42,6 +42,9 @@ function EditReview() {
     const [loading, setLoading] = useState(false);
 
     const API_URL = process.env.REACT_APP_API_URL;
+    const updateTime = process.env.REACT_APP_EDIT_REVIEWS_UPDATE_TIME || 5000;
+
+    console.log(updateTime);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -99,7 +102,7 @@ function EditReview() {
                 setTimeout(() => {
                     setLoading(false);
                     navigate("/");
-                }, 5000);
+                }, updateTime);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);

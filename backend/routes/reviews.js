@@ -16,6 +16,8 @@ cloudinary.config({
 const { User, Review, Comment, UserReviewLikes, UserReviewRatings } = require("../models");
 
 const jwtSecret = process.env.JWT_SECRET || "secret";
+const addUpdateTime = process.env.ADD_REVIEWS_UPDATE_TIME || 5000;
+const editUpdateTime = process.env.EDIT_REVIEWS_UPDATE_TIME || 5000;
 
 module.exports = (io) => {
     router.post("/", async (req, res) => {
@@ -36,7 +38,7 @@ module.exports = (io) => {
             function emitNew() {
                 io.emit("new-review");
             }
-            setTimeout(emitNew, 5000);
+            setTimeout(emitNew, addUpdateTime);
 
             res.status(200).json({
                 message: "User review stored successfully.",
@@ -74,7 +76,7 @@ module.exports = (io) => {
             function emitNew() {
                 io.emit("new-review");
             }
-            setTimeout(emitNew, 5000);
+            setTimeout(emitNew, editUpdateTime);
 
             res.status(200).json({ message: "Review updated successfully" });
         } catch (error) {

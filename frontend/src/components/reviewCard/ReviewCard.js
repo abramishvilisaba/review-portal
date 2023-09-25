@@ -249,7 +249,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     display: "flex",
                                     // alignItems: "center",
                                     fontSize: "24px",
-                                    fontWeight: "700",
+                                    fontWeight: "600",
                                     lineHeight: "1",
                                     height: "26px",
                                     maxHeight: "26px",

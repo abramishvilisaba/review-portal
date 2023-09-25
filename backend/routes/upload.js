@@ -22,6 +22,7 @@ router.post("/photo", upload.single("image"), async (req, res) => {
     try {
         console.log("deleting");
         await cloudinary.uploader.destroy(id, { invalidate: true });
+        console.log("deleted");
     } catch (deleteError) {
         console.error("Error deleting existing image:", deleteError);
     }
@@ -39,6 +40,7 @@ router.post("/photo", upload.single("image"), async (req, res) => {
     if (!file) {
         return res.status(400).send("No file uploaded.");
     }
+    console.log("uploading");
 
     cloudinary.uploader
         .upload_stream(
