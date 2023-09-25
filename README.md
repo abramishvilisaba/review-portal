@@ -1,55 +1,53 @@
-# Multiplayer Gaming Platform - Tic-Tac-Toe Game
+# Review Portal
 
-Welcome to the Multiplayer Gaming Platform! This platform offers a real-time multiplayer gaming experience, featuring the classic Tic-Tac-Toe game. Users can enter their names, wait for another player to join, and enjoy a competitive gaming session. The platform supports multiple game sessions concurrently, providing a seamless experience for users to enjoy and compete with friends.
+Welcome to the Review Portal! This platform is designed to provide a space for users to share reviews of movies, books, and games. With features like personal user pages, advanced data Search, and social network authentication, it offers a comprehensive experience for both creators and consumers of reviews.
+
+![App Preview](app-preview.png)
 
 ## Features
 
--   **Multiplayer Tic-Tac-Toe**: Engage in exciting multiplayer Tic-Tac-Toe matches where two players can compete against each other.
--   **User Registration**: Users can enter their names to participate in a game session.
--   **Real-Time Gameplay**: The game board and moves are synchronized in real-time using Socket.IO, ensuring a smooth and interactive gaming experience.
--   **Sessions for Multiple Games**: The platform supports multiple game sessions simultaneously, allowing users to enjoy various matches concurrently.
--   **Game Termination**: Inactive users are automatically detected, and if a player remains inactive for too long, the game is terminated.
--   **Rematch Option**: After a game concludes, players have the option to play again against the same opponent.
-
-## Screenshot
-
-![Screenshot](./screenshot.jpg)
-
-## Getting Started
-
-1. Clone this repository to your local machine.
-2. Install the required dependencies for the client and server using `npm install` in both the `client` and `server` directories.
-3. Start the server using `npm start` in the `server` directory.
-4. Start the client using `npm start` in the `client` directory.
-5. Open the platform in your browser and start playing multiplayer Tic-Tac-Toe!
+-   **User Authentication**: Users can authenticate via social networks for easy access.
+-   **Review Creation**: Create detailed reviews with a review name, piece of art name, "group" (e.g., "Movies," "Books"), tags, review text , optional image upload, and a grade from 0 to 10.
+-   **Review Interaction**: Users can ratings (1 to 5 stars) and "likes" for reviews.
+-   **Commenting**: Users can leave comments on reviews, creating interactive discussions.
+-   **Automatic Updates**: Comments and reviews are updated automatically when left by other users.
+-   **Personal User Pages**: Each user has a personal page with a table of their reviews. The table supports search, sorting, and various actions such as editing or deleting for review management.
+-   **Full-Text Search**: Perform a full-text search across the entire app, with search results displayed as a list of reviews.
+-   **Tag Autocompletion**: When adding tags to reviews, users receive autocompletion suggestions for existing tags.
+-   **Cloud Image Storage**: All images are stored in the cloud, and the upload control supports drag-and-drop functionality.
+-   **Admin Access**: Admins have access to user pages and reviews as if they were the creators, allowing for review editing and creation on behalf of users.
+-   **UI Languages**: The app supports English and Georgian as user-selectable UI languages.
+-   **Themes**: Choose between light and dark themes for the app's appearance.
 
 ## Technology Stack
 
--   **Frontend**: Built with ReactJS for the user interface, real-time updates powered by Socket.IO, and styled using Tailwind CSS.
--   **Backend**: Developed using ExpressJS to handle game logic, Socket.IO for real-time communication, and to manage game sessions.
--   **Styling**: Styled using the Tailwind CSS framework for a modern and responsive design.
+-   **Frontend**: ReactJS, Material-UI (mui), react-intl for internationalization
+-   **Backend**: Node.js, Express.js, SocketIo, MySQL, Sequelize
+-   **Authentication**: Social network authentication (Google,Github)
+-   **Cloud Storage**: Cloudinary storage for images
 
-## Future Enhancements
+-   ## How to Use
 
--   Support for Additional Games: Expand the platform to offer a variety of multiplayer games.
--   User Profiles: Implement user profiles to track statistics, achievements, and game history.
--   Enhanced Termination Handling: Improve the user experience by providing clearer notifications about game termination due to inactivity.
+1. Open the [Live Demo](https://review-portal-y82o.onrender.com) link.
+2. Wait briefly for server connections to establish.
+3. Authenticate using your social network account.
+4. Interact with the platform:
+    - Leave comments on reviews.
+    - Rate reviewed pieces (1 to 5 stars).
+    - Like reviews.
+    - Create your own reviews.
+5. Customize your experience by toggling themes (light/dark) and choosing your preferred language (English/Georgian).
+   Enjoy exploring and sharing reviews on the Art Review Platform!
 
 ## Links
 
--   GitHub Repository: [github.com/abramishvilisaba/multiplayer-gaming-platform](https://github.com/abramishvilisaba/multiplayer-gaming-platform)
--   Live Demo: [multiplayer-gaming-platform-s4nw.onrender.com](https://multiplayer-gaming-platform-s4nw.onrender.com/)
-
-## Contributing
-
-Contributions to this project are welcome! If you have ideas for enhancements or encounter issues, feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code for your purposes.
+-   GitHub Repository: [github.com/abramishvilisaba/review-portal](https://github.com/abramishvilisaba/review-portal)
+-   Live Demo: [review-portal-y82o.onrender.com](https://review-portal-y82o.onrender.com)
 
 ## Author
 
 -   GitHub: [abramishvilisaba](https://github.com/abramishvilisaba)
 
-Start playing and enjoy the multiplayer gaming experience!
+## Contributing
+
+Contributions to this project are welcome! If you find a bug or have suggestions for improvements, please feel free to open an issue or submit a pull request.
