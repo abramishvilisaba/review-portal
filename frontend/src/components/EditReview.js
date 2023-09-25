@@ -83,7 +83,6 @@ function EditReview() {
             console.log("error uploading photo", error);
         }
     };
-    console.log(reviewData);
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
@@ -99,7 +98,7 @@ function EditReview() {
                 setTimeout(() => {
                     setLoading(false);
                     navigate("/");
-                }, 6000);
+                }, 5000);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);
@@ -242,7 +241,6 @@ function EditReview() {
                         </Typography>
                     </Box>
                     {/* Tags */}
-
                     <TextField
                         label={intl.formatMessage({
                             id: "tags",
@@ -292,7 +290,7 @@ function EditReview() {
                     {/* Submit Button */}
                     {!loading && (
                         <Button type="submit" variant="contained" sx={{ mt: 6 }}>
-                            <FormattedMessage id="addReview" defaultMessage="Add Review" />
+                            <FormattedMessage id="editReview" defaultMessage="Edit Review" />
                         </Button>
                     )}
                     {loading && (

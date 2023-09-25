@@ -29,8 +29,6 @@ function Profile({}) {
     let { state } = useLocation();
     const userData = state.userData;
 
-    console.log(userData);
-
     const [user, setUser] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [sortOption, setSortOption] = useState(null);
@@ -145,7 +143,8 @@ function Profile({}) {
                 elevation={5}
                 sx={{
                     padding: "16px",
-                    maxWidth: { sm: "100%", md: "90%", lg: "70%" },
+                    width: { sm: "100%", md: "90%", lg: "70%" },
+                    minWidth: "fit-Content",
                     margin: "auto",
                     marginTop: "80px",
                 }}

@@ -33,7 +33,10 @@ module.exports = (io) => {
                 creatorGrade: creatorGrade,
                 tags: [tags],
             });
-            io.emit("new-review", { createdReview });
+            function emitNew() {
+                io.emit("new-review");
+            }
+            setTimeout(emitNew, 5000);
 
             res.status(200).json({
                 message: "User review stored successfully.",
@@ -67,7 +70,12 @@ module.exports = (io) => {
             existingReview.tags = [tags];
 
             await existingReview.save();
-            io.emit("new-review", { existingReview });
+
+            function emitNew() {
+                io.emit("new-review");
+            }
+            setTimeout(emitNew, 5000);
+
             res.status(200).json({ message: "Review updated successfully" });
         } catch (error) {
             console.log("Error updating review:", error);
@@ -117,7 +125,8 @@ module.exports = (io) => {
                 return res.status(401).json({ message: "Unauthorized" });
             }
             const decoded = jwt.verify(token, jwtSecret);
-            const userId = decoded.id;
+
+            console.log("delete================");
 
             const review = await Review.findByPk(reviewId);
 
@@ -125,7 +134,7 @@ module.exports = (io) => {
                 return res.status(404).json({ message: "Review not found." });
             }
 
-            if (review.creatorId !== userId) {
+            if (review.creatorId !== decoded.id && decoded.username !== "admin") {
                 return res.status(401).json({ message: "Unauthorized" });
             }
 

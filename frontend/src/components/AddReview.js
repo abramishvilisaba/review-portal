@@ -109,7 +109,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                     });
                     setLoading(false);
                     onAddReview();
-                }, 8000);
+                }, 5000);
             })
             .catch((error) => {
                 console.error("Error storing user review:", error);
@@ -123,7 +123,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
         }));
     };
 
-    console.log(reviewData);
+    // console.log(reviewData);
 
     return (
         <Container maxWidth="lg" width="100%">

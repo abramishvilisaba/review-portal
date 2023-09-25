@@ -20,6 +20,7 @@ router.post("/photo", upload.single("image"), async (req, res) => {
     const id = req.body.id;
 
     try {
+        console.log("deleting");
         await cloudinary.uploader.destroy(id, { invalidate: true });
     } catch (deleteError) {
         console.error("Error deleting existing image:", deleteError);

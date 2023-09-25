@@ -18,7 +18,7 @@ function AdminLogin() {
         try {
             const response = await axios.post(`${API_URL}/admin/login`, { username, password });
             const adminToken = response.data.adminToken;
-            Cookies.set("adminToken", adminToken, { expires: 60 * 60 * 4 });
+            Cookies.set("jwtToken", adminToken, { expires: 60 * 60 * 4 });
             navigate("/AdminPage");
         } catch (error) {
             console.log("Error logging in as admin:", error);

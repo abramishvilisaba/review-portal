@@ -23,8 +23,7 @@ function AdminPage() {
     const navigateToUserProfile = (userId) => {};
 
     function fetchUserData() {
-        const token = Cookies.get("adminToken");
-
+        const token = Cookies.get("jwtToken");
         axios
             .get(`${API_URL}/admin/users`, {
                 headers: {

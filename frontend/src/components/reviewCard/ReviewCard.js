@@ -4,7 +4,8 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import UserRating from "./UserRating";
 import LikeButton from "./LikeButton";
-// import ReviewImage from "./ReviewImage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import ReviewTags from "./ReviewTags";
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -125,8 +126,6 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
         setImageSrc(alturl);
     };
 
-    // const alturl = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUD_NAME}/image/upload/review2.jpg`;
-
     const CustomCardMedia = () => {
         return (
             <Link
@@ -153,7 +152,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 }
                                 src={imageSrc}
                                 alt={"Review Image"}
-                                // onError={handleImageError}
+                                onError={handleImageError}
                             />
                         </Box>
                     </CardActionArea>
@@ -212,29 +211,53 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     height: "max-content",
                                 }}
                             >
-                                <UserRating
-                                    userRating={userRating}
-                                    onUserRatingChange={(rating, e) => {
-                                        console.log(rating);
-                                        submitRating(rating, e);
-                                    }}
-                                    averageRating={averageRating}
-                                />
+                                {user && (
+                                    <UserRating
+                                        userRating={userRating}
+                                        onUserRatingChange={(rating, e) => {
+                                            console.log(rating);
+                                            submitRating(rating, e);
+                                        }}
+                                        averageRating={review.averageRating}
+                                    />
+                                )}
                             </Grid>
                             <Grid>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{
-                                        pl: "4px",
-                                        fontSize: "16px",
-                                        color: "#A7A7A7",
-                                    }}
-                                >
-                                    {"("}
-                                    {review.averageRating}
-                                    {")"}
-                                </Typography>
+                                {user ? (
+                                    <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                        sx={{
+                                            pl: "4px",
+                                            fontSize: "16px",
+                                            color: "#A7A7A7",
+                                        }}
+                                    >
+                                        {"("}
+                                        {review.averageRating}
+                                        {")"}
+                                    </Typography>
+                                ) : (
+                                    <Typography
+                                        variant="body"
+                                        color="text.secondary"
+                                        sx={{
+                                            pl: "4px",
+                                            fontSize: "18px",
+                                            color: "#A7A7A7",
+                                        }}
+                                    >
+                                        <FontAwesomeIcon
+                                            icon={faStar}
+                                            style={{
+                                                marginRight: "6px",
+                                                color: "#FFD437",
+                                            }}
+                                            size="md"
+                                        />
+                                        {review.averageRating}
+                                    </Typography>
+                                )}
                             </Grid>
                         </Grid>
                         <Box container spacing={2} direction="column">
@@ -272,7 +295,24 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 }}
                             >
                                 {review.pieceName}
+                                <Typography
+                                    variant="body"
+                                    color="text.primary"
+                                    sx={{
+                                        marginBottom: "4px",
+                                        alignSelf: "start",
+                                        fontSize: "18px",
+                                        fontWeight: "500",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "nowrap",
+                                        color: "gray",
+                                    }}
+                                >
+                                    {" - " + review.group}
+                                </Typography>
                             </Typography>
+
                             <Typography
                                 variant="body1"
                                 color="text.primary"
