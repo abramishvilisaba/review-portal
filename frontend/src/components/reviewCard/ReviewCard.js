@@ -106,7 +106,6 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
         const url = `${API_URL}/rating`;
         const method = "POST";
         const data = { userId, reviewId, rating };
-        console.log(url);
 
         try {
             const response = await axios({ method, url, data });

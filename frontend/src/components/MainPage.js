@@ -21,6 +21,7 @@ import {
     GridListTile,
     ListSubheader,
     CircularProgress,
+    TextField,
 } from "@mui/material";
 import messages from "../messages";
 import ReviewCard from "./reviewCard/ReviewCard";
@@ -39,6 +40,7 @@ function MainPage() {
     const [topReviews, setTopReviews] = useState([]);
     const [uniqueTags, setUniqueTags] = useState([]);
     const [user, setUser] = useState(null);
+    const [query, setQuery] = useState("");
     const location = useLocation();
     const [searchResults, setSearchResults] = useState([]);
 
@@ -112,14 +114,36 @@ function MainPage() {
         fetchAndSetReviews();
     };
 
+    const handleSearch = async () => {
+        try {
+            console.log("handleSearchQuery = ", query);
+
+            if (query.length > 1) {
+                const response = await axios.get(`${API_URL}/search`, {
+                    params: { query },
+                });
+                console.log("data", response.data);
+                updateSearchResults(response.data);
+            } else if (query.length === 0) {
+                updateSearchResults([]);
+            }
+        } catch (error) {
+            console.error("Error fetching search results:", error);
+        }
+    };
+
     const updateSearchResults = (results) => {
         console.log("results", results);
         setSearchResults(results);
     };
 
-    const searchTag = (tag) => {
-        return tag;
+    const searchTag = async (tag) => {
+        setQuery(tag);
     };
+
+    useEffect(() => {
+        handleSearch(query);
+    }, [query]);
 
     let theme = UseTheme().theme;
 
@@ -160,11 +184,54 @@ function MainPage() {
             <Grid container spacing={2} marginBottom={2} alignItems="center" width={"100%"}>
                 <Grid item xs={12} md={6}>
                     <Grid width={"100%"}>
-                        <Search
+                        <Box
+                            width={"100%"}
+                            sx={{
+                                display: "flex",
+                                alignContent: "space-between",
+                                alignItems: "baseline",
+                                marginBottom: "0px",
+                            }}
+                        >
+                            <TextField
+                                id="outlined-search"
+                                label={<FormattedMessage id="searchBox" defaultMessage="Search" />}
+                                value={query}
+                                sx={{
+                                    marginRight: "8px",
+                                    width: { xs: "80%", lg: "60%" },
+                                }}
+                                InputProps={{
+                                    style: {
+                                        paddingLeft: "10px",
+                                        height: "50px",
+                                        borderRadius: 50,
+                                        textAlign: "center",
+                                    },
+                                }}
+                                onChange={(e) => setQuery(e.target.value)}
+                                type="search"
+                            />
+                            <Button
+                                variant="contained"
+                                onClick={handleSearch}
+                                sx={{
+                                    height: "100%",
+                                    borderRadius: "100px",
+                                    border: "1px none ##7670FC",
+                                    px: 3,
+                                    py: "10px",
+                                }}
+                            >
+                                <FormattedMessage id="search" defaultMessage="Search" />
+                            </Button>
+                        </Box>
+
+                        {/* <Search
                             reviews={reviews}
                             updateResults={updateSearchResults}
                             searchTag={["1", "2", "3"]}
-                        />
+                        /> */}
                     </Grid>
                 </Grid>
                 {user ? (
@@ -285,7 +352,10 @@ function MainPage() {
                                             <ReviewCard
                                                 review={review}
                                                 user={user}
-                                                handleTagClick={(tag) => searchTag(tag)}
+                                                handleTagClick={(tag) => {
+                                                    setQuery(tag);
+                                                    searchTag(tag);
+                                                }}
                                                 update={() => {
                                                     fetchAndSetReviews();
                                                     console.log("update");

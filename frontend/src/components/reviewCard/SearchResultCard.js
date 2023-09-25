@@ -9,8 +9,8 @@ function SearchResultCard({ user, review }) {
     const handleImageError = () => {
         setImageSrc(alturl);
     };
-    console.log("search review", review);
-    console.log("search user", user);
+    // console.log("search review", review);
+    // console.log("search user", user);
 
     return (
         <Link to={`/reviews/${review.id}`} state={{ review: review, user: user }}>
@@ -35,7 +35,7 @@ function SearchResultCard({ user, review }) {
                     }}
                 />
                 <CardContent sx={{ flex: "1" }}>
-                    <Typography variant="h6" color="text.primary">
+                    <Typography variant="h6" sx={{ mb: "10px" }} color="text.primary">
                         {review.reviewName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
