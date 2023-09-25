@@ -278,7 +278,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 {review.pieceName}
                                 <Typography
                                     variant="body"
-                                    color="text.primary"
+                                    color="text.secondary"
                                     sx={{
                                         marginBottom: "4px",
                                         alignSelf: "start",
@@ -287,7 +287,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
                                         whiteSpace: "nowrap",
-                                        color: "gray",
+                                        // color: "gray",
                                     }}
                                 >
                                     {" - " + review.group}
@@ -367,6 +367,13 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     sx={{ justifyContent: "end" }}
                                 >
                                     <FormattedMessage id="likes" defaultMessage="Likes:" />
+                                </Typography>
+                                <Typography
+                                    variant="body1"
+                                    color="text.primary"
+                                    textAlign={"start"}
+                                    sx={{ justifyContent: "end", fontWeight: "600" }}
+                                >
                                     {review.likes}
                                 </Typography>
                             </Grid>
@@ -386,7 +393,14 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                     sx={{ justifyContent: "end" }}
                                 >
                                     <FormattedMessage id="grade" defaultMessage="grade :" />
-                                    {review.creatorGrade}
+                                </Typography>
+                                <Typography
+                                    variant="body1"
+                                    color="text.primary"
+                                    textAlign={"start"}
+                                    sx={{ justifyContent: "end", fontWeight: "600" }}
+                                >
+                                    {" " + review.creatorGrade}
                                 </Typography>
                             </Grid>
                         </Grid>
