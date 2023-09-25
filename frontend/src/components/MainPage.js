@@ -180,7 +180,7 @@ function MainPage() {
                                 label={<FormattedMessage id="searchBox" defaultMessage="Search" />}
                                 value={query}
                                 sx={{
-                                    marginRight: "8px",
+                                    marginRight: "10px",
                                     width: { xs: "80%", lg: "60%" },
                                 }}
                                 InputProps={{
