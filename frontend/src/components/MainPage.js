@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import _ from "lodash";
 import Cookies from "js-cookie";
 import UseTheme from "../UseTheme";
 import io from "socket.io-client";
 import { IntlProvider, FormattedMessage } from "react-intl";
-
 import {
     Button,
     Grid,
@@ -16,20 +15,13 @@ import {
     ThemeProvider,
     createTheme,
     Box,
-    Card,
-    CardContent,
-    GridListTile,
-    ListSubheader,
-    CircularProgress,
     TextField,
+    CircularProgress,
 } from "@mui/material";
 import messages from "../messages";
 import ReviewCard from "./reviewCard/ReviewCard";
 import SearchResultCard from "./reviewCard/SearchResultCard";
 import AddReview from "./AddReview";
-import Search from "./Search";
-import CloseIcon from "@mui/icons-material/Close";
-
 import { getReviews, getReviewsWithRetry } from "../services/reviewService";
 import { getUserData, logOut } from "../services/userService";
 
@@ -43,56 +35,52 @@ function MainPage() {
     const [query, setQuery] = useState("");
     const location = useLocation();
     const [searchResults, setSearchResults] = useState([]);
-
-    // const MAX_RETRIES = 20;
-    // const RETRY_DELAY = 1000;
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
     useEffect(() => {
-        setToken();
-        setSearchResults([]);
-        setShowAddForm(false);
-        console.log("fetchAndSetReviews");
-        fetchAndSetUsers();
-        fetchAndSetReviews();
+        if (reviews.length === 0) {
+            initializeApp();
+        }
     }, []);
 
     useEffect(() => {
         const socket = io(API_URL);
-        socket.on("new-review", (data) => {
-            console.log("new-review");
-            fetchAndSetReviews();
-        });
+        socket.on("new-review", () => fetchAndSetReviews());
         return () => {
             socket.disconnect();
         };
     }, []);
 
     useEffect(() => {
-        setRecentReviews(_.take(reviews, 8));
-        const sortedReviews = _.orderBy(reviews, "creatorGrade", "desc");
-        setTopReviews(_.take(sortedReviews, 8));
-        setUniqueTags(_.uniq(_.flatMap(reviews, "tags")));
+        setRecentAndTopReviews();
     }, [reviews]);
 
-    function setToken() {
+    const initializeApp = () => {
+        console.log("initializeApp");
+
+        setToken();
+        setSearchResults([]);
+        setShowAddForm(false);
+        fetchAndSetUsers();
+        fetchAndSetReviews();
+    };
+
+    const setToken = () => {
         const searchParams = new URLSearchParams(location.search);
-        const message = searchParams.get("message");
         const jwtToken = searchParams.get("jwtToken");
         if (jwtToken) {
             Cookies.set("jwtToken", jwtToken, { expires: 60 * 60 * 4 });
         }
-    }
+    };
 
-    const fetchAndSetReviews = () => {
+    const fetchAndSetReviews = async () => {
         console.log("fetchAndSetReviews");
-        getReviews()
-            .then((reviewData) => {
-                setReviews(reviewData);
-            })
-            .catch((error) => {
-                console.error("Error loading recently added reviews:", error);
-            });
+        try {
+            const reviewData = await getReviews();
+            setReviews(reviewData);
+        } catch (error) {
+            console.error("Error loading recently added reviews:", error);
+        }
     };
 
     const fetchAndSetUsers = () => {
@@ -106,35 +94,36 @@ function MainPage() {
             });
     };
 
-    // const updateQuery = (newQuery) => {};
-
-    const handleAddReview = (newReview) => {
-        console.log("review added");
-        setShowAddForm(false);
-        fetchAndSetReviews();
+    const setRecentAndTopReviews = () => {
+        setRecentReviews(_.take(reviews, 8));
+        const sortedReviews = _.orderBy(reviews, "creatorGrade", "desc");
+        setTopReviews(_.take(sortedReviews, 8));
+        setUniqueTags(_.uniq(_.flatMap(reviews, "tags")));
     };
 
-    const handleSearch = async () => {
-        try {
-            console.log("handleSearchQuery = ", query);
-
-            if (query.length > 1) {
-                const response = await axios.get(`${API_URL}/search`, {
-                    params: { query },
-                });
-                console.log("data", response.data);
-                updateSearchResults(response.data);
-            } else if (query.length === 0) {
-                updateSearchResults([]);
-            }
-        } catch (error) {
-            console.error("Error fetching search results:", error);
-        }
+    const handleAddReview = (newReview) => {
+        setShowAddForm(false);
+        fetchAndSetReviews();
     };
 
     const updateSearchResults = (results) => {
         console.log("results", results);
         setSearchResults(results);
+    };
+
+    const handleSearch = async () => {
+        try {
+            if (query.length > 1) {
+                const response = await axios.get(`${API_URL}/search`, {
+                    params: { query },
+                });
+                updateSearchResults(response.data, setSearchResults);
+            } else if (query.length === 0) {
+                updateSearchResults([], setSearchResults);
+            }
+        } catch (error) {
+            console.error("Error fetching search results:", error);
+        }
     };
 
     const searchTag = async (tag) => {
@@ -145,11 +134,6 @@ function MainPage() {
         handleSearch(query);
     }, [query]);
 
-    let theme = UseTheme().theme;
-
-    // console.log("reviews", reviews);
-    // console.log("searchResults", searchResults);
-    // console.log("user", user);
     return (
         <Container
             sx={{
@@ -161,9 +145,7 @@ function MainPage() {
                 alignItems: "center",
             }}
         >
-            {/* <Typography variant="h1" mt={8} mb={8}>
-                <FormattedMessage id="greeting" defaultMessage="Review Portal" />
-            </Typography> */}
+            {/* Header */}
             <Grid container xs={12} md={12} width={"100%"} justifyContent="start">
                 <Typography
                     variant="h1"
@@ -179,8 +161,7 @@ function MainPage() {
                 </Typography>
             </Grid>
 
-            {/* {title and buttons} */}
-
+            {/* Search Bar */}
             <Grid container spacing={2} marginBottom={2} alignItems="center" width={"100%"}>
                 <Grid item xs={12} md={6}>
                     <Grid width={"100%"}>
@@ -190,7 +171,8 @@ function MainPage() {
                                 display: "flex",
                                 alignContent: "space-between",
                                 alignItems: "baseline",
-                                marginBottom: "0px",
+                                marginBottom: "10px",
+                                marginTop: "10px",
                             }}
                         >
                             <TextField
@@ -226,18 +208,12 @@ function MainPage() {
                                 <FormattedMessage id="search" defaultMessage="Search" />
                             </Button>
                         </Box>
-
-                        {/* <Search
-                            reviews={reviews}
-                            updateResults={updateSearchResults}
-                            searchTag={["1", "2", "3"]}
-                        /> */}
                     </Grid>
                 </Grid>
+                {/* User Actions */}
                 {user ? (
                     <>
                         <Grid item xs={12} md={6} width={"100%"} sx={{ textAlign: "right" }}>
-                            {/* <Grid item xs={12} md={6}> */}
                             <Link to={`/profile`} state={{ userData: user }}>
                                 <Button
                                     variant="contained"
@@ -252,8 +228,6 @@ function MainPage() {
                                     <FormattedMessage id="profile" defaultMessage="Profile" />
                                 </Button>
                             </Link>
-                            {/* </Grid> */}
-
                             <Button
                                 variant="contained"
                                 sx={{
@@ -282,7 +256,7 @@ function MainPage() {
                                         mx: "2px",
                                     }}
                                 >
-                                    <FormattedMessage id="addReview" defaultMessage="addReview" />
+                                    <FormattedMessage id="addReview" defaultMessage="Add Review" />
                                 </Button>
                             )}
                         </Grid>
@@ -315,26 +289,11 @@ function MainPage() {
                 />
             )}
 
-            {/* {Reviews} */}
+            {/* Reviews */}
             {reviews.length > 0 ? (
                 <Grid container spacing={2}>
-                    <Box item xs={12} md={6} width={"100%"}>
-                        {/* <Grid container xs={12} md={12} width={"100%"} justifyContent="center">
-                            <Typography
-                                variant="h2"
-                                sx={{
-                                    mb: 4,
-                                    mt: 2,
-                                }}
-                            >
-                                <FormattedMessage
-                                    id="recentlyAddedReviews"
-                                    defaultMessage="Recently Added Reviews"
-                                />
-                            </Typography>
-                        </Grid> */}
-                    </Box>
-                    {/* {Recently Added Reviews and search} */}
+                    {/* Recently Added Reviews */}
+                    <Box item xs={12} md={6} width={"100%"}></Box>
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>
@@ -358,7 +317,6 @@ function MainPage() {
                                                 }}
                                                 update={() => {
                                                     fetchAndSetReviews();
-                                                    console.log("update");
                                                 }}
                                             />
                                         </Grid>
@@ -367,7 +325,7 @@ function MainPage() {
                             </>
                         ) : (
                             <>
-                                {/* {Search} */}
+                                {/* Search Results */}
                                 <Typography variant="h2" sx={{ mt: 0, mb: 4, width: "100%" }}>
                                     <FormattedMessage
                                         id="searchReviewsText"
@@ -422,33 +380,10 @@ function MainPage() {
                             </>
                         )}
                     </Grid>
-                    {/* {Top Rated Reviews} */}
+                    {/* Top Rated Reviews */}
                     <Grid item xs={12} sx={{ mt: -2 }}>
                         {searchResults.length === 0 ? (
                             <>
-                                {/* <Grid
-                                    container
-                                    xs={12}
-                                    md={12}
-                                    width={"100%"}
-                                    justifyContent="center"
-                                >
-                                    <Typography
-                                        variant="h2"
-                                        sx={{
-                                            mb: 4,
-                                            mt: 2,
-                                            // textAlign: "center",
-                                            // alignSelf: "center",
-                                            // ml: { xs: 0, md: "-100%" },
-                                        }}
-                                    >
-                                        <FormattedMessage
-                                            id="topRatedReviews"
-                                            defaultMessage="Rop Rated Reviews"
-                                        />
-                                    </Typography>
-                                </Grid> */}
                                 <Grid
                                     container
                                     xs={12}
@@ -465,7 +400,7 @@ function MainPage() {
                                     >
                                         <FormattedMessage
                                             id="topRatedReviews"
-                                            defaultMessage="Rop Rated Reviews"
+                                            defaultMessage="Top Rated Reviews"
                                         />
                                     </Typography>
                                 </Grid>
@@ -485,7 +420,6 @@ function MainPage() {
                                                 user={user}
                                                 update={() => {
                                                     fetchAndSetReviews();
-                                                    console.log("update");
                                                 }}
                                             />
                                         </Grid>

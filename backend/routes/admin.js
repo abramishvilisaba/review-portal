@@ -21,6 +21,7 @@ router.post("/login", (req, res) => {
         res.status(401).json({ message: "Invalid credentials" });
     }
 });
+
 router.get("/users", async (req, res) => {
     try {
         console.log("/admin/users");

@@ -1,6 +1,6 @@
 # Review Portal
 
-Welcome to the Review Portal! This platform is designed to provide a space for users to share reviews of movies, books, and games. With features like personal user pages, advanced data Search, and social network authentication, it offers a comprehensive experience for both creators and consumers of reviews.
+Welcome to the Review Portal! This platform is designed to provide a space for users to share reviews of movies, books, and games. With features like personal user pages, advanced data Search, and social network authentication, it offers a comprehensive experience for both creators and consumers.
 
 ![App Preview](app-preview.png)
 

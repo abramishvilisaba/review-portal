@@ -198,7 +198,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
 
                 <CardContent sx={{ pt: "10px", px: "20px" }}>
                     <Box
-                        container
+                        // container
                         spacing={0}
                         direction="column"
                         sx={{ justifyContent: "space-around" }}
@@ -346,7 +346,7 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                                 alignItems: "center",
                             }}
                         >
-                            <Grid item xs={4} sx={{ padding: "0px" }} spacing={0}>
+                            <Grid item xs={4} sx={{ padding: "0px" }}>
                                 {user && <LikeButton liked={liked} onClick={handleLikeButton} />}
                             </Grid>
 

@@ -232,11 +232,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                         required
                     />
                     {/* Creator Grade */}
-                    <Box
-                        alignItems="start"
-                        spacing={2}
-                        sx={{ mb: 1, display: "flex", flexDirection: "row" }}
-                    >
+                    <Box alignItems="start" sx={{ mb: 1, display: "flex", flexDirection: "row" }}>
                         <Typography variant="subtitle1" sx={{ pb: 2, height: "100%" }}>
                             <FormattedMessage id="grade" defaultMessage="Grade : " />
                         </Typography>

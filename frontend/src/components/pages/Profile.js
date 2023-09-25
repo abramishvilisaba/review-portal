@@ -40,7 +40,6 @@ function Profile({}) {
         try {
             setUser(userData);
             axios.get(`${apiUrl}/profile/${userData.id}`).then((response) => {
-                console.log(response.data);
                 setReviews(response.data);
                 setFilteredReviews(response.data);
             });

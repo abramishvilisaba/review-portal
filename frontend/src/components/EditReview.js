@@ -83,6 +83,7 @@ function EditReview() {
             console.log("error uploading photo", error);
         }
     };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);

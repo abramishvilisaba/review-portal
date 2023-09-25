@@ -22,8 +22,6 @@ const ReviewDetail = ({}) => {
 
     const { review, user } = state;
 
-    console.log("review, user", review, user);
-
     useEffect(() => {
         const socket = io(API_URL);
         socket.on("new-comment", (data) => {
@@ -35,14 +33,10 @@ const ReviewDetail = ({}) => {
         };
     }, []);
 
-    console.log("comments", comments);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (content.length > 0) {
             try {
-                console.log(content);
-                console.log(review.id);
                 const response = await axios.post(`${API_URL}/comments`, {
                     content,
                     user_id: user.id,
@@ -64,7 +58,7 @@ const ReviewDetail = ({}) => {
                 console.log(response.data);
                 setComments(response.data);
             })
-            .catch((error) => console.log("error", error));
+            .catch((error) => console.error("error", error));
     };
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { useIntl, IntlProvider, FormattedMessage } from "react-intl";
 import LanguageSelector from "./LanguageSelector";
 import "@formatjs/intl-numberformat/polyfill";
@@ -59,16 +59,13 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
             <AppBar position="static">
                 <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <Link to={"/"}>
-                            <Button
-                                variant="h2"
-                                //  onClick={() => navigate("/")}
-                            >
-                                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                    Review Portal
-                                </Typography>
-                            </Button>
-                        </Link>
+                        {/* <Link to={"/"}> */}
+                        <Button variant="h2" onclick={console.log("aa")}>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Review Portal
+                            </Typography>
+                        </Button>
+                        {/* </Link> */}
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <Box sx={{ ml: "20px" }}>
