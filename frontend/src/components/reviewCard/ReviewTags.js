@@ -18,7 +18,7 @@ function ReviewTags({ tags, handleTagClick }) {
                             label={tag}
                             variant="outlined"
                             sx={{
-                                height: "35px",
+                                height: "36px",
                                 px: "0px",
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
