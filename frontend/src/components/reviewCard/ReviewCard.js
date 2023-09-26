@@ -330,15 +330,23 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
                             }}
                         >
                             {/* Review tags component */}
-                            <ReviewTags
-                                tags={review.tags}
-                                handleTagClick={(tag) => {
-                                    !reviewDetail ? handleTagClick(tag) : null;
-                                }}
-                            />
+                            {reviewDetail ? (
+                                <ReviewTags
+                                    tags={review.tags}
+                                    handleTagClick={(tag) => {
+                                        console.log(tag);
+                                    }}
+                                />
+                            ) : (
+                                <ReviewTags
+                                    tags={review.tags}
+                                    handleTagClick={(tag) => {
+                                        handleTagClick(tag);
+                                    }}
+                                />
+                            )}
                         </Grid>
                     </Grid>
-
                     {/* Container for Like Button and other details */}
                     <Grid
                         container

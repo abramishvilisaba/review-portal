@@ -13,7 +13,6 @@ import {
     Select,
     MenuItem,
     Autocomplete,
-    FormHelperText,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
@@ -78,48 +77,6 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
             console.log("error uploading photo", error);
         }
     };
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     if (reviewData.creatorGrade === null) {
-    //         setSliderError(true);
-    //         return;
-    //     }
-    //     setLoading(true);
-
-    //     axios
-    //         .post(`${API_URL}/reviews`, {
-    //             reviewData,
-    //         })
-    //         .then((response) => {
-    //             console.log("User review stored:", response.data);
-    //             if (reviewData.reviewPhoto) {
-    //                 console.log("uploading");
-    //                 uploadPhoto(
-    //                     reviewData.reviewPhoto,
-    //                     response.data.reviewId,
-    //                     reviewData.reviewName
-    //                 );
-    //             }
-    //             setTimeout(() => {
-    //                 setReviewData({
-    //                     creatorId: userId,
-    //                     reviewName: "",
-    //                     pieceName: "",
-    //                     reviewText: "",
-    //                     creatorGrade: null,
-    //                     tags: "",
-    //                     reviewPhoto: null,
-    //                     group: "",
-    //                 });
-    //                 setLoading(false);
-    //                 onAddReview();
-    //             }, updateTime);
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error storing user review:", error);
-    //         });
-    // };
 
     const handleSubmit = (event) => {
         event.preventDefault();
