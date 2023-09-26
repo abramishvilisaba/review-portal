@@ -53,7 +53,7 @@ const messages = {
         group: "კატეგორია",
         reviewText: "მიმოხილვის ტექსტი",
         grade: `ხარისხი:\u00A0`,
-        likes: `მოწონებები:\u00A0`,
+        likes: `მოწონება:\u00A0`,
         tags: "თეგები",
         createdAt: "შექმნის დრო",
         photoUpload: "ფოტოს ატვირთვა",
