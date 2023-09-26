@@ -27,8 +27,10 @@ function AdminLogin() {
 
     return (
         <Container maxWidth="sm">
-            <Box display="flex" flexDirection="column" alignItems="center" mt={4}>
-                <Typography variant="h4">Admin Login</Typography>
+            <Box display="flex" flexDirection="column" alignItems="center" marginTop={24}>
+                <Typography marginBottom={4} variant="h4">
+                    Admin Login
+                </Typography>
                 <TextField
                     label="Username"
                     variant="outlined"
@@ -51,9 +53,8 @@ function AdminLogin() {
                     variant="contained"
                     color="primary"
                     onClick={handleLogin}
-                    fullWidth
+                    sx={{ width: "fit", mt: 4, px: 6 }}
                     size="large"
-                    mt={2}
                 >
                     Login
                 </Button>

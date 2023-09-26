@@ -404,7 +404,7 @@ function MainPage() {
                                         />
                                     </Typography>
                                 </Grid>
-                                <Grid container spacing={2} marginBottom={8}>
+                                <Grid container spacing={2} marginBottom={8} marginTop={"2px"}>
                                     {topReviews.map((review) => (
                                         <Grid
                                             item
