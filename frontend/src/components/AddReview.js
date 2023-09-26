@@ -307,7 +307,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                             sx={{ mx: 2, mb: 0, width: "150px" }}
                         />
                         {sliderError && !reviewData.creatorGrade && (
-                            <FormHelperText error>This field is required</FormHelperText>
+                            <Typography sx={{ fontSize: "16px" }}>Please select grade *</Typography>
                         )}
 
                         <Typography variant="body1" sx={{ alignSelf: "start", mt: "4px" }}>
