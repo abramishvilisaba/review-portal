@@ -75,15 +75,13 @@ function Profile({}) {
     const handleFilterChange = (e) => {
         const newFilterValue = e.target.value;
         setFilterValue(newFilterValue);
-
         const filteredReviews = reviews.filter((review) =>
             review.reviewName.toLowerCase().includes(newFilterValue.toLowerCase())
         );
-
         const sortedReviews = sortReviews(filteredReviews, sortOrder, "reviewName");
-
         setFilteredReviews(sortedReviews);
     };
+
     const SortableTableHeaderButton = ({ text, name }) => {
         return (
             <TableCell>

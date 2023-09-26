@@ -166,248 +166,257 @@ function ReviewCard({ review, user, update, size = 350, reviewDetail = false, ha
     const theme = useTheme();
 
     return (
-        <IntlProvider locale={currentLocale} messages={intlMessages}>
-            <Card
-                sx={{
-                    width: "100%",
-                    maxWidth: "500px",
-                    borderRadius: "20px",
-                    border: "1px solid #E8E8E8",
-                    pb: "10px",
-                }}
-            >
-                <div style={{ position: "relative" }}>
-                    <CustomCardMedia />
-                    {user && (
-                        <Box
-                            xs={6}
-                            mb={1}
+        // <IntlProvider locale={currentLocale} messages={intlMessages}>
+        <Card
+            sx={{
+                width: "100%",
+                maxWidth: "500px",
+                borderRadius: "20px",
+                border: "1px solid #E8E8E8",
+                pb: "10px",
+            }}
+        >
+            <div style={{ position: "relative" }}>
+                <CustomCardMedia />
+                {user && !reviewDetail && (
+                    <Box
+                        xs={6}
+                        mb={1}
+                        sx={{
+                            position: "absolute",
+                            top: "5%",
+                            left: "5%",
+                            display: "flex",
+                            alignItems: "center",
+                            padding: "0px",
+                        }}
+                    >
+                        <LikeButton liked={liked} onClick={handleLikeButton} version={2} />
+                    </Box>
+                )}
+            </div>
+
+            <CardContent sx={{ pt: "10px", px: "20px" }}>
+                {/* Container for the main content */}
+                <Box spacing={0} direction="column" sx={{ justifyContent: "space-around" }}>
+                    {/* Container for user rating and average rating */}
+                    <Grid container spacing={0} pt={"2px"} pb={"6px"}>
+                        <Grid
                             sx={{
-                                position: "absolute",
-                                top: "5%",
-                                left: "5%",
                                 display: "flex",
                                 alignItems: "center",
-                                padding: "0px",
+                                height: "max-content",
                             }}
                         >
-                            <LikeButton liked={liked} onClick={handleLikeButton} version={2} />
-                        </Box>
-                    )}
-                </div>
-
-                <CardContent sx={{ pt: "10px", px: "20px" }}>
-                    <Box
-                        // container
-                        spacing={0}
-                        direction="column"
-                        sx={{ justifyContent: "space-around" }}
-                    >
-                        <Grid container spacing={0} pt={"2px"} pb={"6px"}>
-                            <Grid
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    height: "max-content",
-                                }}
-                            >
-                                {
-                                    <UserRating
-                                        userRating={userRating}
-                                        onUserRatingChange={(rating, e) => {
-                                            console.log("rating = ", rating);
-                                            submitRating(rating, e);
-                                        }}
-                                        averageRating={parseFloat(review.averageRating)}
-                                        user={user ? true : false}
-                                    />
-                                }
-                            </Grid>
-                            <Grid>
-                                <Typography
-                                    variant="body2"
-                                    color="text.secondary"
-                                    sx={{
-                                        pl: "4px",
-                                        fontSize: "18px",
-                                        color: "#A7A7A7",
+                            {/* User rating component */}
+                            {
+                                <UserRating
+                                    userRating={userRating}
+                                    onUserRatingChange={(rating, e) => {
+                                        console.log("rating = ", rating);
+                                        submitRating(rating, e);
                                     }}
-                                >
-                                    {"("}
-                                    {review.averageRating}
-                                    {")"}
-                                </Typography>
-                            </Grid>
+                                    averageRating={parseFloat(review.averageRating)}
+                                    user={user && !reviewDetail ? true : false}
+                                />
+                            }
                         </Grid>
-                        <Box container spacing={2} direction="column">
+                        <Grid>
+                            {/* Display average rating */}
                             <Typography
-                                variant="h4"
-                                component="div"
+                                variant="body2"
+                                color="text.secondary"
                                 sx={{
-                                    width: "100%",
-                                    textAlign: "start",
-                                    display: "flex",
-                                    // alignItems: "center",
-                                    fontSize: "24px",
-                                    fontWeight: "600",
-                                    height: "30px",
-                                    maxHeight: "30px",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    marginBottom: "4px",
-                                    whiteSpace: "normal",
-                                    fontFamily: "Roboto Slab, serif",
+                                    pl: "4px",
+                                    fontSize: "18px",
+                                    color: "#A7A7A7",
                                 }}
                             >
-                                {review.reviewName}
+                                {"("}
+                                {review.averageRating}
+                                {")"}
                             </Typography>
+                        </Grid>
+                    </Grid>
+
+                    {/* Container for review title and details */}
+                    <Box container spacing={2} direction="column">
+                        {/* Review title */}
+                        <Typography
+                            variant="h4"
+                            component="div"
+                            sx={{
+                                width: "100%",
+                                textAlign: "start",
+                                display: "flex",
+                                fontSize: "24px",
+                                fontWeight: "600",
+                                height: "30px",
+                                maxHeight: "30px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                marginBottom: "4px",
+                                whiteSpace: "normal",
+                                fontFamily: "Roboto Slab, serif",
+                            }}
+                        >
+                            {review.reviewName}
+                        </Typography>
+                        {/* Review piece name and group */}
+                        <Typography
+                            variant="h6"
+                            color="text.primary"
+                            sx={{
+                                marginBottom: "0px",
+                                alignSelf: "start",
+                                fontSize: "18px",
+                                fontWeight: "600",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            {review.pieceName}
                             <Typography
-                                variant="h6"
-                                color="text.primary"
+                                variant="body"
+                                color="text.secondary"
                                 sx={{
-                                    marginBottom: "0px",
+                                    marginBottom: "4px",
                                     alignSelf: "start",
                                     fontSize: "18px",
-                                    fontWeight: "600",
-                                    // mt: "8px",
+                                    fontWeight: "500",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
                                     whiteSpace: "nowrap",
                                 }}
                             >
-                                {review.pieceName}
-                                <Typography
-                                    variant="body"
-                                    color="text.secondary"
-                                    sx={{
-                                        marginBottom: "4px",
-                                        alignSelf: "start",
-                                        fontSize: "18px",
-                                        fontWeight: "500",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "nowrap",
-                                        // color: "gray",
-                                    }}
-                                >
-                                    {" - " + review.group}
-                                </Typography>
+                                {" - " + review.group}
                             </Typography>
+                        </Typography>
 
+                        {/* Review text */}
+                        <Typography
+                            variant="body1"
+                            color="text.primary"
+                            sx={{
+                                height: reviewDetail ? "fit" : "145px",
+                                maxHeight: reviewDetail ? "1000px" : "145px",
+                                overflow: "hidden",
+                                fontSize: "16px",
+                                lineHeight: "1.5",
+                                mb: "8px",
+                                textAlign: "justify",
+                                whiteSpace: "normal",
+                                overflow: reviewDetail ? "auto" : "hidden",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {review.reviewText}
+                        </Typography>
+                    </Box>
+
+                    {/* Container for review tags */}
+                    <Grid container spacing={2} height="48px">
+                        <Grid
+                            item
+                            xs={12}
+                            sx={{
+                                display: "flex",
+                                alignItems: "flex-start",
+                                height: "52px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            {/* Review tags component */}
+                            <ReviewTags
+                                tags={review.tags}
+                                handleTagClick={(tag) => {
+                                    !reviewDetail ? handleTagClick(tag) : null;
+                                }}
+                            />
+                        </Grid>
+                    </Grid>
+
+                    {/* Container for Like Button and other details */}
+                    <Grid
+                        container
+                        spacing={2}
+                        padding={0}
+                        mt={"0px"}
+                        height="40px"
+                        sx={{
+                            justifyContent: "start",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Grid item xs={4} sx={{ padding: "0px" }}>
+                            {/* Like Button component */}
+                            {user && !reviewDetail && (
+                                <LikeButton liked={liked} onClick={handleLikeButton} />
+                            )}
+                        </Grid>
+                        <Grid
+                            item
+                            xs={4}
+                            sx={{
+                                padding: "0px",
+                                display: "flex",
+                                alignItems: "flex-end",
+                                justifyContent: "end",
+                            }}
+                        >
+                            {/* Likes count */}
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                textAlign={"end"}
+                                sx={{ justifyContent: "end" }}
+                            >
+                                <FormattedMessage id="likes" defaultMessage="Likes:" />
+                            </Typography>
                             <Typography
                                 variant="body1"
                                 color="text.primary"
-                                sx={{
-                                    height: reviewDetail ? "fit" : "150px",
-                                    maxHeight: reviewDetail ? "1000px" : "150px",
-                                    overflow: "hidden",
-                                    fontSize: "16px",
-                                    lineHeight: "1.5",
-                                    // px: "2px",
-                                    mb: "8px",
-                                    textAlign: "justify",
-                                    whiteSpace: "normal",
-                                    overflow: reviewDetail ? "auto" : "hidden",
-                                    textOverflow: "ellipsis",
-                                }}
+                                textAlign={"start"}
+                                sx={{ justifyContent: "end", fontWeight: "600" }}
                             >
-                                {review.reviewText}
+                                {review.likes}
                             </Typography>
-                        </Box>
-
-                        <Grid container spacing={2} height="48px">
-                            <Grid
-                                item
-                                xs={12}
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "flex-start",
-                                    height: "52px",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    whiteSpace: "nowrap",
-                                }}
-                            >
-                                <ReviewTags
-                                    tags={review.tags}
-                                    handleTagClick={(tag) => handleTagClick(tag)}
-                                />
-                            </Grid>
                         </Grid>
-
                         <Grid
-                            container
-                            spacing={2}
-                            padding={0}
-                            mt={"0px"}
-                            height="40px"
+                            item
+                            xs={4}
                             sx={{
-                                justifyContent: "start",
-                                alignItems: "center",
+                                padding: "0px",
+                                display: "flex",
+                                alignItems: "flex-end",
                             }}
                         >
-                            <Grid item xs={4} sx={{ padding: "0px" }}>
-                                {user && <LikeButton liked={liked} onClick={handleLikeButton} />}
-                            </Grid>
-
-                            <Grid
-                                item
-                                xs={4}
-                                sx={{
-                                    padding: "0px",
-                                    display: "flex",
-                                    alignItems: "flex-end",
-                                    justifyContent: "end",
-                                }}
+                            {/* Creator Grade */}
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                textAlign={"start"}
+                                sx={{ justifyContent: "end" }}
                             >
-                                <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    textAlign={"end"}
-                                    sx={{ justifyContent: "end" }}
-                                >
-                                    <FormattedMessage id="likes" defaultMessage="Likes:" />
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    color="text.primary"
-                                    textAlign={"start"}
-                                    sx={{ justifyContent: "end", fontWeight: "600" }}
-                                >
-                                    {review.likes}
-                                </Typography>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={4}
-                                sx={{
-                                    padding: "0px",
-                                    display: "flex",
-                                    alignItems: "flex-end",
-                                }}
+                                <FormattedMessage id="grade" defaultMessage="grade :" />
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.primary"
+                                textAlign={"start"}
+                                sx={{ justifyContent: "end", fontWeight: "600" }}
                             >
-                                <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    textAlign={"start"}
-                                    sx={{ justifyContent: "end" }}
-                                >
-                                    <FormattedMessage id="grade" defaultMessage="grade :" />
-                                </Typography>
-                                <Typography
-                                    variant="body1"
-                                    color="text.primary"
-                                    textAlign={"start"}
-                                    sx={{ justifyContent: "end", fontWeight: "600" }}
-                                >
-                                    {" " + review.creatorGrade}
-                                </Typography>
-                            </Grid>
+                                {" " + review.creatorGrade}
+                            </Typography>
                         </Grid>
-                    </Box>
-                </CardContent>
-            </Card>
-        </IntlProvider>
+                    </Grid>
+                </Box>
+            </CardContent>
+        </Card>
+        // </IntlProvider>
     );
 }
 

@@ -28,6 +28,8 @@ function EditReview() {
     const [prevReviewData, setPrevReviewData] = useState({});
     const [reviewData, setReviewData] = useState({});
     const [reviewPhoto, setReviewPhoto] = useState(null);
+    const [sliderError, setSliderError] = useState(false);
+
     const [oldPublicId, setOldPublicId] = useState(null);
 
     const navigate = useNavigate();
@@ -43,8 +45,6 @@ function EditReview() {
 
     const API_URL = process.env.REACT_APP_API_URL;
     const updateTime = process.env.REACT_APP_EDIT_REVIEWS_UPDATE_TIME || 5000;
-
-    console.log(updateTime);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -87,15 +87,45 @@ function EditReview() {
         }
     };
 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+    //     axios
+    //         .put(`${API_URL}/reviews/${reviewData.id}`, {
+    //             reviewData,
+    //         })
+    //         .then((response) => {
+    //             console.log("User review updated:", response.data);
+    //             if (reviewPhoto) {
+    //                 uploadPhoto(reviewPhoto, reviewData.id, reviewData.reviewName);
+    //             }
+    //             setTimeout(() => {
+    //                 setLoading(false);
+    //                 navigate("/");
+    //             }, updateTime);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error storing user review:", error);
+    //         });
+    // };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true);
+        if (reviewData.creatorGrade === null) {
+            setSliderError(true);
+        } else if (reviewData.creatorGrade > 0) {
+            setLoading(true);
+            postReview();
+        }
+    };
+
+    const postReview = async () => {
         axios
             .put(`${API_URL}/reviews/${reviewData.id}`, {
                 reviewData,
             })
             .then((response) => {
-                console.log("User review stored:", response.data);
+                console.log("User review updated:", response.data);
                 if (reviewPhoto) {
                     uploadPhoto(reviewPhoto, reviewData.id, reviewData.reviewName);
                 }
@@ -117,8 +147,10 @@ function EditReview() {
         <Container maxWidth="lg" width="100%">
             <Box
                 marginBottom={8}
+                marginTop={2}
                 sx={{
-                    py: 6,
+                    pt: 4,
+                    pb: 6,
                     px: { xs: 2, sm: 4, md: 6, lg: 8 },
                     boxShadow: "0px 4px 6px rgba(200, 200, 200, 0.5)",
                     borderRadius: "8px",
@@ -224,11 +256,10 @@ function EditReview() {
                         <Slider
                             id="creatorGrade"
                             name="creatorGrade"
-                            min={1}
+                            min={0}
                             max={10}
                             step={1}
                             value={reviewData.creatorGrade}
-                            valueLabelDisplay={"auto"}
                             defaultValue={review.creatorGrade}
                             onChange={(_, newValue) =>
                                 handleInputChange({
@@ -240,6 +271,9 @@ function EditReview() {
                             }
                             sx={{ mx: 2, mb: 0, width: "150px" }}
                         />
+                        {sliderError && !reviewData.creatorGrade && (
+                            <FormHelperText error>This field is required</FormHelperText>
+                        )}
                         <Typography variant="body1" sx={{ alignSelf: "start", mt: "4px" }}>
                             {reviewData.creatorGrade}
                         </Typography>
@@ -272,7 +306,7 @@ function EditReview() {
                                         alignItems: "center",
                                         justifyContent: "center",
                                         cursor: "pointer",
-                                        height: "160px",
+                                        height: "180px",
                                     }}
                                 >
                                     <Typography variant="body1" mb={2}>

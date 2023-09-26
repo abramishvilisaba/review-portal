@@ -97,8 +97,8 @@ function MainPage() {
 
     const setRecentAndTopReviews = () => {
         setRecentReviews(_.take(reviews, 8));
-        const sortedReviews = _.orderBy(reviews, "creatorGrade", "desc");
-        setTopReviews(_.take(sortedReviews, 8));
+        const sortedReviews = _.orderBy(reviews, "averageRating", "desc");
+        setTopReviews(_.take(sortedReviews, 24));
         setUniqueTags(_.uniq(_.flatMap(reviews, "tags")));
     };
 
@@ -108,7 +108,6 @@ function MainPage() {
     };
 
     const updateSearchResults = (results) => {
-        console.log("results", results);
         setSearchResults(results);
     };
 

@@ -32,41 +32,6 @@ const UseTheme = () => {
                         },
                     },
                 },
-                // typography: {
-                //     // fontFamily: "Alegreya, sans-serif",
-                //     fontFamily: "Roboto Slab, serif",
-                //     fontFamily: "Inter, sans-serif",
-                //     h1: {
-                //         fontFamily: "Roboto Slab, serif",
-                //         fontSize: "3rem",
-                //         fontWeight: "500",
-                //         textAlign: "center",
-                //         color: "inherit",
-                //     },
-                //     h2: {
-                //         fontFamily: "Roboto Slab, serif",
-                //         fontSize: "2rem",
-                //         fontWeight: "500",
-                //         color: "inherit",
-                //     },
-                //     h3: {
-                //         fontFamily: "Roboto Slab, serif",
-                //         fontSize: "1.5rem",
-                //         fontWeight: "500",
-                //     },
-                //     h4: {
-                //         fontFamily: "Roboto Slab, serif",
-                //         // fontSize: "1.5rem",
-                //         fontWeight: "normal",
-                //         textAlign: "center",
-                //     },
-                //     h5: {
-                //         fontFamily: "Inter, sans-serif",
-                //         // fontSize: "1.5rem",
-                //         fontWeight: "normal",
-                //         textAlign: "center",
-                //     },
-                // },
                 typography: {
                     // fontFamily: "Alegreya, sans-serif",
                     // fontFamily: "Roboto Slab, serif",
@@ -81,7 +46,7 @@ const UseTheme = () => {
                     h2: {
                         fontFamily: "Roboto Slab, serif",
                         fontSize: "2rem",
-                        fontWeight: "500",
+                        fontWeight: "600",
                         color: "inherit",
                     },
                     h3: {

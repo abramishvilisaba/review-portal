@@ -56,7 +56,6 @@ function App() {
         <IntlProvider locale={locale} messages={intlMessages}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns} locale={locale}> */}
                 <Router>
                     <Navbar
                         theme={theme}
@@ -66,7 +65,6 @@ function App() {
                     />
                     <Routes>
                         {/* <Route path="/" element={<Navigate to="/en" replace />} /> */}
-
                         <Route path="/reviews/:reviewId" element={<ReviewDetail />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/Profile" element={<Profile />} />
@@ -77,7 +75,6 @@ function App() {
                         <Route path="/dashboard/*" element={<MainPage />} slectedLocale={locale} />
                     </Routes>
                 </Router>
-                {/* </LocalizationProvider>  */}
             </ThemeProvider>
         </IntlProvider>
     );

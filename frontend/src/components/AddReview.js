@@ -13,6 +13,7 @@ import {
     Select,
     MenuItem,
     Autocomplete,
+    FormHelperText,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import axios from "axios";
@@ -30,12 +31,12 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
         reviewName: "",
         pieceName: "",
         reviewText: "",
-        creatorGrade: 1,
+        creatorGrade: null,
         tags: "",
         reviewPhoto: null,
         group: "",
     });
-
+    const [sliderError, setSliderError] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const API_URL = process.env.REACT_APP_API_URL;
@@ -78,13 +79,59 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
         }
     };
 
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     if (reviewData.creatorGrade === null) {
+    //         setSliderError(true);
+    //         return;
+    //     }
+    //     setLoading(true);
+
+    //     axios
+    //         .post(`${API_URL}/reviews`, {
+    //             reviewData,
+    //         })
+    //         .then((response) => {
+    //             console.log("User review stored:", response.data);
+    //             if (reviewData.reviewPhoto) {
+    //                 console.log("uploading");
+    //                 uploadPhoto(
+    //                     reviewData.reviewPhoto,
+    //                     response.data.reviewId,
+    //                     reviewData.reviewName
+    //                 );
+    //             }
+    //             setTimeout(() => {
+    //                 setReviewData({
+    //                     creatorId: userId,
+    //                     reviewName: "",
+    //                     pieceName: "",
+    //                     reviewText: "",
+    //                     creatorGrade: null,
+    //                     tags: "",
+    //                     reviewPhoto: null,
+    //                     group: "",
+    //                 });
+    //                 setLoading(false);
+    //                 onAddReview();
+    //             }, updateTime);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error storing user review:", error);
+    //         });
+    // };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        setLoading(true);
+        if (reviewData.creatorGrade === null) {
+            setSliderError(true);
+        } else if (reviewData.creatorGrade > 0) {
+            setLoading(true);
+            postReview();
+        }
+    };
 
-        // const { reviewName, pieceName, reviewText, creatorGrade, reviewPhoto, tags, group } =
-        //     reviewData;
-
+    const postReview = () => {
         axios
             .post(`${API_URL}/reviews`, {
                 reviewData,
@@ -105,7 +152,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                         reviewName: "",
                         pieceName: "",
                         reviewText: "",
-                        creatorGrade: 0,
+                        creatorGrade: null,
                         tags: "",
                         reviewPhoto: null,
                         group: "",
@@ -242,9 +289,12 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                         <Slider
                             id="creatorGrade"
                             name="creatorGrade"
+                            required
                             min={1}
                             max={10}
                             step={1}
+                            defaultValue={0}
+                            error={sliderError}
                             value={reviewData.creatorGrade}
                             onChange={(_, newValue) =>
                                 handleInputChange({
@@ -256,6 +306,10 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                             }
                             sx={{ mx: 2, mb: 0, width: "150px" }}
                         />
+                        {sliderError && !reviewData.creatorGrade && (
+                            <FormHelperText error>This field is required</FormHelperText>
+                        )}
+
                         <Typography variant="body1" sx={{ alignSelf: "start", mt: "4px" }}>
                             {reviewData.creatorGrade}
                         </Typography>
@@ -286,19 +340,6 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                             />
                         )}
                     />
-                    {/* <TextField
-                        label={intl.formatMessage({
-                            id: "tags",
-                            defaultMessage: "Tags (comma-separated)",
-                        })}
-                        id="tags"
-                        name="tags"
-                        value={reviewData.tags}
-                        onChange={handleInputChange}
-                        fullWidth
-                        sx={{ mb: 3 }}
-                    /> */}
-                    {/* Dropzone */}
                     <Dropzone onDrop={handleDrop}>
                         {({ getRootProps, getInputProps }) => (
                             <section>
@@ -312,7 +353,7 @@ function AddReview({ userId, onAddReview, onCloseForm, uniqueTags }) {
                                         alignItems: "center",
                                         justifyContent: "center",
                                         cursor: "pointer",
-                                        height: "200px",
+                                        height: "180px",
                                     }}
                                 >
                                     <Typography variant="body1" mb={2}>

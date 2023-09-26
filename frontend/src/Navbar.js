@@ -31,6 +31,12 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
     }, [theme]);
 
     useEffect(() => {
+        if (locale) {
+            sessionStorage.setItem("selectedLanguage", locale);
+        }
+    }, [locale]);
+
+    useEffect(() => {
         const savedThemeMode = sessionStorage.getItem("themeMode");
         if (savedThemeMode) {
             setCurrentTheme(savedThemeMode);
@@ -38,12 +44,6 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
             setCurrentTheme("light");
         }
     }, []);
-
-    useEffect(() => {
-        if (locale) {
-            sessionStorage.setItem("selectedLanguage", locale);
-        }
-    }, [locale]);
 
     useEffect(() => {
         const savedLanguage = sessionStorage.getItem("selectedLanguage");
@@ -60,7 +60,7 @@ const Navbar = ({ theme, toggleMode, toggleLocale }) => {
                 <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
                         <Link to={"/"}>
-                            <Button variant="h2" onclick={console.log("aa")}>
+                            <Button variant="h2">
                                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                     Review Portal
                                 </Typography>
