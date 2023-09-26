@@ -1,8 +1,6 @@
 const express = require("express");
 const googlePassport = require("../auth/googleAuth");
 const githubPassport = require("../auth/githubAuth");
-const facebookPassport = require("../auth/facebookAuth");
-
 const crypto = require("crypto");
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS || "http://localhost:3000";
 const cookieParser = require("cookie-parser");
